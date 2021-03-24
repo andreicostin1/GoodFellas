@@ -17,7 +17,7 @@ public class Main extends Application
             URL url = getClass().getResource("GUI.fxml");
 
             Pane root = FXMLLoader.load(url);
-            Scene scene = new Scene(root, 1600, 900);
+            Scene scene = new Scene(root, 700, 400);
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("My App");

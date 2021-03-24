@@ -22,7 +22,11 @@ public class Controller {
 
 
     public void imagePlacement(){
+        neutralImage.setFitHeight(100);
+        neutralImage.setFitWidth(100);
+        neutralImage.setTranslateY(98);
         display.getChildren().addAll(neutralImage);
+
 
         System.out.println("This worked");
     }
