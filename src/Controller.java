@@ -8,9 +8,8 @@ import javafx.scene.layout.HBox;
 public class Controller {
 
     @FXML Button characterLeft = new Button();
+    @FXML Button characterRight = new Button();
     @FXML HBox display = new HBox();
-
-    ImageView neutralImage = new ImageView("resources/characters/neutral.png");
 
     public class MyEventHandler implements EventHandler<Event> {
 
@@ -21,13 +20,19 @@ public class Controller {
 
 
 
-    public void imagePlacement(){
+    public void leftSideImagePlacement(){
+        ImageView neutralImage = new ImageView("resources/characters/neutral.png");
         neutralImage.setFitHeight(100);
         neutralImage.setFitWidth(100);
         neutralImage.setTranslateY(98);
         display.getChildren().addAll(neutralImage);
+    }
 
-
-        System.out.println("This worked");
+    public void rightSideImagePlacement(){
+        ImageView neutralImage = new ImageView("resources/characters/neutral.png");
+        neutralImage.setFitHeight(100);
+        neutralImage.setFitWidth(100);
+        neutralImage.setTranslateY(98);
+        display.getChildren().addAll(neutralImage);
     }
 }

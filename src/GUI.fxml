@@ -45,7 +45,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="characterLeft" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#imagePlacement" text="Character" translateY="10.0" GridPane.valignment="TOP" />
+            <Button fx:id="characterLeft" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#leftSideImagePlacement" text="Character" translateY="10.0" GridPane.valignment="TOP" />
+            <Button fx:id="characterRight" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#rightSideImagePlacement" text="Character 2" translateY="10.0" GridPane.columnIndex="1" GridPane.valignment="TOP" />
          </children>
       </GridPane>
       <Pane layoutX="228.0" layoutY="100.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black;" />
