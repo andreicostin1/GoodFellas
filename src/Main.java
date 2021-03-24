@@ -1,32 +1,35 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.control.TextArea;
+
+import java.net.URL;
 
 
 public class Main extends Application
 {
+    @Override
+    public void start(Stage primaryStage)
+    {
+        try {
+
+            URL url = getClass().getResource("GUI.fxml");
+
+            Pane root = FXMLLoader.load(url);
+            Scene scene = new Scene(root, 1600, 900);
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("My App");
+            primaryStage.show();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args)
     {
         launch(args);
-    }
-
-    @Override
-    public void start(Stage stage)
-    {
-        MenuB menuBar = new MenuB();
-        EditStage editStage=new EditStage();
-        VBox vbox = new VBox();
-        stage.setTitle("My App");
-
-        vbox.getChildren().add(menuBar);
-        editStage.setMaxWidth(500);
-        vbox.getChildren().add(editStage);
-
-        Scene scene = new Scene(vbox,1600,900);
-        stage.setScene(scene);
-        stage.show();
     }
 }

@@ -12,5 +12,4 @@ public class MenuB extends MenuBar
         Menu tab3 = new Menu("Configure");
         this.getMenus().addAll(tab1,tab2,tab3);
     }
-
 }
