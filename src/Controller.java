@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,21 +16,31 @@ public class Controller {
 
     @FXML Button addLeft = new Button();
     @FXML Button addRight = new Button();
+    @FXML Button clearPane = new Button();
     @FXML ChoiceBox leftCharacterMenu = new ChoiceBox();
     @FXML ChoiceBox rightCharacterMenu = new ChoiceBox();
-    @FXML HBox display = new HBox();
+    @FXML GridPane display = new GridPane();
 
     ArrayList<Character> poseList = new ArrayList<>();
     String sourceRootPath = "resources/characters/";
 
 
-    public class MyEventHandler implements EventHandler<Event> {
+    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
 
-        public void handle(Event event){
-            System.out.println("Event happened");
+            System.out.println(e.getSource());
+            System.out.println(addRight);
+            if(e.getSource().equals(addLeft)){
+                System.out.println("Add left");
+                addPoseLeft();
+            }
+            else if(e.getSource().equals(addRight)){
+                System.out.println("Add right");
+                addPoseRight();
+            }
         }
-    }
-
+    };
 
     public void initialize(){
         createPoseList();
@@ -41,10 +52,11 @@ public class Controller {
             rightCharacterMenu.getItems().add(pose.getName());
         }
 
+        addLeft.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         System.out.println("INITIALISED");
     }
-
 
     //Creates a list of Character objects for each image
     public void createPoseList(){
@@ -67,37 +79,26 @@ public class Controller {
     }
 
     public void addPoseLeft(){
-        System.out.println("Here");
+        Character character = findCharacter(leftCharacterMenu.getValue().toString());
 
-        addLeft.setOnAction(actionEvent -> {
-            System.out.println("You chose: " + leftCharacterMenu.getValue());
+        character.getImage().setFitHeight(100);
+        character.getImage().setFitWidth(100);
 
-            Character character = findCharacter(leftCharacterMenu.getValue().toString());
-
-            character.getImage().setFitHeight(100);
-            character.getImage().setFitWidth(100);
-            character.getImage().setTranslateY(98);
-
-            display.getChildren().add(character.getImage());
-        });
+        display.add(character.getImage(), 0, 1);
     }
 
     public void addPoseRight(){
-        System.out.println("Here");
+        Character character = findCharacter(rightCharacterMenu.getValue().toString());
 
-        addLeft.setOnAction(actionEvent -> {
-            System.out.println("You chose: " + rightCharacterMenu.getValue());
+        character.getImage().setFitHeight(100);
+        character.getImage().setFitWidth(100);
 
-            Character character = findCharacter(rightCharacterMenu.getValue().toString());
-
-            character.getImage().setFitHeight(100);
-            character.getImage().setFitWidth(100);
-            character.getImage().setTranslateY(98);
-
-            display.getChildren().add(character.getImage());
-        });
+        display.add(character.getImage(), 1, 1);
     }
 
+    public void clearPane(){
+        display.getChildren().clear();
+    }
 
     public Character findCharacter(String name){
 
