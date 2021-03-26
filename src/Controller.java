@@ -12,12 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Controller {
-
-    @FXML Button characterLeft = new Button();
-    @FXML Button characterRight = new Button();
+    
+    @FXML Button addLeft = new Button();
+    @FXML Button addRight = new Button();
     @FXML ChoiceBox leftCharacterMenu = new ChoiceBox();
+    @FXML ChoiceBox rightCharacterMenu = new ChoiceBox();
     @FXML HBox display = new HBox();
 
+    ArrayList<Character> poseList = new ArrayList<>();
     String sourceRootPath = "resources/characters/";
 
 
@@ -28,19 +30,26 @@ public class Controller {
         }
     }
 
-    /*
-    public void init(){
-        leftCharacterMenu.getItems().add("Test");
-        //leftCharacterMenu.getItems().addAll(allCharacters.toString());
+
+    public void initialize(){
+        createPoseList();
+
+        for (Character pose : poseList) {
+            leftCharacterMenu.getItems().add(pose.getName());
+        }
+        for (Character pose : poseList) {
+            rightCharacterMenu.getItems().add(pose.getName());
+        }
+
+
+        System.out.println("INITIALISED");
     }
-    */
+
 
     //Creates a list of Character objects for each image
     public void createPoseList(){
         File poseFile = new File("src/resources/characters");
         List<File> files = Arrays.asList(poseFile.listFiles());
-        ArrayList<Character> poseList = new ArrayList<>();
-
 
         for (int i = 0; i < poseFile.list().length; i++) {
 
@@ -57,9 +66,20 @@ public class Controller {
 
     }
 
+    public void addPose(){
+        System.out.println("Here");
+
+        addLeft.setOnAction(actionEvent -> {
+            System.out.println("You chose: " + leftCharacterMenu.getValue());
+        });
+    }
+
     public void leftSideImagePlacement(){
 
-        createPoseList();
+        System.out.println(leftCharacterMenu.getSelectionModel());
+        System.out.println(leftCharacterMenu.getValue());
+
+        leftCharacterMenu.getItems().add("Test");
 
         ImageView neutralImage = new ImageView("resources/characters/neutral.png");
         neutralImage.setFitHeight(100);
@@ -70,6 +90,7 @@ public class Controller {
     }
 
     public void rightSideImagePlacement(){
+
         ImageView neutralImage = new ImageView("resources/characters/neutral.png");
         neutralImage.setFitHeight(100);
         neutralImage.setFitWidth(100);
