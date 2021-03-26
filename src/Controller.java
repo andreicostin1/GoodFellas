@@ -29,8 +29,6 @@ public class Controller {
         @Override
         public void handle(MouseEvent e) {
 
-            System.out.println(e.getSource());
-            System.out.println(addRight);
             if(e.getSource().equals(addLeft)){
                 System.out.println("Add left");
                 addPoseLeft();
