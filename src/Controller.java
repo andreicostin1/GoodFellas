@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Controller {
-    
+
     @FXML Button addLeft = new Button();
     @FXML Button addRight = new Button();
     @FXML ChoiceBox leftCharacterMenu = new ChoiceBox();
@@ -66,36 +66,49 @@ public class Controller {
 
     }
 
-    public void addPose(){
+    public void addPoseLeft(){
         System.out.println("Here");
 
         addLeft.setOnAction(actionEvent -> {
             System.out.println("You chose: " + leftCharacterMenu.getValue());
+
+            Character character = findCharacter(leftCharacterMenu.getValue().toString());
+
+            character.getImage().setFitHeight(100);
+            character.getImage().setFitWidth(100);
+            character.getImage().setTranslateY(98);
+
+            display.getChildren().add(character.getImage());
         });
     }
 
-    public void leftSideImagePlacement(){
+    public void addPoseRight(){
+        System.out.println("Here");
 
-        System.out.println(leftCharacterMenu.getSelectionModel());
-        System.out.println(leftCharacterMenu.getValue());
+        addLeft.setOnAction(actionEvent -> {
+            System.out.println("You chose: " + rightCharacterMenu.getValue());
 
-        leftCharacterMenu.getItems().add("Test");
+            Character character = findCharacter(rightCharacterMenu.getValue().toString());
 
-        ImageView neutralImage = new ImageView("resources/characters/neutral.png");
-        neutralImage.setFitHeight(100);
-        neutralImage.setFitWidth(100);
-        neutralImage.setTranslateY(98);
+            character.getImage().setFitHeight(100);
+            character.getImage().setFitWidth(100);
+            character.getImage().setTranslateY(98);
 
-        display.getChildren().addAll(neutralImage);
+            display.getChildren().add(character.getImage());
+        });
     }
 
-    public void rightSideImagePlacement(){
 
-        ImageView neutralImage = new ImageView("resources/characters/neutral.png");
-        neutralImage.setFitHeight(100);
-        neutralImage.setFitWidth(100);
-        neutralImage.setTranslateY(98);
+    public Character findCharacter(String name){
 
-        display.getChildren().addAll(neutralImage);
+        Character character = null;
+
+        for (Character c : poseList) {
+            if(name.equals(c.getName())) {
+                character = c;
+            }
+        }
+
+        return character;
     }
 }

@@ -47,9 +47,9 @@
         </rowConstraints>
          <children>
             <ChoiceBox fx:id="leftCharacterMenu" prefWidth="150.0" />
-            <Button fx:id="addLeft" mnemonicParsing="false" onMouseClicked="#addPose" text="Add" GridPane.valignment="BOTTOM" />
+            <Button fx:id="addLeft" mnemonicParsing="false" onMouseClicked="#addPoseLeft" text="Add" GridPane.valignment="BOTTOM" />
             <ChoiceBox fx:id="rightCharacterMenu" prefWidth="150.0" GridPane.columnIndex="1" />
-            <Button fx:id="addRight" mnemonicParsing="false" onMouseClicked="#addPose" text="Add" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+            <Button fx:id="addRight" mnemonicParsing="false" onMouseClicked="#addPoseRight" text="Add" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
       <Pane layoutX="228.0" layoutY="100.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black;" />
