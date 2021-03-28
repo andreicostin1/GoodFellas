@@ -14,35 +14,44 @@ import java.util.List;
 
 public class Controller {
 
-    @FXML Button addLeft = new Button();
-    @FXML Button addRight = new Button();
-    @FXML Button clearPane = new Button();
-    @FXML Button flipLeft = new Button();
-    @FXML Button flipRight = new Button();
-    @FXML ChoiceBox leftCharacterMenu = new ChoiceBox();
-    @FXML ChoiceBox rightCharacterMenu = new ChoiceBox();
-    @FXML GridPane display = new GridPane();
+    @FXML
+    Button addLeft = new Button();
+    @FXML
+    Button addRight = new Button();
+    @FXML
+    Button clearPane = new Button();
+    @FXML
+    Button flipLeft = new Button();
+    @FXML
+    Button flipRight = new Button();
+    @FXML
+    ChoiceBox leftCharacterMenu = new ChoiceBox();
+    @FXML
+    ChoiceBox rightCharacterMenu = new ChoiceBox();
+    @FXML
+    GridPane display = new GridPane();
 
     ArrayList<Character> poseList = new ArrayList<>();
     String sourceRootPath = "resources/characters/";
 
+    Character left = null;
+    Character right = null;
 
     EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e) {
 
-            if(e.getSource().equals(addLeft)){
+            if (e.getSource().equals(addLeft)) {
                 System.out.println("Add left");
                 addPoseLeft();
-            }
-            else if(e.getSource().equals(addRight)){
+            } else if (e.getSource().equals(addRight)) {
                 System.out.println("Add right");
                 addPoseRight();
             }
         }
     };
 
-    public void initialize(){
+    public void initialize() {
         createPoseList();
 
         for (Character pose : poseList) {
@@ -59,7 +68,7 @@ public class Controller {
     }
 
     //Creates a list of Character objects for each image
-    public void createPoseList(){
+    public void createPoseList() {
         File poseFile = new File("src/resources/characters");
         List<File> files = Arrays.asList(poseFile.listFiles());
 
@@ -78,34 +87,38 @@ public class Controller {
 
     }
 
-    public void addPoseLeft(){
+    public void addPoseLeft() {
         Character character = findCharacter(leftCharacterMenu.getValue().toString());
 
         character.getImage().setFitHeight(100);
         character.getImage().setFitWidth(100);
 
+        left = character;
         display.add(character.getImage(), 0, 1);
     }
 
-    public void addPoseRight(){
+    public void addPoseRight() {
         Character character = findCharacter(rightCharacterMenu.getValue().toString());
 
         character.getImage().setFitHeight(100);
         character.getImage().setFitWidth(100);
 
+        right = character;
         display.add(character.getImage(), 1, 1);
     }
 
-    public void clearPane(){
+    public void clearPane() {
         display.getChildren().clear();
+        left = null;
+        right = null;
     }
 
-    public Character findCharacter(String name){
+    public Character findCharacter(String name) {
 
         Character character = null;
 
         for (Character c : poseList) {
-            if(name.equals(c.getName())) {
+            if (name.equals(c.getName())) {
                 character = c;
             }
         }
@@ -114,11 +127,26 @@ public class Controller {
     }
 
     public void flipLeft() {
-
+        if (left != null) {
+            display.getChildren().remove(0, 1);
+            if (left.getImage().getScaleX() == -1) {
+                left.getImage().setScaleX(1);
+            } else {
+                left.getImage().setScaleX(-1);
+            }
+            display.add(left.getImage(), 0, 1);
+        }
     }
 
     public void flipRight() {
-
+        if (right != null) {
+            display.getChildren().remove(1, 1);
+            if (right.getImage().getScaleX() == -1) {
+                right.getImage().setScaleX(1);
+            } else {
+                right.getImage().setScaleX(-1);
+            }
+            display.add(right.getImage(), 1, 1);
+        }
     }
-
 }

@@ -11,6 +11,9 @@ public class Character {
         this.image = image;
     }
 
+    public Character() {
+    }
+
     public String getName() {
         return name;
     }
