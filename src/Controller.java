@@ -127,8 +127,8 @@ public class Controller {
     }
 
     public void flipLeft() {
+        display.getChildren().remove(left.getImage());
         if (left != null) {
-            display.getChildren().remove(0, 1);
             if (left.getImage().getScaleX() == -1) {
                 left.getImage().setScaleX(1);
             } else {
@@ -139,8 +139,8 @@ public class Controller {
     }
 
     public void flipRight() {
+        display.getChildren().remove(right.getImage());
         if (right != null) {
-            display.getChildren().remove(1, 1);
             if (right.getImage().getScaleX() == -1) {
                 right.getImage().setScaleX(1);
             } else {
