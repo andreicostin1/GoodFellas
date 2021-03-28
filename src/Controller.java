@@ -17,6 +17,8 @@ public class Controller {
     @FXML Button addLeft = new Button();
     @FXML Button addRight = new Button();
     @FXML Button clearPane = new Button();
+    @FXML Button flipLeft = new Button();
+    @FXML Button flipRight = new Button();
     @FXML ChoiceBox leftCharacterMenu = new ChoiceBox();
     @FXML ChoiceBox rightCharacterMenu = new ChoiceBox();
     @FXML GridPane display = new GridPane();
@@ -110,4 +112,13 @@ public class Controller {
 
         return character;
     }
+
+    public void flipLeft() {
+
+    }
+
+    public void flipRight() {
+
+    }
+
 }
