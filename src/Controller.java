@@ -21,10 +21,6 @@ public class Controller {
     @FXML
     Button clearPane = new Button();
     @FXML
-    Button flipLeft = new Button();
-    @FXML
-    Button flipRight = new Button();
-    @FXML
     ChoiceBox leftCharacterMenu = new ChoiceBox();
     @FXML
     ChoiceBox rightCharacterMenu = new ChoiceBox();
@@ -40,12 +36,9 @@ public class Controller {
     EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e) {
-
             if (e.getSource().equals(addLeft)) {
-                System.out.println("Add left");
                 addPoseLeft();
             } else if (e.getSource().equals(addRight)) {
-                System.out.println("Add right");
                 addPoseRight();
             }
         }
@@ -53,7 +46,6 @@ public class Controller {
 
     public void initialize() {
         createPoseList();
-
         for (Character pose : poseList) {
             leftCharacterMenu.getItems().add(pose.getName());
         }
@@ -63,8 +55,6 @@ public class Controller {
 
         addLeft.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-
-        System.out.println("INITIALISED");
     }
 
     //Creates a list of Character objects for each image
@@ -73,7 +63,6 @@ public class Controller {
         List<File> files = Arrays.asList(poseFile.listFiles());
 
         for (int i = 0; i < poseFile.list().length; i++) {
-
             ImageView poseImage = new ImageView(sourceRootPath.concat(files.get(i).getName()));
             String name = files.get(i).getName();
 
@@ -114,7 +103,6 @@ public class Controller {
     }
 
     public Character findCharacter(String name) {
-
         Character character = null;
 
         for (Character c : poseList) {
