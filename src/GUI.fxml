@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="700.0">
         <menus>
@@ -34,7 +34,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <GridPane layoutX="396.0" layoutY="36.0" prefHeight="375.0" prefWidth="290.0">
+      <GridPane alignment="CENTER" layoutX="396.0" layoutY="36.0" prefHeight="375.0" prefWidth="290.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -63,23 +63,18 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Label>
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#flipLeft" text="Flip Left" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#flipRight" text="Flip Right" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
-
-       <GridPane layoutX="250.0" layoutY="36.0" prefHeight="150.0" prefWidth="290.0">
-           <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-           </columnConstraints>
-           <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-           </rowConstraints>
-           <children>
-               <Button fx:id="flipLeft" mnemonicParsing="false" text="Flip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-               <Button fx:id="flipRight" mnemonicParsing="false" text="Flip" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-           </children>
-       </GridPane>
-
       <Pane layoutX="228.0" layoutY="100.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black;" />
       <TextField layoutX="14.0" layoutY="36.0" prefHeight="51.0" prefWidth="360.0" />
       <TextField layoutX="14.0" layoutY="335.0" prefHeight="51.0" prefWidth="360.0" />
