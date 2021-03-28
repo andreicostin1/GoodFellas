@@ -52,7 +52,8 @@
             <ChoiceBox fx:id="rightCharacterMenu" prefWidth="150.0" GridPane.columnIndex="1" />
             <Button fx:id="addRight" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
             <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-            <Label alignment="CENTER" prefWidth="96.0" text="Left character" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+
+             <Label alignment="CENTER" prefWidth="96.0" text="Left character" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>
@@ -64,6 +65,21 @@
             </Label>
          </children>
       </GridPane>
+
+       <GridPane layoutX="250.0" layoutY="36.0" prefHeight="150.0" prefWidth="290.0">
+           <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           </rowConstraints>
+           <children>
+               <Button fx:id="flipLeft" mnemonicParsing="false" text="Flip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+               <Button fx:id="flipRight" mnemonicParsing="false" text="Flip" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+           </children>
+       </GridPane>
+
       <Pane layoutX="228.0" layoutY="100.0" prefHeight="200.0" prefWidth="145.0" style="-fx-border-color: black;" />
       <TextField layoutX="14.0" layoutY="36.0" prefHeight="51.0" prefWidth="360.0" />
       <TextField layoutX="14.0" layoutY="335.0" prefHeight="51.0" prefWidth="360.0" />
