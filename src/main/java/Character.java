@@ -1,3 +1,5 @@
+package main.java;
+
 import javafx.scene.image.ImageView;
 
 public class Character {

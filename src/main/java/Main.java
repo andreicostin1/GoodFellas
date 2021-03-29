@@ -1,10 +1,14 @@
+package main.java;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
+import java.util.Scanner;
 
 
 public class Main extends Application
@@ -13,9 +17,7 @@ public class Main extends Application
     public void start(Stage primaryStage)
     {
         try {
-
-            URL url = getClass().getResource("GUI.fxml");
-
+            URL url = getClass().getResource("/main/resources/view/GUI.fxml");
             Pane root = FXMLLoader.load(url);
             Scene scene = new Scene(root, 700, 400);
 

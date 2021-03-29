@@ -1,4 +1,5 @@
-import javafx.event.Event;
+package main.java;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,9 +9,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class Controller {
 
@@ -28,7 +33,6 @@ public class Controller {
     GridPane display = new GridPane();
 
     ArrayList<Character> poseList = new ArrayList<>();
-    String sourceRootPath = "resources/characters/";
 
     Character left = null;
     Character right = null;
@@ -45,7 +49,11 @@ public class Controller {
     };
 
     public void initialize() {
-        createPoseList();
+        try {
+            createPoseList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (Character pose : poseList) {
             leftCharacterMenu.getItems().add(pose.getName());
         }
@@ -57,23 +65,43 @@ public class Controller {
         addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
-    //Creates a list of Character objects for each image
-    public void createPoseList() {
-        File poseFile = new File("src/resources/characters");
-        List<File> files = Arrays.asList(poseFile.listFiles());
-
-        for (int i = 0; i < poseFile.list().length; i++) {
-            ImageView poseImage = new ImageView(sourceRootPath.concat(files.get(i).getName()));
-            String name = files.get(i).getName();
+    //Creates a list of main.java.Character objects for each image
+    public void createPoseList() throws URISyntaxException, IOException {
+        URI uri = getClass().getResource("/main/resources/characters").toURI();
+        Path myPath;
+        if (uri.getScheme().equals("jar")) {
+            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+            myPath = fileSystem.getPath("/main/resources/characters");
+        } else {
+            myPath = Paths.get(uri);
+        }
+        Stream<Path> walk = Files.walk(myPath, 1);
+        for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+            ImageView poseImage = new ImageView(it.next().toUri().toURL().toString());
+            String name = it.next().getFileName().toString();
 
             //Removes extension from file name
             if (name.indexOf(".") > 0) {
                 name = name.substring(0, name.lastIndexOf("."));
             }
-
             poseList.add(new Character(name, poseImage));
         }
-
+//        System.out.print(getClass().getResource("/main/resources/characters").toURI().toString());
+//        File poseFile = new File(getClass().getResource("/main/resources/characters").toURI());
+//        List<File> files = Arrays.asList(poseFile.listFiles());
+//
+//        for (int i = 0; i < poseFile.list().length; i++) {
+//
+//            System.out.println(getClass().getResource("/main/resources/characters/" + files.get(i).getName()).toString());
+//            ImageView poseImage = new ImageView(getClass().getResource("/main/resources/characters/" + files.get(i).getName()).toString());
+//            String name = files.get(i).getName();
+//
+//            //Removes extension from file name
+//            if (name.indexOf(".") > 0) {
+//                name = name.substring(0, name.lastIndexOf("."));
+//            }
+//            poseList.add(new Character(name, poseImage));
+//        }
     }
 
     public void addPoseLeft() {
