@@ -78,7 +78,7 @@ public class Controller {
         }
         Stream<Path> walk = Files.walk(myPath, 1);
 
-        for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+        for (Iterator<Path> it = walk.iterator(); it.hasNext(); ) {
             Path inLoop = it.next();
             ImageView poseImage = new ImageView(inLoop.toUri().toURL().toString());
             String name = inLoop.getFileName().toString();
@@ -90,7 +90,7 @@ public class Controller {
                 poseList.add(new Character(name, poseImage));
             }
         }
-        Collections.sort(poseList, new Comparator<Character>(){
+        Collections.sort(poseList, new Comparator<Character>() {
             public int compare(Character o1, Character o2) {
                 return o1.name.compareTo(o2.name);
             }
