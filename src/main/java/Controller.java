@@ -90,6 +90,11 @@ public class Controller {
                 poseList.add(new Character(name, poseImage));
             }
         }
+        Collections.sort(poseList, new Comparator<Character>(){
+            public int compare(Character o1, Character o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        });
     }
 
     public void addPoseLeft() {
@@ -114,6 +119,12 @@ public class Controller {
 
     public void clearPane() {
         display.getChildren().clear();
+        if (left != null) {
+            left.getImage().setScaleX(1);
+        }
+        if (right != null) {
+            right.getImage().setScaleX(1);
+        }
         left = null;
         right = null;
     }
