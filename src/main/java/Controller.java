@@ -38,6 +38,10 @@ public class Controller {
 
     ArrayList<Character> poseList = new ArrayList<>();
 
+    public enum direction {
+        LEFT, RIGHT
+    }
+
     Character left = null;
     Character right = null;
 
@@ -98,6 +102,7 @@ public class Controller {
                 poseList.add(new Character(name, poseImage));
             }
         }
+        // to make list alphabetical
         Collections.sort(poseList, new Comparator<Character>() {
             public int compare(Character o1, Character o2) {
                 return o1.name.compareTo(o2.name);
@@ -106,22 +111,47 @@ public class Controller {
     }
 
     public void addPoseLeft() {
-        Character character = findCharacter(leftCharacterMenu.getValue().toString());
-
-        character.getImage().setFitHeight(100);
-        character.getImage().setFitWidth(100);
-
-        left = character;
-        display.add(character.getImage(), 0, 1);
+        addPose(direction.LEFT);
     }
 
     public void addPoseRight() {
-        Character character = findCharacter(rightCharacterMenu.getValue().toString());
+        addPose(direction.RIGHT);
+    }
 
-        character.getImage().setFitHeight(100);
-        character.getImage().setFitWidth(100);
-        right = character;
-        display.add(character.getImage(), 1, 1);
+    // method for adding poses
+    //TODO fix bug if no selection is made in the dropdown
+    public void addPose(direction d) {
+        if (d == direction.LEFT) {
+            String menuValue = leftCharacterMenu.getValue().toString();
+            if (menuValue != null) {
+                // if left is already defined, override
+                if (left != null) {
+                    display.getChildren().remove(0, 1);
+                    left = null;
+                }
+                // add new character
+                left = findCharacter(menuValue);
+                left.getImage().setFitHeight(100);
+                left.getImage().setFitWidth(100);
+                // add to display
+                display.add(left.getImage(), 0, 1);
+            }
+        } else {
+            String menuValue = rightCharacterMenu.getValue().toString();
+            if (menuValue != null) {
+                // if left is already defined, override
+                if (right != null) {
+                    display.getChildren().remove(1, 1);
+                    right = null;
+                }
+                // add new character
+                right = findCharacter(menuValue);
+                right.getImage().setFitHeight(100);
+                right.getImage().setFitWidth(100);
+                // add to display
+                display.add(right.getImage(), 1, 1);
+            }
+        }
     }
 
     public void clearPane() {
@@ -136,6 +166,7 @@ public class Controller {
         right = null;
     }
 
+    // function to find character in list
     public Character findCharacter(String name) {
         Character character = new Character();
         for (Character c : poseList) {
