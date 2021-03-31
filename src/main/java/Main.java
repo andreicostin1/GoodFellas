@@ -5,10 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.net.URL;
-import java.util.Scanner;
+
 
 
 public class Main extends Application

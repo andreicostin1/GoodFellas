@@ -47,9 +47,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="addLeft" mnemonicParsing="false" text="Add" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-            <Button fx:id="addRight" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-            <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+             <Button fx:id="addLeft" mnemonicParsing="false" text="Add" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+             <Button fx:id="leftGender" mnemonicParsing="false" text="Left M/F" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+             <Button fx:id="addRight" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+             <Button fx:id="rightGender" mnemonicParsing="false" text="Right M/F" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+             <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
 
              <Label alignment="CENTER" prefWidth="96.0" text="Left character" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <GridPane.margin>

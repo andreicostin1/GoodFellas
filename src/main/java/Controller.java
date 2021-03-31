@@ -3,20 +3,19 @@ package main.java;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Stream;
+
 
 public class Controller {
 
@@ -26,6 +25,10 @@ public class Controller {
     Button addRight = new Button();
     @FXML
     Button clearPane = new Button();
+    @FXML
+    Button leftGender = new Button();
+    @FXML
+    Button rightGender = new Button();
     @FXML
     ComboBox leftCharacterMenu = new ComboBox();
     @FXML
@@ -45,6 +48,10 @@ public class Controller {
                 addPoseLeft();
             } else if (e.getSource().equals(addRight)) {
                 addPoseRight();
+            } else if (e.getSource().equals(leftGender)) {
+                changeLeftGender();
+            } else if (e.getSource().equals(rightGender)) {
+                changeRightGender();
             }
         }
     };
@@ -61,9 +68,10 @@ public class Controller {
         for (Character pose : poseList) {
             rightCharacterMenu.getItems().add(pose.getName());
         }
-
         addLeft.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
     //Creates a list of main.java.Character objects for each image
@@ -112,7 +120,6 @@ public class Controller {
 
         character.getImage().setFitHeight(100);
         character.getImage().setFitWidth(100);
-
         right = character;
         display.add(character.getImage(), 1, 1);
     }
@@ -135,6 +142,8 @@ public class Controller {
             if (name.equals(c.getName())) {
                 character.setName(c.getName());
                 character.setImage(c.getImage());
+                character.setHairColor(new Color(249/255.0,255/255.0,0/255.0,1));
+                character.setSkin(new Color(255/255.0,232/255.0,216/255.0,1));
             }
         }
         return character;
@@ -162,5 +171,153 @@ public class Controller {
             }
             display.add(right.getImage(), 1, 1);
         }
+    }
+
+    public void changeLeftGender()
+    {
+        Character character = findCharacter(leftCharacterMenu.getValue().toString());
+        Color hairColor = character.getHairColor();
+        Color skinColor=character.getSkin();
+        display.getChildren().remove(left.getImage());
+        Image input = left.getImage().getImage();
+        int W = (int) input.getWidth();
+        int H = (int) input.getHeight();
+        WritableImage outputImage = new WritableImage(W, H);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+
+
+        for (int y = 0; y < H; y++)
+        {
+            for (int x = 0; x < W; x++)
+            {
+                Color currColor=reader.getColor(x,y);
+                if(currColor.equals(Color.RED))
+                {
+                    double newGreen = (skinColor.getGreen()*255)+1;
+                    Color hideLipColor = new Color(255/255.0,newGreen/255.0,216/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(Color.rgb(240,255,0)))
+                {
+                    double newRed = (skinColor.getRed()*255)-1;
+                    Color hideLipColor = new Color(newRed/255.0,255/255.0,255/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(Color.rgb(236,180,181)))
+                {
+                    double newBlue = (skinColor.getBlue()*255)-1;
+                    Color hideLipColor = new Color(255/255.0,255/255.0,newBlue/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+
+                else if(currColor.equals(new Color(255/255.0,((skinColor.getGreen()*255)+1)/255.0,216/255.0,1)))
+                {
+                    Color hideLipColor = new Color(255/255.0,0/255.0,0/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(new Color(((skinColor.getRed()*255)-1)/255.0,255/255.0,255/255.0,1)))
+                {
+                    Color hideLipColor = new Color(240/255.0,255/255.0,0/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(new Color(255/255.0,255/255.0,((skinColor.getBlue()*255)-1)/255.0,1)))
+                {
+                    Color hideLipColor = new Color(236/255.0,180/255.0,181/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else
+                {
+                    writer.setColor(x,y,currColor);
+                }
+            }
+        }
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (left.getImage().getScaleX() == -1)
+        {
+            output.setScaleX(-1);
+        }
+        else
+        {
+            output.setScaleX(1);
+        }
+        left.getImage().setImage(outputImage);
+        display.add(output, 0, 1);
+    }
+
+    public void changeRightGender()
+    {
+        Character character = findCharacter(rightCharacterMenu.getValue().toString());
+        Color hairColor = character.getHairColor();
+        Color skinColor=character.getSkin();
+        display.getChildren().remove(right.getImage());
+        Image input = right.getImage().getImage();
+        int W = (int) input.getWidth();
+        int H = (int) input.getHeight();
+        WritableImage outputImage = new WritableImage(W, H);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+
+
+        for (int y = 0; y < H; y++)
+        {
+            for (int x = 0; x < W; x++)
+            {
+                Color currColor=reader.getColor(x,y);
+                if(currColor.equals(Color.RED))
+                {
+                    double newGreen = (skinColor.getGreen()*255)+1;
+                    Color hideLipColor = new Color(255/255.0,newGreen/255.0,216/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(Color.rgb(240,255,0)))
+                {
+                    double newRed = (skinColor.getRed()*255)-1;
+                    Color hideLipColor = new Color(newRed/255.0,255/255.0,255/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(Color.rgb(236,180,181)))
+                {
+                    double newBlue = (skinColor.getBlue()*255)-1;
+                    Color hideLipColor = new Color(255/255.0,255/255.0,newBlue/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+
+                else if(currColor.equals(new Color(255/255.0,((skinColor.getGreen()*255)+1)/255.0,216/255.0,1)))
+                {
+                    Color hideLipColor = new Color(255/255.0,0/255.0,0/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(new Color(((skinColor.getRed()*255)-1)/255.0,255/255.0,255/255.0,1)))
+                {
+                    Color hideLipColor = new Color(240/255.0,255/255.0,0/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else if(currColor.equals(new Color(255/255.0,255/255.0,((skinColor.getBlue()*255)-1)/255.0,1)))
+                {
+                    Color hideLipColor = new Color(236/255.0,180/255.0,181/255.0,1);
+                    writer.setColor(x,y,hideLipColor);
+                }
+                else
+                {
+                    writer.setColor(x,y,currColor);
+                }
+            }
+        }
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (right.getImage().getScaleX() == -1)
+        {
+            output.setScaleX(-1);
+        }
+        else
+        {
+            output.setScaleX(1);
+        }
+        right.getImage().setImage(outputImage);
+        display.add(output, 1, 1);
     }
 }

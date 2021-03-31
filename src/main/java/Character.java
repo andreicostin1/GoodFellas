@@ -1,16 +1,20 @@
 package main.java;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 public class Character {
 
     String name;
     ImageView image;
-
-    public Character(String name, ImageView image){
-
+    Color hairColor;
+    Color skin;
+    public Character(String name, ImageView image)
+    {
         this.name = name;
         this.image = image;
+        hairColor = null;
+        skin = null;
     }
 
     public Character() {
@@ -30,5 +34,21 @@ public class Character {
 
     public void setImage(ImageView character) {
         this.image = character;
+    }
+
+    public Color getHairColor() {
+        return hairColor;
+    }
+
+    public void setHairColor(Color hairColor) {
+        this.hairColor = hairColor;
+    }
+
+    public Color getSkin() {
+        return skin;
+    }
+
+    public void setSkin(Color skin) {
+        this.skin = skin;
     }
 }
