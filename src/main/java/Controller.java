@@ -119,37 +119,43 @@ public class Controller {
     }
 
     // method for adding poses
-    //TODO fix bug if no selection is made in the dropdown
     public void addPose(direction d) {
+        String menuValue = null;
+        Character toStore = null;
+        int i = -1;
+
         if (d == direction.LEFT) {
-            String menuValue = leftCharacterMenu.getValue().toString();
-            if (menuValue != null) {
-                // if left is already defined, override
-                if (left != null) {
-                    display.getChildren().remove(0, 1);
-                    left = null;
-                }
-                // add new character
-                left = findCharacter(menuValue);
-                left.getImage().setFitHeight(100);
-                left.getImage().setFitWidth(100);
-                // add to display
-                display.add(left.getImage(), 0, 1);
+            if (leftCharacterMenu.getSelectionModel().isEmpty()) {
+                return;
             }
+            menuValue = leftCharacterMenu.getValue().toString();
+            toStore = left;
+            i = 0;
         } else {
-            String menuValue = rightCharacterMenu.getValue().toString();
-            if (menuValue != null) {
-                // if left is already defined, override
-                if (right != null) {
-                    display.getChildren().remove(1, 1);
-                    right = null;
-                }
-                // add new character
-                right = findCharacter(menuValue);
-                right.getImage().setFitHeight(100);
-                right.getImage().setFitWidth(100);
-                // add to display
-                display.add(right.getImage(), 1, 1);
+            if (rightCharacterMenu.getSelectionModel().isEmpty()) {
+                return;
+            }
+            menuValue = rightCharacterMenu.getValue().toString();
+            toStore = right;
+            i = 1;
+        }
+
+        if (menuValue != null) {
+            // if character is already defined, override
+            if (toStore != null) {
+                display.getChildren().remove(i, 1);
+            }
+            // add new character
+            toStore = findCharacter(menuValue);
+            toStore.getImage().setFitHeight(100);
+            toStore.getImage().setFitWidth(100);
+            // add to display
+            display.add(toStore.getImage(), i, 1);
+
+            if (d == direction.LEFT) {
+                left = toStore;
+            } else {
+                right = toStore;
             }
         }
     }
