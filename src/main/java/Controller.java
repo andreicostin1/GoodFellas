@@ -38,7 +38,7 @@ public class Controller {
 
     ArrayList<Character> poseList = new ArrayList<>();
 
-    public enum direction {
+    public enum Direction {
         LEFT, RIGHT
     }
 
@@ -111,20 +111,20 @@ public class Controller {
     }
 
     public void addPoseLeft() {
-        addPose(direction.LEFT);
+        addPose(Direction.LEFT);
     }
 
     public void addPoseRight() {
-        addPose(direction.RIGHT);
+        addPose(Direction.RIGHT);
     }
 
     // method for adding poses
-    public void addPose(direction d) {
+    public void addPose(Direction d) {
         String menuValue = null;
         Character toStore = null;
         int i = -1;
 
-        if (d == direction.LEFT) {
+        if (d == Direction.LEFT) {
             if (leftCharacterMenu.getSelectionModel().isEmpty()) {
                 return;
             }
@@ -140,26 +140,26 @@ public class Controller {
             i = 1;
         }
 
-        if (menuValue != null) {
-            // if character is already defined, override
-            if (toStore != null) {
-                display.getChildren().remove(i, 1);
-            }
-            // add new character
-            toStore = findCharacter(menuValue);
-            toStore.getImage().setFitHeight(100);
-            toStore.getImage().setFitWidth(100);
-            // add to display
-            display.add(toStore.getImage(), i, 1);
-
-            if (d == direction.LEFT) {
-                left = toStore;
-            } else {
-                right = toStore;
-            }
+        // if character is already defined, override
+        if (toStore != null) {
+            display.getChildren().remove(i, 1);
         }
+        // add new character
+        toStore = findCharacter(menuValue);
+        toStore.getImage().setFitHeight(100);
+        toStore.getImage().setFitWidth(100);
+        // add to display
+        display.add(toStore.getImage(), i, 1);
+
+        if (d == Direction.LEFT) {
+            left = toStore;
+        } else {
+            right = toStore;
+        }
+
     }
 
+    // function to clear the display
     public void clearPane() {
         display.getChildren().clear();
         if (left != null) {
@@ -187,26 +187,43 @@ public class Controller {
     }
 
     public void flipLeft() {
-        display.getChildren().remove(left.getImage());
-        if (left != null) {
-            if (left.getImage().getScaleX() == -1) {
-                left.getImage().setScaleX(1);
-            } else {
-                left.getImage().setScaleX(-1);
-            }
-            display.add(left.getImage(), 0, 1);
-        }
+        flip(Direction.LEFT);
     }
 
     public void flipRight() {
-        display.getChildren().remove(right.getImage());
-        if (right != null) {
-            if (right.getImage().getScaleX() == -1) {
-                right.getImage().setScaleX(1);
+        flip(Direction.RIGHT);
+    }
+
+    public void flip(Direction d) {
+        Character toFlip = null;
+        int i = -1;
+
+        if (d == Direction.LEFT) {
+            toFlip = left;
+            i = 0;
+        } else {
+            toFlip = right;
+            i = 1;
+        }
+
+        if (toFlip == null) {
+            return;
+        }
+        display.getChildren().remove(toFlip.getImage());
+
+        if (toFlip != null) {
+            if (toFlip.getImage().getScaleX() == -1) {
+                toFlip.getImage().setScaleX(1);
             } else {
-                right.getImage().setScaleX(-1);
+                toFlip.getImage().setScaleX(-1);
             }
-            display.add(right.getImage(), 1, 1);
+            display.add(toFlip.getImage(), i, 1);
+        }
+
+        if (d == Direction.LEFT) {
+            left = toFlip;
+        } else {
+            right = toFlip;
         }
     }
 
