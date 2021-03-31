@@ -20,7 +20,7 @@ public class Main extends Application
             Scene scene = new Scene(root, 700, 400);
 
             primaryStage.setScene(scene);
-            primaryStage.setTitle("My App");
+            primaryStage.setTitle("Comic Builder");
             primaryStage.show();
 
         } catch (Exception e){
