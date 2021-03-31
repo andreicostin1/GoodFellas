@@ -45,18 +45,15 @@ public class Controller {
     Character left = null;
     Character right = null;
 
-    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e) {
-            if (e.getSource().equals(addLeft)) {
-                addPoseLeft();
-            } else if (e.getSource().equals(addRight)) {
-                addPoseRight();
-            } else if (e.getSource().equals(leftGender)) {
-                changeLeftGender();
-            } else if (e.getSource().equals(rightGender)) {
-                changeRightGender();
-            }
+    EventHandler<MouseEvent> eventHandler = e -> {
+        if (e.getSource().equals(addLeft)) {
+            addPoseLeft();
+        } else if (e.getSource().equals(addRight)) {
+            addPoseRight();
+        } else if (e.getSource().equals(leftGender)) {
+            changeLeftGender();
+        } else if (e.getSource().equals(rightGender)) {
+            changeRightGender();
         }
     };
 
@@ -83,7 +80,7 @@ public class Controller {
         URI uri = getClass().getResource("/main/resources/characters/").toURI();
         Path myPath;
         if (uri.getScheme().equals("jar")) {
-            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
             myPath = fileSystem.getPath("/main/resources/characters/");
         } else {
             myPath = Paths.get(uri);
@@ -103,11 +100,7 @@ public class Controller {
             }
         }
         // to make list alphabetical
-        Collections.sort(poseList, new Comparator<Character>() {
-            public int compare(Character o1, Character o2) {
-                return o1.name.compareTo(o2.name);
-            }
-        });
+        poseList.sort(Comparator.comparing(o -> o.name));
     }
 
     public void addPoseLeft() {
@@ -120,9 +113,9 @@ public class Controller {
 
     // method for adding poses
     public void addPose(Direction d) {
-        String menuValue = null;
-        Character toStore = null;
-        int i = -1;
+        String menuValue;
+        Character toStore;
+        int i;
 
         if (d == Direction.LEFT) {
             if (leftCharacterMenu.getSelectionModel().isEmpty()) {
@@ -195,8 +188,8 @@ public class Controller {
     }
 
     public void flip(Direction d) {
-        Character toFlip = null;
-        int i = -1;
+        Character toFlip;
+        int i;
 
         if (d == Direction.LEFT) {
             toFlip = left;
@@ -211,14 +204,13 @@ public class Controller {
         }
         display.getChildren().remove(toFlip.getImage());
 
-        if (toFlip != null) {
-            if (toFlip.getImage().getScaleX() == -1) {
-                toFlip.getImage().setScaleX(1);
-            } else {
-                toFlip.getImage().setScaleX(-1);
-            }
-            display.add(toFlip.getImage(), i, 1);
+        if (toFlip.getImage().getScaleX() == -1) {
+            toFlip.getImage().setScaleX(1);
+        } else {
+            toFlip.getImage().setScaleX(-1);
         }
+        display.add(toFlip.getImage(), i, 1);
+
 
         if (d == Direction.LEFT) {
             left = toFlip;
