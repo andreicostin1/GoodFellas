@@ -1,8 +1,10 @@
 package main.java;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -35,6 +37,14 @@ public class Controller {
     ComboBox rightCharacterMenu = new ComboBox();
     @FXML
     GridPane display = new GridPane();
+    @FXML
+    ColorPicker leftHairColorPicker = new ColorPicker();
+    @FXML
+    ColorPicker rightHairColorPicker = new ColorPicker();
+    @FXML
+    ColorPicker leftSkinColorPicker = new ColorPicker();
+    @FXML
+    ColorPicker rightSkinColorPicker = new ColorPicker();
 
     ArrayList<Character> poseList = new ArrayList<>();
 
@@ -57,6 +67,18 @@ public class Controller {
         }
     };
 
+    EventHandler<ActionEvent> actionEventHandler = e -> {
+        if (e.getSource().equals(leftHairColorPicker)) {
+            changeLeftHairColor();
+        } else if (e.getSource().equals(rightHairColorPicker)) {
+            changeRightHairColor();
+        } else if (e.getSource().equals(leftSkinColorPicker)) {
+            changeLeftSkinColor();
+        } else if (e.getSource().equals(rightSkinColorPicker)) {
+            changeRightSkinColor();
+        }
+    };
+
     public void initialize() {
         try {
             createPoseList();
@@ -73,6 +95,11 @@ public class Controller {
         addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+
+        leftHairColorPicker.setOnAction(actionEventHandler);
+        rightHairColorPicker.setOnAction(actionEventHandler);
+        leftSkinColorPicker.setOnAction(actionEventHandler);
+        rightSkinColorPicker.setOnAction(actionEventHandler);
     }
 
     //Creates a list of main.java.Character objects for each image
@@ -146,10 +173,13 @@ public class Controller {
 
         if (d == Direction.LEFT) {
             left = toStore;
+            leftSkinColorPicker.setValue(toStore.getSkin());
+            leftHairColorPicker.setValue(toStore.getHairColor());
         } else {
             right = toStore;
+            rightSkinColorPicker.setValue(toStore.getSkin());
+            rightHairColorPicker.setValue(toStore.getHairColor());
         }
-
     }
 
     // function to clear the display
@@ -174,6 +204,7 @@ public class Controller {
                 character.setImage(c.getImage());
                 character.setHairColor(new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1));
                 character.setSkin(new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1));
+                character.setBraidColor(new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1));
             }
         }
         return character;
@@ -221,7 +252,8 @@ public class Controller {
 
     public void changeLeftGender() {
         Character character = findCharacter(leftCharacterMenu.getValue().toString());
-        Color hairColor = character.getHairColor();
+        Color hairColor = left.getHairColor();
+        Color braidColor = left.getBraidColor();
         Color skinColor = character.getSkin();
         display.getChildren().remove(left.getImage());
         Image input = left.getImage().getImage();
@@ -324,6 +356,184 @@ public class Controller {
             output.setScaleX(1);
         }
         right.getImage().setImage(outputImage);
+        display.add(output, 1, 1);
+    }
+
+    public void changeLeftHairColor() {
+        if(left == null) {
+            return;
+        }
+
+        //original hair and braid colors
+        Color originalHair = left.getHairColor();
+        Color originalBraid = left.getBraidColor();
+
+        //sets new hair color, sets new braid color to be slightly lighter than hair color
+        left.setHairColor(leftHairColorPicker.getValue());
+        Color interpolateWithWhite = left.getHairColor().interpolate(Color.WHITE, 0.1);
+        int r = (int) Math.round(interpolateWithWhite.getRed()*255);
+        int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
+        int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
+        left.setBraidColor(Color.rgb(r,g,b));
+
+        Image input = left.getImage().getImage();
+        int width = (int) input.getWidth();
+        int height = (int) input.getHeight();
+        display.getChildren().remove(left.getImage());
+        WritableImage outputImage = new WritableImage(width, height);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color currColor = reader.getColor(j, i);
+                if (currColor.equals(originalHair)) {
+                    writer.setColor(j, i, left.getHairColor());
+                } else if (currColor.equals(originalBraid)) {
+                    writer.setColor(j, i, left.getBraidColor());
+                } else {
+                    writer.setColor(j, i, currColor);
+                }
+            }
+        }
+
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (left.getImage().getScaleX() == -1) {
+            output.setScaleX(-1);
+        } else {
+            output.setScaleX(1);
+        }
+        //left.getImage().setImage(outputImage);
+        left.setImage(output);
+        display.add(output, 0, 1);
+    }
+
+    public void changeRightHairColor() {
+        if(right == null) {
+            return;
+        }
+
+        //original hair colors
+        Color originalHair = right.getHairColor();
+        Color originalBraid = right.getBraidColor();
+
+        //sets new hair color, sets new braid color to be slightly lighter than hair color
+        right.setHairColor(rightHairColorPicker.getValue());
+        Color interpolateWithWhite = right.getHairColor().interpolate(Color.WHITE, 0.1);
+        int r = (int) Math.round(interpolateWithWhite.getRed()*255);
+        int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
+        int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
+        right.setBraidColor(Color.rgb(r,g,b));
+
+        Image input = right.getImage().getImage();
+        int width = (int) input.getWidth();
+        int height = (int) input.getHeight();
+        display.getChildren().remove(right.getImage());
+        WritableImage outputImage = new WritableImage(width, height);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color currColor = reader.getColor(j, i);
+                if (currColor.equals(originalHair)) {
+                    writer.setColor(j, i, right.getHairColor());
+                } else if (currColor.equals(originalBraid)) {
+                    writer.setColor(j, i, right.getBraidColor());
+                } else {
+                    writer.setColor(j, i, currColor);
+                }
+            }
+        }
+
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (right.getImage().getScaleX() == -1) {
+            output.setScaleX(-1);
+        } else {
+            output.setScaleX(1);
+        }
+        //right.getImage().setImage(outputImage);
+        right.setImage(output);
+        display.add(output, 1, 1);
+    }
+
+    public void changeLeftSkinColor() {
+        if(left == null) {
+            return;
+        }
+
+        Color originalSkin = left.getSkin();
+        left.setSkin(leftSkinColorPicker.getValue());
+
+        Image input = left.getImage().getImage();
+        int width = (int) input.getWidth();
+        int height = (int) input.getHeight();
+        display.getChildren().remove(left.getImage());
+        WritableImage outputImage = new WritableImage(width, height);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color currColor = reader.getColor(j, i);
+                if (currColor.equals(originalSkin)) {
+                    writer.setColor(j, i, left.getSkin());
+                } else {
+                    writer.setColor(j, i, currColor);
+                }
+            }
+        }
+
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (left.getImage().getScaleX() == -1) {
+            output.setScaleX(-1);
+        } else {
+            output.setScaleX(1);
+        }
+        left.setImage(output);
+        display.add(output, 0, 1);
+    }
+
+    public void changeRightSkinColor() {
+        if(right == null) {
+            return;
+        }
+
+        Color originalSkin = right.getSkin();
+        right.setSkin(rightSkinColorPicker.getValue());
+
+        Image input = right.getImage().getImage();
+        int width = (int) input.getWidth();
+        int height = (int) input.getHeight();
+        display.getChildren().remove(right.getImage());
+        WritableImage outputImage = new WritableImage(width, height);
+        PixelReader reader = input.getPixelReader();
+        PixelWriter writer = outputImage.getPixelWriter();
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color currColor = reader.getColor(j, i);
+                if (currColor.equals(originalSkin)) {
+                    writer.setColor(j, i, right.getSkin());
+                } else {
+                    writer.setColor(j, i, currColor);
+                }
+            }
+        }
+
+        ImageView output = new ImageView(outputImage);
+        output.setFitHeight(100);
+        output.setFitWidth(100);
+        if (right.getImage().getScaleX() == -1) {
+            output.setScaleX(-1);
+        } else {
+            output.setScaleX(1);
+        }
+        right.setImage(output);
         display.add(output, 1, 1);
     }
 }

@@ -8,6 +8,7 @@ public class Character {
     String name;
     ImageView image;
     Color hairColor;
+    Color braidColor;
     Color skin;
     public Character(String name, ImageView image)
     {
@@ -15,6 +16,7 @@ public class Character {
         this.image = image;
         hairColor = null;
         skin = null;
+        braidColor = null;
     }
 
     public Character() {
@@ -51,4 +53,8 @@ public class Character {
     public void setSkin(Color skin) {
         this.skin = skin;
     }
+
+    public void setBraidColor(Color braidColor) { this.braidColor = braidColor; }
+
+    public Color getBraidColor() { return braidColor; }
 }
