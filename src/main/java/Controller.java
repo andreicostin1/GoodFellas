@@ -47,7 +47,8 @@ public class Controller {
     ColorPicker rightSkinColorPicker = new ColorPicker();
 
     ArrayList<Character> poseList = new ArrayList<>();
-
+    Color color_1=Color.rgb(200, 200, 200);
+    Color color_2=Color.rgb(100, 100, 100);
     public enum Direction {
         LEFT, RIGHT
     }
@@ -282,12 +283,18 @@ public class Controller {
                 } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
                     Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))) {
+                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_1.equals(Color.rgb(200, 200, 200))) {
                     Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
+                } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1)) ) {
                     Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
+                } else if(currColor.equals(color_1)){
+                    double newRed = (skinColor.getRed() * 255) - 1;
+                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
+                    writer.setColor(j, i,hideLipColor);
+                } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
+                    writer.setColor(j, i,color_1);
                 } else {
                     writer.setColor(j, i, currColor);
                 }
@@ -336,13 +343,19 @@ public class Controller {
                 } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
                     Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))) {
+                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_2.equals(Color.rgb(100, 100, 100))) {
                     Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
                 } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
                     Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
                     writer.setColor(j, i, hideLipColor);
-                } else {
+                } else if(currColor.equals(color_2)){
+                    double newRed = (skinColor.getRed() * 255) - 1;
+                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
+                    writer.setColor(j, i,hideLipColor);
+                } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
+                    writer.setColor(j, i,color_2);
+                }else {
                     writer.setColor(j, i, currColor);
                 }
             }
@@ -375,9 +388,7 @@ public class Controller {
         int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
         int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
         left.setBraidColor(Color.rgb(r,g,b));
-
-        Color longhair=Color.rgb(240, 255, 0);
-
+        color_1=left.getBraidColor();
         Image input = left.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -390,10 +401,7 @@ public class Controller {
                 Color currColor = reader.getColor(j, i);
                 if (currColor.equals(originalHair)) {
                     writer.setColor(j, i, left.getHairColor());
-                } else if(currColor.equals(longhair)){
-                    writer.setColor(j, i, left.getHairColor());
-                }
-                else if (currColor.equals(originalBraid)) {
+                } else if (currColor.equals(originalBraid)) {
                     writer.setColor(j, i, left.getBraidColor());
                 } else {
                     writer.setColor(j, i, currColor);
@@ -430,9 +438,7 @@ public class Controller {
         int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
         int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
         right.setBraidColor(Color.rgb(r,g,b));
-
-        Color longhair=Color.rgb(240, 255, 0);//the extra hair color
-      //Color haircolor= Color.rgb(249, 255, 0); the original Hair color
+        color_2=right.getBraidColor();
         Image input = right.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -445,10 +451,7 @@ public class Controller {
                 Color currColor = reader.getColor(j, i);
                 if (currColor.equals(originalHair)) {
                     writer.setColor(j, i, right.getHairColor());
-                } else if(currColor.equals(longhair)){
-                    writer.setColor(j, i, right.getHairColor());
-                }
-                else if (currColor.equals(originalBraid)) {
+                } else if (currColor.equals(originalBraid)) {
                     writer.setColor(j, i, right.getBraidColor());
                 } else {
                     writer.setColor(j, i, currColor);
