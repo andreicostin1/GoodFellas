@@ -376,6 +376,8 @@ public class Controller {
         int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
         left.setBraidColor(Color.rgb(r,g,b));
 
+        Color longhair=Color.rgb(240, 255, 0);
+
         Image input = left.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -388,7 +390,10 @@ public class Controller {
                 Color currColor = reader.getColor(j, i);
                 if (currColor.equals(originalHair)) {
                     writer.setColor(j, i, left.getHairColor());
-                } else if (currColor.equals(originalBraid)) {
+                } else if(currColor.equals(longhair)){
+                    writer.setColor(j, i, left.getHairColor());
+                }
+                else if (currColor.equals(originalBraid)) {
                     writer.setColor(j, i, left.getBraidColor());
                 } else {
                     writer.setColor(j, i, currColor);
@@ -426,6 +431,8 @@ public class Controller {
         int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
         right.setBraidColor(Color.rgb(r,g,b));
 
+        Color longhair=Color.rgb(240, 255, 0);//the extra hair color
+      //Color haircolor= Color.rgb(249, 255, 0); the original Hair color
         Image input = right.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -438,7 +445,10 @@ public class Controller {
                 Color currColor = reader.getColor(j, i);
                 if (currColor.equals(originalHair)) {
                     writer.setColor(j, i, right.getHairColor());
-                } else if (currColor.equals(originalBraid)) {
+                } else if(currColor.equals(longhair)){
+                    writer.setColor(j, i, right.getHairColor());
+                }
+                else if (currColor.equals(originalBraid)) {
                     writer.setColor(j, i, right.getBraidColor());
                 } else {
                     writer.setColor(j, i, currColor);
