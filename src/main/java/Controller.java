@@ -608,18 +608,24 @@ public class Controller {
         return bubble;
     }
     String out ="";
+    Label leftLabel=new Label();
+    Label rightLabel=new Label();
     public void LeftSpeechBubble(){
         out=usertxt.getText();
-        Text text=new Text("     "+out);
         if(arrow!=null){
             display.getChildren().remove(arrow.getImage());
-            text = new Text("");
         }
         arrow=findBubble("arrow");
         arrow.getImage().setFitWidth(90);
         arrow.getImage().setFitHeight(25);
+        if(!leftLabel.getText().equals("")){
+            leftLabel.setText("");
+            leftLabel.setText("     "+out);
+        } else {
+            leftLabel.setText("     "+out);
+            display.add(leftLabel,0,0);
+        }
         display.add(arrow.getImage(), 0, 1);
-        display.add(text,0,0);
     }
 
     public void RightSpeechBubble(){
@@ -627,12 +633,16 @@ public class Controller {
         if(arrow!=null){
             display.getChildren().remove(arrow.getImage());
         }
-
-        Text text=new Text("     "+out);
         arrow=findBubble("arrow");
         arrow.getImage().setFitWidth(90);
         arrow.getImage().setFitHeight(25);
+        if(!rightLabel.getText().equals("")){
+            rightLabel.setText("");
+            rightLabel.setText("     "+out);
+        } else {
+            rightLabel.setText("     "+out);
+            display.add(rightLabel,1,0);
+        }
         display.add(arrow.getImage(), 1, 1);
-        display.add(text,1,0);
     }
 }
