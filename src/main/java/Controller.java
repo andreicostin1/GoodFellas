@@ -3,13 +3,12 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URI;
@@ -32,6 +31,11 @@ public class Controller {
     @FXML
     Button rightGender = new Button();
     @FXML
+    Button LeftSpeechBubble = new Button();
+    @FXML
+    Button RightSpeechBubble = new Button();
+
+    @FXML
     ComboBox leftCharacterMenu = new ComboBox();
     @FXML
     ComboBox rightCharacterMenu = new ComboBox();
@@ -45,8 +49,11 @@ public class Controller {
     ColorPicker leftSkinColorPicker = new ColorPicker();
     @FXML
     ColorPicker rightSkinColorPicker = new ColorPicker();
+    @FXML
+    TextField usertxt;
 
     ArrayList<Character> poseList = new ArrayList<>();
+    ArrayList<Bubble> bubbleList = new ArrayList<>();
     Color color_1=Color.rgb(200, 200, 200);
     Color color_2=Color.rgb(100, 100, 100);
     public enum Direction {
@@ -55,7 +62,7 @@ public class Controller {
 
     Character left = null;
     Character right = null;
-
+    Bubble arrow =null;
     EventHandler<MouseEvent> eventHandler = e -> {
         if (e.getSource().equals(addLeft)) {
             addPoseLeft();
@@ -65,6 +72,10 @@ public class Controller {
             changeLeftGender();
         } else if (e.getSource().equals(rightGender)) {
             changeRightGender();
+        } else if (e.getSource().equals(LeftSpeechBubble)) {
+            LeftSpeechBubble();
+        } else if (e.getSource().equals(RightSpeechBubble)) {
+            RightSpeechBubble();
         }
     };
 
@@ -86,6 +97,12 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        try {
+            createBubbleList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for (Character pose : poseList) {
             leftCharacterMenu.getItems().add(pose.getName());
         }
@@ -96,11 +113,15 @@ public class Controller {
         addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        RightSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         leftHairColorPicker.setOnAction(actionEventHandler);
         rightHairColorPicker.setOnAction(actionEventHandler);
         leftSkinColorPicker.setOnAction(actionEventHandler);
         rightSkinColorPicker.setOnAction(actionEventHandler);
+
+
     }
 
     //Creates a list of main.java.Character objects for each image
@@ -129,6 +150,32 @@ public class Controller {
         }
         // to make list alphabetical
         poseList.sort(Comparator.comparing(o -> o.name));
+    }
+    public void createBubbleList() throws URISyntaxException, IOException {
+        URI uri = getClass().getResource("/main/resources/bubbles/").toURI();
+        Path myPath;
+        if (uri.getScheme().equals("jar")) {
+            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+            myPath = fileSystem.getPath("/main/resources/bubbles/");
+        } else {
+            myPath = Paths.get(uri);
+        }
+        Stream<Path> walk = Files.walk(myPath, 1);
+
+        for (Iterator<Path> it = walk.iterator(); it.hasNext(); ) {
+            Path inLoop = it.next();
+            ImageView poseImage = new ImageView(inLoop.toUri().toURL().toString());
+            String name = inLoop.getFileName().toString();
+            if (!name.equals("bubbles")) {
+                //Removes extension from file name
+                if (name.indexOf(".") > 0) {
+                    name = name.substring(0, name.lastIndexOf("."));
+                }
+                bubbleList.add(new Bubble(name, poseImage));
+            }
+        }
+        // to make list alphabetical
+        bubbleList.sort(Comparator.comparing(Bubble::getName));
     }
 
     public void addPoseLeft() {
@@ -170,7 +217,7 @@ public class Controller {
         toStore.getImage().setFitHeight(100);
         toStore.getImage().setFitWidth(100);
         // add to display
-        display.add(toStore.getImage(), i, 1);
+        display.add(toStore.getImage(), i, 2);
 
         if (d == Direction.LEFT) {
             left = toStore;
@@ -241,7 +288,7 @@ public class Controller {
         } else {
             toFlip.getImage().setScaleX(-1);
         }
-        display.add(toFlip.getImage(), i, 1);
+        display.add(toFlip.getImage(), i, 2);
 
 
         if (d == Direction.LEFT) {
@@ -309,7 +356,7 @@ public class Controller {
             output.setScaleX(1);
         }
         left.getImage().setImage(outputImage);
-        display.add(output, 0, 1);
+        display.add(output, 0, 2);
     }
 
     public void changeRightGender() {
@@ -369,7 +416,7 @@ public class Controller {
             output.setScaleX(1);
         }
         right.getImage().setImage(outputImage);
-        display.add(output, 1, 1);
+        display.add(output, 1, 2);
     }
 
     public void changeLeftHairColor() {
@@ -548,5 +595,44 @@ public class Controller {
         }
         right.setImage(output);
         display.add(output, 1, 1);
+    }
+
+    public Bubble findBubble(String name) {
+        Bubble bubble = new Bubble();
+        for (Bubble c : bubbleList) {
+            if (name.equals(c.getName())) {
+                bubble.setName(c.getName());
+                bubble.setImage(c.getImage());
+            }
+        }
+        return bubble;
+    }
+    String out ="";
+    public void LeftSpeechBubble(){
+        out=usertxt.getText();
+        Text text=new Text("     "+out);
+        if(arrow!=null){
+            display.getChildren().remove(arrow.getImage());
+            text = new Text("");
+        }
+        arrow=findBubble("arrow");
+        arrow.getImage().setFitWidth(90);
+        arrow.getImage().setFitHeight(25);
+        display.add(arrow.getImage(), 0, 1);
+        display.add(text,0,0);
+    }
+
+    public void RightSpeechBubble(){
+        out=usertxt.getText();
+        if(arrow!=null){
+            display.getChildren().remove(arrow.getImage());
+        }
+
+        Text text=new Text("     "+out);
+        arrow=findBubble("arrow");
+        arrow.getImage().setFitWidth(90);
+        arrow.getImage().setFitHeight(25);
+        display.add(arrow.getImage(), 1, 1);
+        display.add(text,1,0);
     }
 }
