@@ -664,7 +664,7 @@ public class Controller {
             }
             else {
                 rightBubble = null;
-                leftLabel.setText("   ");
+                rightLabel.setText("   ");
                 return;
             }
         }
