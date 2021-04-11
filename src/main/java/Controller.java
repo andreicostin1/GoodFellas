@@ -51,9 +51,12 @@ public class Controller {
     ColorPicker rightSkinColorPicker = new ColorPicker();
     @FXML
     TextField usertxt;
+    @FXML
+    TextField usertxt2;
 
     ArrayList<Character> poseList = new ArrayList<>();
-    ArrayList<Bubble> bubbleList = new ArrayList<>();
+    ArrayList<Bubble> rightBubbleList = new ArrayList<>();
+    ArrayList<Bubble> leftBubbleList = new ArrayList<>();
     Color color_1=Color.rgb(200, 200, 200);
     Color color_2=Color.rgb(100, 100, 100);
     public enum Direction {
@@ -62,7 +65,10 @@ public class Controller {
 
     Character left = null;
     Character right = null;
-    Bubble arrow =null;
+    Bubble leftBubble = null;
+    Bubble rightBubble = null;
+
+
     EventHandler<MouseEvent> eventHandler = e -> {
         if (e.getSource().equals(addLeft)) {
             addPoseLeft();
@@ -121,7 +127,6 @@ public class Controller {
         leftSkinColorPicker.setOnAction(actionEventHandler);
         rightSkinColorPicker.setOnAction(actionEventHandler);
 
-
     }
 
     //Creates a list of main.java.Character objects for each image
@@ -164,18 +169,21 @@ public class Controller {
 
         for (Iterator<Path> it = walk.iterator(); it.hasNext(); ) {
             Path inLoop = it.next();
-            ImageView poseImage = new ImageView(inLoop.toUri().toURL().toString());
+            ImageView poseImageR = new ImageView(inLoop.toUri().toURL().toString());
+            ImageView poseImageL = new ImageView(inLoop.toUri().toURL().toString());
             String name = inLoop.getFileName().toString();
             if (!name.equals("bubbles")) {
                 //Removes extension from file name
                 if (name.indexOf(".") > 0) {
                     name = name.substring(0, name.lastIndexOf("."));
                 }
-                bubbleList.add(new Bubble(name, poseImage));
+                rightBubbleList.add(new Bubble(name, poseImageR));
+                leftBubbleList.add(new Bubble(name, poseImageL));
             }
         }
         // to make list alphabetical
-        bubbleList.sort(Comparator.comparing(Bubble::getName));
+        rightBubbleList.sort(Comparator.comparing(Bubble::getName));
+        leftBubbleList.sort(Comparator.comparing(Bubble::getName));
     }
 
     public void addPoseLeft() {
@@ -597,8 +605,16 @@ public class Controller {
         display.add(output, 1, 1);
     }
 
-    public Bubble findBubble(String name) {
+    public Bubble findNextBubble(Direction d, String name) {
         Bubble bubble = new Bubble();
+        List<Bubble> bubbleList;
+        if(d == Direction.LEFT) {
+            bubbleList = leftBubbleList;
+        }
+        else
+        {
+            bubbleList = rightBubbleList;
+        }
         for (Bubble c : bubbleList) {
             if (name.equals(c.getName())) {
                 bubble.setName(c.getName());
@@ -607,17 +623,27 @@ public class Controller {
         }
         return bubble;
     }
+
     String out ="";
     Label leftLabel=new Label();
     Label rightLabel=new Label();
     public void LeftSpeechBubble(){
         out=usertxt.getText();
-        if(arrow!=null){
-            display.getChildren().remove(arrow.getImage());
+        String newBubble = "arrow";
+        if(leftBubble!=null){
+            display.getChildren().remove(leftBubble.getImage());
+            if(leftBubble.getName().equals("arrow")) {
+                newBubble = "circles";
+            }
+            else {
+                leftBubble = null;
+                leftLabel.setText("   ");
+                return;
+            }
         }
-        arrow=findBubble("arrow");
-        arrow.getImage().setFitWidth(90);
-        arrow.getImage().setFitHeight(25);
+        leftBubble=findNextBubble(Direction.LEFT, newBubble);
+        leftBubble.getImage().setFitWidth(90);
+        leftBubble.getImage().setFitHeight(25);
         if(!leftLabel.getText().equals("")){
             leftLabel.setText("");
             leftLabel.setText("     "+out);
@@ -625,17 +651,26 @@ public class Controller {
             leftLabel.setText("     "+out);
             display.add(leftLabel,0,0);
         }
-        display.add(arrow.getImage(), 0, 1);
+        display.add(leftBubble.getImage(), 0, 1);
     }
 
     public void RightSpeechBubble(){
-        out=usertxt.getText();
-        if(arrow!=null){
-            display.getChildren().remove(arrow.getImage());
+        out=usertxt2.getText();
+        String newBubble = "arrow";
+        if(rightBubble!=null){
+            display.getChildren().remove(rightBubble.getImage());
+            if(rightBubble.getName().equals("arrow")) {
+                newBubble = "circles";
+            }
+            else {
+                rightBubble = null;
+                leftLabel.setText("   ");
+                return;
+            }
         }
-        arrow=findBubble("arrow");
-        arrow.getImage().setFitWidth(90);
-        arrow.getImage().setFitHeight(25);
+        rightBubble=findNextBubble(Direction.RIGHT, newBubble);
+        rightBubble.getImage().setFitWidth(90);
+        rightBubble.getImage().setFitHeight(25);
         if(!rightLabel.getText().equals("")){
             rightLabel.setText("");
             rightLabel.setText("     "+out);
@@ -643,6 +678,6 @@ public class Controller {
             rightLabel.setText("     "+out);
             display.add(rightLabel,1,0);
         }
-        display.add(arrow.getImage(), 1, 1);
+        display.add(rightBubble.getImage(), 1, 1);
     }
 }

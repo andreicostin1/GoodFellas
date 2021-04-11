@@ -17,7 +17,7 @@ public class Main extends Application
         try {
             URL url = getClass().getResource("/main/resources/view/GUI.fxml");
             Pane root = FXMLLoader.load(url);
-            Scene scene = new Scene(root, 700, 400);
+            Scene scene = new Scene(root, 700, 425);
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("Comic Builder");
