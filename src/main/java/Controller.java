@@ -225,7 +225,7 @@ public class Controller {
 
             // if character is already defined, override
             if (toStore != null) {
-                leftDisplayBox.getChildren().clear();;
+                leftDisplayBox.getChildren().clear();
             }
 
             // add new character
@@ -321,28 +321,40 @@ public class Controller {
 
     public void flip(Direction d) {
         Character toFlip;
-        int i;
+
 
         if (d == Direction.LEFT) {
             toFlip = left;
-            i = 0;
+            leftDisplayBox.getChildren().clear();
+
+            if (toFlip == null) {
+                return;
+            }
+
+            if (toFlip.getImage().getScaleX() == -1) {
+                toFlip.getImage().setScaleX(1);
+            } else {
+                toFlip.getImage().setScaleX(-1);
+            }
+
+            leftDisplayBox.getChildren().add(toFlip.getImage());
+
         } else {
             toFlip = right;
-            i = 1;
-        }
+            rightDisplayBox.getChildren().clear();
 
-        if (toFlip == null) {
-            return;
-        }
-        display.getChildren().remove(toFlip.getImage());
+            if (toFlip == null) {
+                return;
+            }
 
-        if (toFlip.getImage().getScaleX() == -1) {
-            toFlip.getImage().setScaleX(1);
-        } else {
-            toFlip.getImage().setScaleX(-1);
-        }
-        display.add(toFlip.getImage(), i, 2);
+            if (toFlip.getImage().getScaleX() == -1) {
+                toFlip.getImage().setScaleX(1);
+            } else {
+                toFlip.getImage().setScaleX(-1);
+            }
 
+            rightDisplayBox.getChildren().add(toFlip.getImage());
+        }
 
         if (d == Direction.LEFT) {
             left = toFlip;
@@ -401,8 +413,8 @@ public class Controller {
             }
         }
         ImageView output = new ImageView(outputImage);
-        output.setFitHeight(100);
-        output.setFitWidth(100);
+        output.setFitHeight(150);
+        output.setFitWidth(150);
         if (left.getImage().getScaleX() == -1) {
             output.setScaleX(-1);
         } else {
@@ -461,8 +473,8 @@ public class Controller {
             }
         }
         ImageView output = new ImageView(outputImage);
-        output.setFitHeight(100);
-        output.setFitWidth(100);
+        output.setFitHeight(150);
+        output.setFitWidth(150);
         if (right.getImage().getScaleX() == -1) {
             output.setScaleX(-1);
         } else {
