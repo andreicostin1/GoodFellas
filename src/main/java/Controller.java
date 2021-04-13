@@ -21,9 +21,7 @@ import java.util.stream.Stream;
 public class Controller {
 
     @FXML
-    Button addLeft = new Button();
-    @FXML
-    Button addRight = new Button();
+    Button addCharacter = new Button();
     @FXML
     Button clearPane = new Button();
     @FXML
@@ -36,9 +34,7 @@ public class Controller {
     Button RightSpeechBubble = new Button();
 
     @FXML
-    ComboBox leftCharacterMenu = new ComboBox();
-    @FXML
-    ComboBox rightCharacterMenu = new ComboBox();
+    ComboBox characterMenu = new ComboBox();
     @FXML
     GridPane display = new GridPane();
     @FXML
@@ -73,14 +69,12 @@ public class Controller {
     Bubble rightBubble = null;
 
 
-    Character currentlySelected = null;
+    HBox currentlySelected = null;
     Bubble arrow = null;
 
     EventHandler<MouseEvent> eventHandler = e -> {
-        if (e.getSource().equals(addLeft)) {
-            addPoseLeft();
-        } else if (e.getSource().equals(addRight)) {
-            addPoseRight();
+        if (e.getSource().equals(addCharacter)) {
+            addPose(currentlySelected);
         } else if (e.getSource().equals(leftGender)) {
             changeLeftGender();
         } else if (e.getSource().equals(rightGender)) {
@@ -118,13 +112,10 @@ public class Controller {
             e.printStackTrace();
         }
         for (Character pose : poseList) {
-            leftCharacterMenu.getItems().add(pose.getName());
+            characterMenu.getItems().add(pose.getName());
         }
-        for (Character pose : poseList) {
-            rightCharacterMenu.getItems().add(pose.getName());
-        }
-        addLeft.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-        addRight.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+
+        addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -201,60 +192,33 @@ public class Controller {
         leftBubbleList.sort(Comparator.comparing(Bubble::getName));
     }
 
-    public void addPoseLeft() {
-        addPose(Direction.LEFT);
-    }
-
-    public void addPoseRight() {
-        addPose(Direction.RIGHT);
-    }
-
     // method for adding poses
-    public void addPose(Direction d) {
+    public void addPose(HBox currentlySelected) {
 
         Character toStore;
         String menuValue;
 
-        if (d == Direction.LEFT) {
-            if (leftCharacterMenu.getSelectionModel().isEmpty()) {
-                return;
-            }
-
-            menuValue = leftCharacterMenu.getValue().toString();
-            toStore = left;
-
-            // if character is already defined, override
-            if (toStore != null) {
-                leftDisplayBox.getChildren().clear();
-            }
-
-            // add new character
-            toStore = findCharacter(menuValue);
-            toStore.getImage().setFitHeight(150);
-            toStore.getImage().setFitWidth(150);
-            // add to display
-            leftDisplayBox.getChildren().add(toStore.getImage());
-
-        } else {
-            if (rightCharacterMenu.getSelectionModel().isEmpty()) {
-                return;
-            }
-            menuValue = rightCharacterMenu.getValue().toString();
-            toStore = right;
-
-            // if character is already defined, override
-            if (toStore != null) {
-                rightDisplayBox.getChildren().clear();
-            }
-            // add new character
-            toStore = findCharacter(menuValue);
-            toStore.getImage().setFitHeight(150);
-            toStore.getImage().setFitWidth(150);
-            // add to display
-            rightDisplayBox.getChildren().add(toStore.getImage());
+        if (characterMenu.getSelectionModel().isEmpty()) {
+            return;
         }
 
-        if (d == Direction.LEFT) {
+        menuValue = characterMenu.getValue().toString();
+
+        // if character is already defined, override
+        if (currentlySelected.getChildren() != null) {
+            currentlySelected.getChildren().clear();
+        }
+
+        // add new character
+        toStore = findCharacter(menuValue);
+        toStore.getImage().setFitHeight(150);
+        toStore.getImage().setFitWidth(150);
+        // add to display
+        currentlySelected.getChildren().add(toStore.getImage());
+
+
+
+        if (currentlySelected.equals(leftDisplayBox)) {
             left = toStore;
             leftSkinColorPicker.setValue(toStore.getSkin());
             leftHairColorPicker.setValue(toStore.getHairColor());
@@ -274,11 +238,13 @@ public class Controller {
         if (side.equals(leftDisplayBox)){
             rightDisplayBox.setStyle("-fx-border-width: 0;");
             leftDisplayBox.setStyle(border_style);
+            currentlySelected = leftDisplayBox;
             System.out.println("LEFT");
         }
         else if (side.equals(rightDisplayBox)){
             leftDisplayBox.setStyle("-fx-border-width: 0;");
             rightDisplayBox.setStyle(border_style);
+            currentlySelected = rightDisplayBox;
             System.out.println("RIGHT");
         }
     }
@@ -364,7 +330,7 @@ public class Controller {
     }
 
     public void changeLeftGender() {
-        Character character = findCharacter(leftCharacterMenu.getValue().toString());
+        Character character = findCharacter(characterMenu.getValue().toString());
         Color hairColor = left.getHairColor();
         Color braidColor = left.getBraidColor();
         Color skinColor = character.getSkin();
@@ -425,7 +391,7 @@ public class Controller {
     }
 
     public void changeRightGender() {
-        Character character = findCharacter(rightCharacterMenu.getValue().toString());
+        Character character = findCharacter(characterMenu.getValue().toString());
         Color hairColor = character.getHairColor();
         Color skinColor = character.getSkin();
         rightDisplayBox.getChildren().clear();

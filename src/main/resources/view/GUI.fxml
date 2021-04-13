@@ -50,20 +50,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <Button fx:id="addLeft" mnemonicParsing="false" text="Add" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+             <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
              <Button fx:id="leftGender" mnemonicParsing="false" text="Left Gender" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-             <Button fx:id="addRight" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
              <Button fx:id="rightGender" mnemonicParsing="false" text="Right Gender" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
              <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
 
-             <Label alignment="CENTER" prefWidth="96.0" text="Left character" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label alignment="CENTER" prefWidth="96.0" text="Right character" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.valignment="TOP">
+             <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>
@@ -78,8 +72,7 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Button>
-            <ComboBox fx:id="leftCharacterMenu" prefWidth="150.0" />
-            <ComboBox fx:id="rightCharacterMenu" prefWidth="150.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="characterMenu" prefWidth="150.0" />
             <ColorPicker fx:id="rightHairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <value>
                   <Color red="0.9411764740943909" green="1.0" />
