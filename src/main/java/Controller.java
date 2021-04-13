@@ -7,8 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URI;
@@ -42,6 +42,10 @@ public class Controller {
     @FXML
     GridPane display = new GridPane();
     @FXML
+    HBox leftDisplayBox = new HBox();
+    @FXML
+    HBox rightDisplayBox = new HBox();
+    @FXML
     ColorPicker leftHairColorPicker = new ColorPicker();
     @FXML
     ColorPicker rightHairColorPicker = new ColorPicker();
@@ -68,6 +72,9 @@ public class Controller {
     Bubble leftBubble = null;
     Bubble rightBubble = null;
 
+
+    Character currentlySelected = null;
+    Bubble arrow = null;
 
     EventHandler<MouseEvent> eventHandler = e -> {
         if (e.getSource().equals(addLeft)) {
@@ -96,6 +103,7 @@ public class Controller {
             changeRightSkinColor();
         }
     };
+
 
     public void initialize() {
         try {
@@ -126,6 +134,13 @@ public class Controller {
         rightHairColorPicker.setOnAction(actionEventHandler);
         leftSkinColorPicker.setOnAction(actionEventHandler);
         rightSkinColorPicker.setOnAction(actionEventHandler);
+
+        rightDisplayBox.setOnMouseClicked((MouseEvent e) -> {
+            characterSelected(rightDisplayBox);
+        });
+        leftDisplayBox.setOnMouseClicked((MouseEvent e) -> {
+            characterSelected(leftDisplayBox);
+        });
 
     }
 
@@ -196,36 +211,48 @@ public class Controller {
 
     // method for adding poses
     public void addPose(Direction d) {
-        String menuValue;
+
         Character toStore;
-        int i;
+        String menuValue;
 
         if (d == Direction.LEFT) {
             if (leftCharacterMenu.getSelectionModel().isEmpty()) {
                 return;
             }
+
             menuValue = leftCharacterMenu.getValue().toString();
             toStore = left;
-            i = 0;
+
+            // if character is already defined, override
+            if (toStore != null) {
+                leftDisplayBox.getChildren().clear();;
+            }
+
+            // add new character
+            toStore = findCharacter(menuValue);
+            toStore.getImage().setFitHeight(150);
+            toStore.getImage().setFitWidth(150);
+            // add to display
+            leftDisplayBox.getChildren().add(toStore.getImage());
+
         } else {
             if (rightCharacterMenu.getSelectionModel().isEmpty()) {
                 return;
             }
             menuValue = rightCharacterMenu.getValue().toString();
             toStore = right;
-            i = 1;
-        }
 
-        // if character is already defined, override
-        if (toStore != null) {
-            display.getChildren().remove(i, 1);
+            // if character is already defined, override
+            if (toStore != null) {
+                rightDisplayBox.getChildren().clear();
+            }
+            // add new character
+            toStore = findCharacter(menuValue);
+            toStore.getImage().setFitHeight(150);
+            toStore.getImage().setFitWidth(150);
+            // add to display
+            rightDisplayBox.getChildren().add(toStore.getImage());
         }
-        // add new character
-        toStore = findCharacter(menuValue);
-        toStore.getImage().setFitHeight(100);
-        toStore.getImage().setFitWidth(100);
-        // add to display
-        display.add(toStore.getImage(), i, 2);
 
         if (d == Direction.LEFT) {
             left = toStore;
@@ -235,6 +262,24 @@ public class Controller {
             right = toStore;
             rightSkinColorPicker.setValue(toStore.getSkin());
             rightHairColorPicker.setValue(toStore.getHairColor());
+        }
+
+    }
+
+    public void characterSelected(HBox side){
+        System.out.println("Here");
+
+        String border_style = "-fx-border-color: red;" + "-fx-border-width: 1;";
+
+        if (side.equals(leftDisplayBox)){
+            rightDisplayBox.setStyle("-fx-border-width: 0;");
+            leftDisplayBox.setStyle(border_style);
+            System.out.println("LEFT");
+        }
+        else if (side.equals(rightDisplayBox)){
+            leftDisplayBox.setStyle("-fx-border-width: 0;");
+            rightDisplayBox.setStyle(border_style);
+            System.out.println("RIGHT");
         }
     }
 
@@ -311,7 +356,7 @@ public class Controller {
         Color hairColor = left.getHairColor();
         Color braidColor = left.getBraidColor();
         Color skinColor = character.getSkin();
-        display.getChildren().remove(left.getImage());
+        leftDisplayBox.getChildren().clear();
         Image input = left.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -364,14 +409,14 @@ public class Controller {
             output.setScaleX(1);
         }
         left.getImage().setImage(outputImage);
-        display.add(output, 0, 2);
+        leftDisplayBox.getChildren().add(output);
     }
 
     public void changeRightGender() {
         Character character = findCharacter(rightCharacterMenu.getValue().toString());
         Color hairColor = character.getHairColor();
         Color skinColor = character.getSkin();
-        display.getChildren().remove(right.getImage());
+        rightDisplayBox.getChildren().clear();
         Image input = right.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -424,7 +469,7 @@ public class Controller {
             output.setScaleX(1);
         }
         right.getImage().setImage(outputImage);
-        display.add(output, 1, 2);
+        rightDisplayBox.getChildren().add(output);
     }
 
     public void changeLeftHairColor() {
