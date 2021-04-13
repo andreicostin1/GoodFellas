@@ -3,6 +3,7 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +25,8 @@ public class Controller {
     Button addCharacter = new Button();
     @FXML
     Button clearPane = new Button();
+    @FXML
+    Button flipCharacter = new Button();
     @FXML
     Button leftGender = new Button();
     @FXML
@@ -75,6 +78,8 @@ public class Controller {
     EventHandler<MouseEvent> eventHandler = e -> {
         if (e.getSource().equals(addCharacter)) {
             addPose(currentlySelected);
+        } else if (e.getSource().equals(flipCharacter)) {
+            flip(currentlySelected);
         } else if (e.getSource().equals(leftGender)) {
             changeLeftGender();
         } else if (e.getSource().equals(rightGender)) {
@@ -116,6 +121,7 @@ public class Controller {
         }
 
         addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -194,7 +200,6 @@ public class Controller {
 
     // method for adding poses
     public void addPose(HBox currentlySelected) {
-
         Character toStore;
         String menuValue;
 
@@ -216,8 +221,6 @@ public class Controller {
         // add to display
         currentlySelected.getChildren().add(toStore.getImage());
 
-
-
         if (currentlySelected.equals(leftDisplayBox)) {
             left = toStore;
             leftSkinColorPicker.setValue(toStore.getSkin());
@@ -227,7 +230,6 @@ public class Controller {
             rightSkinColorPicker.setValue(toStore.getSkin());
             rightHairColorPicker.setValue(toStore.getHairColor());
         }
-
     }
 
     public void characterSelected(HBox side){
@@ -277,52 +279,30 @@ public class Controller {
         return character;
     }
 
-    public void flipLeft() {
-        flip(Direction.LEFT);
-    }
+    public void flip(HBox currentlySelected) {
+        Character toFlip = null;
 
-    public void flipRight() {
-        flip(Direction.RIGHT);
-    }
-
-    public void flip(Direction d) {
-        Character toFlip;
-
-
-        if (d == Direction.LEFT) {
+        if(currentlySelected.equals(leftDisplayBox)){
             toFlip = left;
             leftDisplayBox.getChildren().clear();
-
-            if (toFlip == null) {
-                return;
-            }
-
-            if (toFlip.getImage().getScaleX() == -1) {
-                toFlip.getImage().setScaleX(1);
-            } else {
-                toFlip.getImage().setScaleX(-1);
-            }
-
-            leftDisplayBox.getChildren().add(toFlip.getImage());
-
-        } else {
+        }
+        else if (currentlySelected.equals(rightDisplayBox)) {
             toFlip = right;
             rightDisplayBox.getChildren().clear();
-
-            if (toFlip == null) {
-                return;
-            }
-
-            if (toFlip.getImage().getScaleX() == -1) {
-                toFlip.getImage().setScaleX(1);
-            } else {
-                toFlip.getImage().setScaleX(-1);
-            }
-
-            rightDisplayBox.getChildren().add(toFlip.getImage());
+        }
+        else if (toFlip == null){
+            return;
         }
 
-        if (d == Direction.LEFT) {
+        if (currentlySelected.getScaleX() == -1) {
+            currentlySelected.setScaleX(1);
+        } else {
+            currentlySelected.setScaleX(-1);
+        }
+
+        currentlySelected.getChildren().add(toFlip.getImage());
+
+        if (currentlySelected.equals(leftDisplayBox)) {
             left = toFlip;
         } else {
             right = toFlip;
