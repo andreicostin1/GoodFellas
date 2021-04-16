@@ -59,8 +59,9 @@ public class Controller {
     ArrayList<Character> poseList = new ArrayList<>();
     ArrayList<Bubble> rightBubbleList = new ArrayList<>();
     ArrayList<Bubble> leftBubbleList = new ArrayList<>();
-    Color color_1=Color.rgb(200, 200, 200);
-    Color color_2=Color.rgb(100, 100, 100);
+    Color color_1 = Color.rgb(200, 200, 200);
+    Color color_2 = Color.rgb(100, 100, 100);
+
     public enum Direction {
         LEFT, RIGHT
     }
@@ -164,6 +165,7 @@ public class Controller {
         // to make list alphabetical
         poseList.sort(Comparator.comparing(o -> o.name));
     }
+
     public void createBubbleList() throws URISyntaxException, IOException {
         URI uri = getClass().getResource("/main/resources/bubbles/").toURI();
         Path myPath;
@@ -228,17 +230,16 @@ public class Controller {
         }
     }
 
-    public void characterSelected(HBox side){
+    public void characterSelected(HBox side) {
 
 
         String border_style = "-fx-border-color: red;" + "-fx-border-width: 1;";
 
-        if (side.equals(leftDisplayBox)){
+        if (side.equals(leftDisplayBox)) {
             rightDisplayBox.setStyle("-fx-border-width: 0;");
             leftDisplayBox.setStyle(border_style);
             currentlySelected = leftDisplayBox;
-        }
-        else if (side.equals(rightDisplayBox)){
+        } else if (side.equals(rightDisplayBox)) {
             leftDisplayBox.setStyle("-fx-border-width: 0;");
             rightDisplayBox.setStyle(border_style);
             currentlySelected = rightDisplayBox;
@@ -276,15 +277,13 @@ public class Controller {
     public void flip(HBox currentlySelected) {
         Character toFlip = null;
 
-        if(currentlySelected.equals(leftDisplayBox)){
+        if (currentlySelected.equals(leftDisplayBox)) {
             toFlip = left;
             leftDisplayBox.getChildren().clear();
-        }
-        else if (currentlySelected.equals(rightDisplayBox)) {
+        } else if (currentlySelected.equals(rightDisplayBox)) {
             toFlip = right;
             rightDisplayBox.getChildren().clear();
-        }
-        else if (toFlip == null){
+        } else if (toFlip == null) {
             return;
         }
 
@@ -307,7 +306,7 @@ public class Controller {
         Character changingCharacter = null;
 
         try {
-            if (currentlySelected.equals(leftDisplayBox)){
+            if (currentlySelected.equals(leftDisplayBox)) {
                 changingCharacter = left;
             } else {
                 changingCharacter = right;
@@ -343,18 +342,18 @@ public class Controller {
                     } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
                         Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
                         writer.setColor(j, i, hideLipColor);
-                    } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_1.equals(Color.rgb(200, 200, 200))) {
+                    } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1)) && color_1.equals(Color.rgb(200, 200, 200))) {
                         Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
                         writer.setColor(j, i, hideLipColor);
-                    } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1)) ) {
+                    } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
                         Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
                         writer.setColor(j, i, hideLipColor);
-                    } else if(currColor.equals(color_1)){
+                    } else if (currColor.equals(color_1)) {
                         double newRed = (skinColor.getRed() * 255) - 1;
                         Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
-                        writer.setColor(j, i,hideLipColor);
-                    } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
-                        writer.setColor(j, i,color_1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))) {
+                        writer.setColor(j, i, color_1);
                     } else {
                         writer.setColor(j, i, currColor);
                     }
@@ -382,7 +381,7 @@ public class Controller {
                 rightDisplayBox.getChildren().add(output);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Alert warning = new Alert(Alert.AlertType.WARNING);
             warning.setContentText("Please select a character to change");
             warning.show();
@@ -390,7 +389,7 @@ public class Controller {
     }
 
     public void changeLeftHairColor() {
-        if(left == null) {
+        if (left == null) {
             return;
         }
 
@@ -401,11 +400,11 @@ public class Controller {
         //sets new hair color, sets new braid color to be slightly lighter than hair color
         left.setHairColor(leftHairColorPicker.getValue());
         Color interpolateWithWhite = left.getHairColor().interpolate(Color.WHITE, 0.1);
-        int r = (int) Math.round(interpolateWithWhite.getRed()*255);
-        int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
-        int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
-        left.setBraidColor(Color.rgb(r,g,b));
-        color_1=left.getBraidColor();
+        int r = (int) Math.round(interpolateWithWhite.getRed() * 255);
+        int g = (int) Math.round(interpolateWithWhite.getGreen() * 255);
+        int b = (int) Math.round(interpolateWithWhite.getBlue() * 255);
+        left.setBraidColor(Color.rgb(r, g, b));
+        color_1 = left.getBraidColor();
         Image input = left.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -440,7 +439,7 @@ public class Controller {
     }
 
     public void changeRightHairColor() {
-        if(right == null) {
+        if (right == null) {
             return;
         }
 
@@ -451,11 +450,11 @@ public class Controller {
         //sets new hair color, sets new braid color to be slightly lighter than hair color
         right.setHairColor(rightHairColorPicker.getValue());
         Color interpolateWithWhite = right.getHairColor().interpolate(Color.WHITE, 0.1);
-        int r = (int) Math.round(interpolateWithWhite.getRed()*255);
-        int g = (int) Math.round(interpolateWithWhite.getGreen()*255);
-        int b = (int) Math.round(interpolateWithWhite.getBlue()*255);
-        right.setBraidColor(Color.rgb(r,g,b));
-        color_2=right.getBraidColor();
+        int r = (int) Math.round(interpolateWithWhite.getRed() * 255);
+        int g = (int) Math.round(interpolateWithWhite.getGreen() * 255);
+        int b = (int) Math.round(interpolateWithWhite.getBlue() * 255);
+        right.setBraidColor(Color.rgb(r, g, b));
+        color_2 = right.getBraidColor();
         Image input = right.getImage().getImage();
         int width = (int) input.getWidth();
         int height = (int) input.getHeight();
@@ -490,7 +489,7 @@ public class Controller {
     }
 
     public void changeLeftSkinColor() {
-        if(left == null) {
+        if (left == null) {
             return;
         }
 
@@ -529,7 +528,7 @@ public class Controller {
     }
 
     public void changeRightSkinColor() {
-        if(right == null) {
+        if (right == null) {
             return;
         }
 
@@ -570,11 +569,9 @@ public class Controller {
     public Bubble findNextBubble(Direction d, String name) {
         Bubble bubble = new Bubble();
         List<Bubble> bubbleList;
-        if(d == Direction.LEFT) {
+        if (d == Direction.LEFT) {
             bubbleList = leftBubbleList;
-        }
-        else
-        {
+        } else {
             bubbleList = rightBubbleList;
         }
         for (Bubble c : bubbleList) {
@@ -586,59 +583,58 @@ public class Controller {
         return bubble;
     }
 
-    String out ="";
-    Label leftLabel=new Label();
-    Label rightLabel=new Label();
-    public void LeftSpeechBubble(){
-        out=usertxt.getText();
+    String out = "";
+    Label leftLabel = new Label();
+    Label rightLabel = new Label();
+
+    public void LeftSpeechBubble() {
+        out = usertxt.getText();
         String newBubble = "arrow";
-        if(leftBubble!=null){
+        if (leftBubble != null) {
             display.getChildren().remove(leftBubble.getImage());
-            if(leftBubble.getName().equals("arrow")) {
+            if (leftBubble.getName().equals("arrow")) {
                 newBubble = "circles";
-            }
-            else {
+            } else {
                 leftBubble = null;
                 leftLabel.setText("   ");
                 return;
             }
         }
-        leftBubble=findNextBubble(Direction.LEFT, newBubble);
+        leftBubble = findNextBubble(Direction.LEFT, newBubble);
         leftBubble.getImage().setFitWidth(90);
         leftBubble.getImage().setFitHeight(25);
-        if(!leftLabel.getText().equals("")){
+        if (!leftLabel.getText().equals("")) {
             leftLabel.setText("");
-            leftLabel.setText("     "+out);
+            leftLabel.setText("     " + out);
         } else {
-            leftLabel.setText("     "+out);
-            display.add(leftLabel,0,0);
+            leftLabel.setText("     " + out);
+            display.add(leftLabel, 0, 0);
         }
         display.add(leftBubble.getImage(), 0, 1);
     }
 
-    public void RightSpeechBubble(){
-        out=usertxt2.getText();
+    public void RightSpeechBubble() {
+        out = usertxt2.getText();
         String newBubble = "arrow";
-        if(rightBubble!=null){
+        if (rightBubble != null) {
             display.getChildren().remove(rightBubble.getImage());
-            if(rightBubble.getName().equals("arrow")) {
+            if (rightBubble.getName().equals("arrow")) {
                 newBubble = "circles";
-            }
-            else {
+            } else {
                 rightBubble = null;
                 rightLabel.setText("   ");
                 return;
             }
         }
-        rightBubble=findNextBubble(Direction.RIGHT, newBubble);
+        rightBubble = findNextBubble(Direction.RIGHT, newBubble);
         rightBubble.getImage().setFitWidth(90);
         rightBubble.getImage().setFitHeight(25);
-        if(!rightLabel.getText().equals("")){
+        if (!rightLabel.getText().equals("")) {
             rightLabel.setText("");
-            rightLabel.setText("     "+out);
+            rightLabel.setText("     " + out);
         } else {
-            rightLabel.setText("     "+out);
-            display.add(rightLabel,1,0);
+            rightLabel.setText("     " + out);
+            display.add(rightLabel, 1, 0);
         }
         display.add(rightBubble.getImage(), 1, 1);
     }
