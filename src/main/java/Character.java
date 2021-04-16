@@ -10,6 +10,7 @@ public class Character {
     Color hairColor;
     Color braidColor;
     Color skin;
+
     public Character(String name, ImageView image)
     {
         this.name = name;

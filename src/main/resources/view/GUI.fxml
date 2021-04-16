@@ -51,9 +51,8 @@
         </rowConstraints>
          <children>
              <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-             <Button fx:id="leftGender" mnemonicParsing="false" text="Left Gender" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+             <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-             <Button fx:id="rightGender" mnemonicParsing="false" text="Right Gender" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
              <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
 
@@ -62,7 +61,7 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip Left" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>

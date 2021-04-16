@@ -3,7 +3,6 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -71,7 +70,6 @@ public class Controller {
     Bubble leftBubble = null;
     Bubble rightBubble = null;
 
-
     HBox currentlySelected = null;
     Bubble arrow = null;
 
@@ -81,9 +79,7 @@ public class Controller {
         } else if (e.getSource().equals(flipCharacter)) {
             flip(currentlySelected);
         } else if (e.getSource().equals(leftGender)) {
-            changeLeftGender();
-        } else if (e.getSource().equals(rightGender)) {
-            changeRightGender();
+            changeGender(currentlySelected);
         } else if (e.getSource().equals(LeftSpeechBubble)) {
             LeftSpeechBubble();
         } else if (e.getSource().equals(RightSpeechBubble)) {
@@ -233,7 +229,7 @@ public class Controller {
     }
 
     public void characterSelected(HBox side){
-        System.out.println("Here");
+
 
         String border_style = "-fx-border-color: red;" + "-fx-border-width: 1;";
 
@@ -241,13 +237,11 @@ public class Controller {
             rightDisplayBox.setStyle("-fx-border-width: 0;");
             leftDisplayBox.setStyle(border_style);
             currentlySelected = leftDisplayBox;
-            System.out.println("LEFT");
         }
         else if (side.equals(rightDisplayBox)){
             leftDisplayBox.setStyle("-fx-border-width: 0;");
             rightDisplayBox.setStyle(border_style);
             currentlySelected = rightDisplayBox;
-            System.out.println("RIGHT");
         }
     }
 
@@ -309,125 +303,90 @@ public class Controller {
         }
     }
 
-    public void changeLeftGender() {
-        Character character = findCharacter(characterMenu.getValue().toString());
-        Color hairColor = left.getHairColor();
-        Color braidColor = left.getBraidColor();
-        Color skinColor = character.getSkin();
-        leftDisplayBox.getChildren().clear();
-        Image input = left.getImage().getImage();
-        int width = (int) input.getWidth();
-        int height = (int) input.getHeight();
-        WritableImage outputImage = new WritableImage(width, height);
-        PixelReader reader = input.getPixelReader();
-        PixelWriter writer = outputImage.getPixelWriter();
+    public void changeGender(HBox currentlySelected) {
+        Character changingCharacter = null;
+
+        try {
+            if (currentlySelected.equals(leftDisplayBox)){
+                changingCharacter = left;
+            } else {
+                changingCharacter = right;
+            }
+
+            currentlySelected.getChildren().clear();
+
+            Color skinColor = changingCharacter.getSkin();
+            Image input = changingCharacter.getImage().getImage();
+            int width = (int) input.getWidth();
+            int height = (int) input.getHeight();
+
+            WritableImage outputImage = new WritableImage(width, height);
+            PixelReader reader = input.getPixelReader();
+            PixelWriter writer = outputImage.getPixelWriter();
 
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Color currColor = reader.getColor(j, i);
-                if (currColor.equals(Color.RED)) {
-                    double newGreen = (skinColor.getGreen() * 255) + 1;
-                    Color hideLipColor = new Color(255 / 255.0, newGreen / 255.0, 216 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(Color.rgb(240, 255, 0))) {
-                    double newRed = (skinColor.getRed() * 255) - 1;
-                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(Color.rgb(236, 180, 181))) {
-                    double newBlue = (skinColor.getBlue() * 255) - 1;
-                    Color hideLipColor = new Color(255 / 255.0, 255 / 255.0, newBlue / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
-                    Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_1.equals(Color.rgb(200, 200, 200))) {
-                    Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1)) ) {
-                    Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if(currColor.equals(color_1)){
-                    double newRed = (skinColor.getRed() * 255) - 1;
-                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
-                    writer.setColor(j, i,hideLipColor);
-                } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
-                    writer.setColor(j, i,color_1);
-                } else {
-                    writer.setColor(j, i, currColor);
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    Color currColor = reader.getColor(j, i);
+                    if (currColor.equals(Color.RED)) {
+                        double newGreen = (skinColor.getGreen() * 255) + 1;
+                        Color hideLipColor = new Color(255 / 255.0, newGreen / 255.0, 216 / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(Color.rgb(240, 255, 0))) {
+                        double newRed = (skinColor.getRed() * 255) - 1;
+                        Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(Color.rgb(236, 180, 181))) {
+                        double newBlue = (skinColor.getBlue() * 255) - 1;
+                        Color hideLipColor = new Color(255 / 255.0, 255 / 255.0, newBlue / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
+                        Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_1.equals(Color.rgb(200, 200, 200))) {
+                        Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1)) ) {
+                        Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
+                        writer.setColor(j, i, hideLipColor);
+                    } else if(currColor.equals(color_1)){
+                        double newRed = (skinColor.getRed() * 255) - 1;
+                        Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
+                        writer.setColor(j, i,hideLipColor);
+                    } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
+                        writer.setColor(j, i,color_1);
+                    } else {
+                        writer.setColor(j, i, currColor);
+                    }
                 }
             }
-        }
-        ImageView output = new ImageView(outputImage);
-        output.setFitHeight(150);
-        output.setFitWidth(150);
-        if (left.getImage().getScaleX() == -1) {
-            output.setScaleX(-1);
-        } else {
-            output.setScaleX(1);
-        }
-        left.getImage().setImage(outputImage);
-        leftDisplayBox.getChildren().add(output);
-    }
 
-    public void changeRightGender() {
-        Character character = findCharacter(characterMenu.getValue().toString());
-        Color hairColor = character.getHairColor();
-        Color skinColor = character.getSkin();
-        rightDisplayBox.getChildren().clear();
-        Image input = right.getImage().getImage();
-        int width = (int) input.getWidth();
-        int height = (int) input.getHeight();
-        WritableImage outputImage = new WritableImage(width, height);
-        PixelReader reader = input.getPixelReader();
-        PixelWriter writer = outputImage.getPixelWriter();
+            ImageView output = new ImageView(outputImage);
+            output.setFitHeight(150);
+            output.setFitWidth(150);
 
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Color currColor = reader.getColor(j, i);
-                if (currColor.equals(Color.RED)) {
-                    double newGreen = (skinColor.getGreen() * 255) + 1;
-                    Color hideLipColor = new Color(255 / 255.0, newGreen / 255.0, 216 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(Color.rgb(240, 255, 0))) {
-                    double newRed = (skinColor.getRed() * 255) - 1;
-                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(Color.rgb(236, 180, 181))) {
-                    double newBlue = (skinColor.getBlue() * 255) - 1;
-                    Color hideLipColor = new Color(255 / 255.0, 255 / 255.0, newBlue / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
-                    Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))&& color_2.equals(Color.rgb(100, 100, 100))) {
-                    Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
-                    Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
-                    writer.setColor(j, i, hideLipColor);
-                } else if(currColor.equals(color_2)){
-                    double newRed = (skinColor.getRed() * 255) - 1;
-                    Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
-                    writer.setColor(j, i,hideLipColor);
-                } else if(currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))){
-                    writer.setColor(j, i,color_2);
-                }else {
-                    writer.setColor(j, i, currColor);
-                }
+            if (changingCharacter.getImage().getScaleX() == -1) {
+                output.setScaleX(-1);
+            } else {
+                output.setScaleX(1);
             }
+
+            if (currentlySelected.equals(leftDisplayBox)) {
+                left = changingCharacter;
+                left.getImage().setImage(outputImage);
+                leftDisplayBox.getChildren().add(output);
+
+            } else {
+                right = changingCharacter;
+                right.getImage().setImage(outputImage);
+                rightDisplayBox.getChildren().add(output);
+            }
+
+        } catch (Exception e){
+            Alert warning = new Alert(Alert.AlertType.WARNING);
+            warning.setContentText("Please select a character to change");
+            warning.show();
         }
-        ImageView output = new ImageView(outputImage);
-        output.setFitHeight(150);
-        output.setFitWidth(150);
-        if (right.getImage().getScaleX() == -1) {
-            output.setScaleX(-1);
-        } else {
-            output.setScaleX(1);
-        }
-        right.getImage().setImage(outputImage);
-        rightDisplayBox.getChildren().add(output);
     }
 
     public void changeLeftHairColor() {
