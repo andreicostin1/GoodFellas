@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="700.0">
         <menus>
@@ -50,7 +51,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+             <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <tooltip>
+                  <Tooltip text="Select canvas" />
+               </tooltip></Button>
              <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
              <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
@@ -89,23 +93,26 @@
             </ColorPicker>
             <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="27.0" text="Skin" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <Label layoutX="10.0" layoutY="292.0" prefHeight="25.0" prefWidth="28.0" text="Skin" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Button fx:id="narrative" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" text="Narrative" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
       <TextField fx:id="usertxt" layoutX="14.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0" />
-      <TextField layoutX="14.0" layoutY="360.0" prefHeight="35.0" prefWidth="360.0" />
-      <GridPane fx:id="display" layoutX="12.0" layoutY="100.0" prefHeight="250.0" prefWidth="360.0" style="-fx-background-color: white; -fx-border-color: black;">
+      <TextField fx:id="narrativeText" layoutX="12.0" layoutY="426.0" prefHeight="35.0" prefWidth="360.0" promptText="Enter Narrative Text here..." />
+      <GridPane fx:id="display" layoutX="12.0" layoutY="100.0" prefHeight="319.0" prefWidth="360.0" style="-fx-background-color: white; -fx-border-color: black;">
           <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="2" />
-            <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3" />
+            <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <TextField fx:id="usertxt2" layoutX="202.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0" />

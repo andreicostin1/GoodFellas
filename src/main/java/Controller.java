@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URI;
@@ -36,6 +37,9 @@ public class Controller {
     Button RightSpeechBubble = new Button();
 
     @FXML
+    Button narrative = new Button();
+
+    @FXML
     ComboBox characterMenu = new ComboBox();
     @FXML
     GridPane display = new GridPane();
@@ -55,6 +59,8 @@ public class Controller {
     TextField usertxt;
     @FXML
     TextField usertxt2;
+    @FXML
+    TextField narrativeText;
 
     ArrayList<Character> poseList = new ArrayList<>();
     ArrayList<Bubble> rightBubbleList = new ArrayList<>();
@@ -62,9 +68,15 @@ public class Controller {
     Color color_1 = Color.rgb(200, 200, 200);
     Color color_2 = Color.rgb(100, 100, 100);
 
+    Label upperNarrative = new Label();
+    Label lowerNarrative = new Label();
+
     public enum Direction {
-        LEFT, RIGHT
+        LEFT, RIGHT, UP, DOWN, NONE
     }
+
+    //where the narrative text currently is
+    Direction narrativeDirection = Direction.NONE;
 
     Character left = null;
     Character right = null;
@@ -85,6 +97,9 @@ public class Controller {
             LeftSpeechBubble();
         } else if (e.getSource().equals(RightSpeechBubble)) {
             RightSpeechBubble();
+        }
+        else if (e.getSource().equals(narrative)) {
+            narrativeText();
         }
     };
 
@@ -117,12 +132,21 @@ public class Controller {
             characterMenu.getItems().add(pose.getName());
         }
 
+        //insert empty narrative text
+        upperNarrative.setFont(new Font("Arial", 15));
+        upperNarrative.setText(" ");
+        display.add(upperNarrative, 0, 0, 2, 1);
+        lowerNarrative.setFont(new Font("Arial", 15));
+        lowerNarrative.setText(" ");
+        display.add(lowerNarrative, 0, 4, 2, 1);
+
         addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         RightSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        narrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         leftHairColorPicker.setOnAction(actionEventHandler);
         rightHairColorPicker.setOnAction(actionEventHandler);
@@ -608,9 +632,9 @@ public class Controller {
             leftLabel.setText("     " + out);
         } else {
             leftLabel.setText("     " + out);
-            display.add(leftLabel, 0, 0);
+            display.add(leftLabel, 0, 1);
         }
-        display.add(leftBubble.getImage(), 0, 1);
+        display.add(leftBubble.getImage(), 0, 2);
     }
 
     public void RightSpeechBubble() {
@@ -634,8 +658,26 @@ public class Controller {
             rightLabel.setText("     " + out);
         } else {
             rightLabel.setText("     " + out);
-            display.add(rightLabel, 1, 0);
+            display.add(rightLabel, 1, 1);
         }
-        display.add(rightBubble.getImage(), 1, 1);
+        display.add(rightBubble.getImage(), 1, 2);
+    }
+
+    public void narrativeText() {
+        switch (narrativeDirection) {
+            case UP -> {
+                upperNarrative.setText(" ");
+                lowerNarrative.setText(narrativeText.getText());
+                narrativeDirection = Direction.DOWN;
+            }
+            case DOWN -> {
+                lowerNarrative.setText(" ");
+                narrativeDirection = Direction.NONE;
+            }
+            default -> {
+                upperNarrative.setText(narrativeText.getText());
+                narrativeDirection = Direction.UP;
+            }
+        }
     }
 }
