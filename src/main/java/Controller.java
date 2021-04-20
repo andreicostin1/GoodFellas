@@ -3,6 +3,7 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -38,6 +39,8 @@ public class Controller {
     Button LeftSpeechBubble = new Button();
     @FXML
     Button RightSpeechBubble = new Button();
+    @FXML
+    Button Save = new Button();
 
     @FXML
     Button narrative = new Button();
@@ -46,6 +49,8 @@ public class Controller {
     ComboBox characterMenu = new ComboBox();
     @FXML
     GridPane display = new GridPane();
+    @FXML
+    ListView<GridPane> listView = new ListView<>();
     @FXML
     HBox leftDisplayBox = new HBox();
     @FXML
@@ -74,6 +79,14 @@ public class Controller {
     Label upperNarrative = new Label();
     Label lowerNarrative = new Label();
 
+    int pointer=0;
+    Map<Integer,Character> current_left=new HashMap<>();
+    Map<Integer,Character> current_right=new HashMap<>();
+    Map<Integer,Label> leftText=new HashMap<>();
+    Map<Integer,Label> rightText=new HashMap<>();
+    Map<Integer,Bubble> SpeechBubble_left=new HashMap<>();
+    Map<Integer,Bubble> SpeechBubble_right=new HashMap<>();
+
     public enum Direction {
         LEFT, RIGHT, UP, DOWN, NONE
     }
@@ -101,8 +114,11 @@ public class Controller {
         } else if (e.getSource().equals(RightSpeechBubble)) {
             RightSpeechBubble();
         }
-        else if (e.getSource().equals(narrative)) {
-            narrativeText();
+//        else if (e.getSource().equals(narrative)) {
+//            narrativeText();
+//        }
+        else if (e.getSource().equals(Save)){
+            save();
         }
     };
 
@@ -120,7 +136,6 @@ public class Controller {
 
 
     public void initialize() {
-
         try {
             createPoseList();
         } catch (Exception e) {
@@ -151,7 +166,7 @@ public class Controller {
         LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         RightSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         narrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-
+        Save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftHairColorPicker.setOnAction(actionEventHandler);
         rightHairColorPicker.setOnAction(actionEventHandler);
         leftSkinColorPicker.setOnAction(actionEventHandler);
@@ -276,7 +291,8 @@ public class Controller {
 
     // function to clear the display
     public void clearPane() {
-        display.getChildren().clear();
+        leftDisplayBox.getChildren().clear();
+        rightDisplayBox.getChildren().clear();
         if (left != null) {
             left.getImage().setScaleX(1);
         }
@@ -314,13 +330,11 @@ public class Controller {
         } else if (toFlip == null) {
             return;
         }
-
         if (currentlySelected.getScaleX() == -1) {
             currentlySelected.setScaleX(1);
         } else {
             currentlySelected.setScaleX(-1);
         }
-
         currentlySelected.getChildren().add(toFlip.getImage());
 
         if (currentlySelected.equals(leftDisplayBox)) {
@@ -667,21 +681,70 @@ public class Controller {
         display.add(rightBubble.getImage(), 1, 2);
     }
 
-    public void narrativeText() {
-        switch (narrativeDirection) {
-            case UP -> {
-                upperNarrative.setText(" ");
-                lowerNarrative.setText(narrativeText.getText());
-                narrativeDirection = Direction.DOWN;
+//    public void narrativeText() {
+//        switch (narrativeDirection) {
+//            case UP -> {
+//                upperNarrative.setText(" ");
+//                lowerNarrative.setText(narrativeText.getText());
+//                narrativeDirection = Direction.DOWN;
+//            }
+//            case DOWN -> {
+//                lowerNarrative.setText(" ");
+//                narrativeDirection = Direction.NONE;
+//            }
+//            default -> {
+//                upperNarrative.setText(narrativeText.getText());
+//                narrativeDirection = Direction.UP;
+//            }
+//        }
+//    }
+
+    public void save(){
+        GridPane view = new GridPane();
+        view.setPrefSize(225,225);
+        view.setGridLinesVisible(true);
+        current_left.put(pointer,left);
+        current_right.put(pointer,right);
+        leftText.put(pointer,leftLabel);
+        rightText.put(pointer,rightLabel);
+        SpeechBubble_left.put(pointer,leftBubble);
+        SpeechBubble_right.put(pointer,rightBubble);
+        try{
+            if(current_left.get(pointer).getImage() !=null && current_right.get(pointer).getImage()!=null) {
+                ImageView leftImage=current_left.get(pointer).getImage();
+                ImageView rightImage=current_right.get(pointer).getImage();
+
+                leftImage.setFitHeight(110);
+                leftImage.setFitWidth(110);
+                rightImage.setFitWidth(110);
+                rightImage.setFitHeight(110);
+                System.out.print(left.getImage().getScaleX() + "     ");
+                if (left.getImage().getScaleX() == -1) {
+                    leftImage.setScaleX(-1);
+                } else {
+                    leftImage.setScaleX(1);
+                }
+                if (right.getImage().getScaleX() == -1) {
+                    rightImage.setScaleX(-1);
+                } else {
+                    rightImage.setScaleX(1);
+                }
+
+                view.add(leftImage,0,0);
+                view.add(rightImage,1,0);
+                listView.getItems().add(view);
+                listView.setOrientation(Orientation.HORIZONTAL);
+                //listView.setPrefSize(675,138);
+
+                leftDisplayBox.getChildren().clear();
+                rightDisplayBox.getChildren().clear();
+                pointer++;
             }
-            case DOWN -> {
-                lowerNarrative.setText(" ");
-                narrativeDirection = Direction.NONE;
-            }
-            default -> {
-                upperNarrative.setText(narrativeText.getText());
-                narrativeDirection = Direction.UP;
-            }
+        }
+        catch (Exception e) {
+            Alert warning = new Alert(Alert.AlertType.WARNING);
+            warning.setContentText("Please put both character");
+            warning.show();
         }
     }
 }

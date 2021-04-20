@@ -16,8 +16,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.control.ListView?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="700.0">
         <menus>
@@ -58,6 +60,7 @@
              <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
              <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
              <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="Bubble" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+             <Button fx:id="Save" mnemonicParsing="false" text="Save" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
              <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
 
              <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
@@ -115,6 +118,8 @@
             <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
+       <ListView fx:id="listView" layoutX="12.0" layoutY="469.0" prefHeight="138.0" prefWidth="675.0" style="-fx-background-color: white; -fx-border-color: black;">
+       </ListView>
       <TextField fx:id="usertxt2" layoutX="202.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0" />
    </children>
 </Pane>
