@@ -3,7 +3,7 @@ package main.java;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Character {
+public class Character implements Cloneable{
 
     String name;
     ImageView image;

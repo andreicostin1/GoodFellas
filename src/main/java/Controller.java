@@ -1,10 +1,13 @@
 package main.java;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -40,11 +43,11 @@ public class Controller {
     @FXML
     Button RightSpeechBubble = new Button();
     @FXML
-    Button Save = new Button();
-
+    Button save = new Button();
+    @FXML
+    Button load = new Button();
     @FXML
     Button narrative = new Button();
-
     @FXML
     ComboBox characterMenu = new ComboBox();
     @FXML
@@ -73,19 +76,20 @@ public class Controller {
     ArrayList<Character> poseList = new ArrayList<>();
     ArrayList<Bubble> rightBubbleList = new ArrayList<>();
     ArrayList<Bubble> leftBubbleList = new ArrayList<>();
+
     Color color_1 = Color.rgb(200, 200, 200);
     Color color_2 = Color.rgb(100, 100, 100);
 
     Label upperNarrative = new Label();
     Label lowerNarrative = new Label();
 
-    int pointer=0;
-    Map<Integer,Character> current_left=new HashMap<>();
-    Map<Integer,Character> current_right=new HashMap<>();
-    Map<Integer,Label> leftText=new HashMap<>();
-    Map<Integer,Label> rightText=new HashMap<>();
-    Map<Integer,Bubble> SpeechBubble_left=new HashMap<>();
-    Map<Integer,Bubble> SpeechBubble_right=new HashMap<>();
+    int pointer = 0;
+    Map<Integer,Character> current_left = new HashMap<>();
+    Map<Integer,Character> current_right = new HashMap<>();
+    Map<Integer,Label> leftText = new HashMap<>();
+    Map<Integer,Label> rightText = new HashMap<>();
+    Map<Integer,Bubble> SpeechBubble_left = new HashMap<>();
+    Map<Integer,Bubble> SpeechBubble_right = new HashMap<>();
 
     public enum Direction {
         LEFT, RIGHT, UP, DOWN, NONE
@@ -94,6 +98,7 @@ public class Controller {
     //where the narrative text currently is
     Direction narrativeDirection = Direction.NONE;
 
+    SaveAndLoad saveAndLoad = new SaveAndLoad();
     Character left = null;
     Character right = null;
     Bubble leftBubble = null;
@@ -117,8 +122,12 @@ public class Controller {
 //        else if (e.getSource().equals(narrative)) {
 //            narrativeText();
 //        }
-        else if (e.getSource().equals(Save)){
-            save();
+        else if (e.getSource().equals(save)){
+            saveAndLoad.save(left, right, display, listView);
+        }
+        else if (e.getSource().equals(listView)){
+            int index = listView.getSelectionModel().getSelectedIndex();
+            saveAndLoad.load(leftDisplayBox, rightDisplayBox, index, listView);
         }
     };
 
@@ -166,11 +175,12 @@ public class Controller {
         LeftSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         RightSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         narrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-        Save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         leftHairColorPicker.setOnAction(actionEventHandler);
         rightHairColorPicker.setOnAction(actionEventHandler);
         leftSkinColorPicker.setOnAction(actionEventHandler);
         rightSkinColorPicker.setOnAction(actionEventHandler);
+        save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         rightDisplayBox.setOnMouseClicked((MouseEvent e) -> {
             characterSelected(rightDisplayBox);
@@ -259,6 +269,7 @@ public class Controller {
         toStore = findCharacter(menuValue);
         toStore.getImage().setFitHeight(150);
         toStore.getImage().setFitWidth(150);
+
         // add to display
         currentlySelected.getChildren().add(toStore.getImage());
 
@@ -710,20 +721,22 @@ public class Controller {
         SpeechBubble_left.put(pointer,leftBubble);
         SpeechBubble_right.put(pointer,rightBubble);
         try{
-            if(current_left.get(pointer).getImage() !=null && current_right.get(pointer).getImage()!=null) {
-                ImageView leftImage=current_left.get(pointer).getImage();
-                ImageView rightImage=current_right.get(pointer).getImage();
+            if(current_left.get(pointer).getImage() != null && current_right.get(pointer).getImage() != null) {
+                ImageView leftImage = current_left.get(pointer).getImage();
+                ImageView rightImage = current_right.get(pointer).getImage();
 
                 leftImage.setFitHeight(110);
                 leftImage.setFitWidth(110);
                 rightImage.setFitWidth(110);
                 rightImage.setFitHeight(110);
                 System.out.print(left.getImage().getScaleX() + "     ");
+
                 if (left.getImage().getScaleX() == -1) {
                     leftImage.setScaleX(-1);
                 } else {
                     leftImage.setScaleX(1);
                 }
+
                 if (right.getImage().getScaleX() == -1) {
                     rightImage.setScaleX(-1);
                 } else {
@@ -734,7 +747,7 @@ public class Controller {
                 view.add(rightImage,1,0);
                 listView.getItems().add(view);
                 listView.setOrientation(Orientation.HORIZONTAL);
-                //listView.setPrefSize(675,138);
+                //saveListView.setPrefSize(675,138);
 
                 leftDisplayBox.getChildren().clear();
                 rightDisplayBox.getChildren().clear();
@@ -746,5 +759,21 @@ public class Controller {
             warning.setContentText("Please put both character");
             warning.show();
         }
+    }
+
+    public void load(){
+        GridPane test = new GridPane();
+        System.out.println(test.getChildren());
+
+        test = listView.getItems().get(0);
+        test.getChildren().get(0);
+
+        System.out.println(test.getChildren().get(0));
+
+
+
+
+       // leftDisplayBox.getChildren().add(listView.getSelectionModel().getSelectedItem());
+
     }
 }
