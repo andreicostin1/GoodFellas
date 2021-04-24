@@ -6,14 +6,15 @@ public class Bubble {
     private String name;
     private ImageView image;
 
-    public Bubble(String name, ImageView image)
-    {
+    public Bubble(String name, ImageView image) {
         this.name = name;
         this.image = image;
     }
-    public Bubble(){
+
+    public Bubble() {
 
     }
+
     public String getName() {
         return name;
     }

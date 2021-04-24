@@ -7,7 +7,7 @@ public class SavedSlide {
     private int ID;
     private Character characterLeft, characterRight;
 
-    public  SavedSlide(int ID, Character characterLeft, Character characterRight){
+    public SavedSlide(int ID, Character characterLeft, Character characterRight) {
         this.ID = ID;
         this.characterLeft = characterLeft;
         this.characterRight = characterRight;

@@ -26,8 +26,8 @@ public class SplashScreenController implements Initializable {
     class SplashScreen extends Thread {
 
         @Override
-        public void run(){
-            try{
+        public void run() {
+            try {
                 Thread.sleep(2000);
 
                 Platform.runLater(new Runnable() {
@@ -53,7 +53,7 @@ public class SplashScreenController implements Initializable {
                     }
                 });
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

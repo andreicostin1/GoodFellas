@@ -14,10 +14,10 @@ public class SaveAndLoad {
     private ArrayList<SavedSlide> slideArrayList = new ArrayList<>();
     private int id = 0;
 
-    public void save(Character left, Character right, GridPane display, ListView<GridPane> listView){
+    public void save(Character left, Character right, GridPane display, ListView<GridPane> listView) {
         savedSlide = generateSlide(left, right);
 
-        savedSlide.setPrefSize(225,225);
+        savedSlide.setPrefSize(225, 225);
         savedSlide.setGridLinesVisible(true);
 
         listView.getItems().add(savedSlide);
@@ -28,7 +28,7 @@ public class SaveAndLoad {
         id++;
     }
 
-    public void load(HBox leftDisplay, HBox rightDisplay, int index, ListView<GridPane> listView){
+    public void load(HBox leftDisplay, HBox rightDisplay, int index, ListView<GridPane> listView) {
         leftDisplay.getChildren().clear();
         rightDisplay.getChildren().clear();
 
@@ -46,7 +46,7 @@ public class SaveAndLoad {
         id--;
     }
 
-    public GridPane generateSlide(Character left, Character right){
+    public GridPane generateSlide(Character left, Character right) {
         GridPane generatedSlide = new GridPane();
 
         SavedSlide slide = new SavedSlide(id, left, right);
@@ -60,8 +60,8 @@ public class SaveAndLoad {
         rightImage.setFitWidth(110);
         rightImage.setFitHeight(110);
 
-        generatedSlide.add(leftImage,0,0);
-        generatedSlide.add(rightImage,1,0);
+        generatedSlide.add(leftImage, 0, 0);
+        generatedSlide.add(rightImage, 1, 0);
 
         return generatedSlide;
     }

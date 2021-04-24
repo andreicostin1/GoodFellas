@@ -10,12 +10,9 @@ import javafx.stage.StageStyle;
 import java.net.URL;
 
 
-
-public class Main extends Application
-{
+public class Main extends Application {
     @Override
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         try {
             URL url = getClass().getResource("/main/resources/view/SplashScreen.fxml");
             Pane root = FXMLLoader.load(url);
@@ -26,13 +23,12 @@ public class Main extends Application
             primaryStage.setTitle("Comic Builder");
             primaryStage.show();
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 }

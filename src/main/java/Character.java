@@ -3,7 +3,7 @@ package main.java;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Character implements Cloneable{
+public class Character implements Cloneable {
 
     String name;
     ImageView image;
@@ -11,8 +11,7 @@ public class Character implements Cloneable{
     Color braidColor;
     Color skin;
 
-    public Character(String name, ImageView image)
-    {
+    public Character(String name, ImageView image) {
         this.name = name;
         this.image = image;
         hairColor = null;
@@ -55,7 +54,11 @@ public class Character implements Cloneable{
         this.skin = skin;
     }
 
-    public void setBraidColor(Color braidColor) { this.braidColor = braidColor; }
+    public void setBraidColor(Color braidColor) {
+        this.braidColor = braidColor;
+    }
 
-    public Color getBraidColor() { return braidColor; }
+    public Color getBraidColor() {
+        return braidColor;
+    }
 }

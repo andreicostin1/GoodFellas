@@ -84,12 +84,12 @@ public class Controller {
     Label lowerNarrative = new Label();
 
     int pointer = 0;
-    Map<Integer,Character> current_left = new HashMap<>();
-    Map<Integer,Character> current_right = new HashMap<>();
-    Map<Integer,Label> leftText = new HashMap<>();
-    Map<Integer,Label> rightText = new HashMap<>();
-    Map<Integer,Bubble> SpeechBubble_left = new HashMap<>();
-    Map<Integer,Bubble> SpeechBubble_right = new HashMap<>();
+    Map<Integer, Character> current_left = new HashMap<>();
+    Map<Integer, Character> current_right = new HashMap<>();
+    Map<Integer, Label> leftText = new HashMap<>();
+    Map<Integer, Label> rightText = new HashMap<>();
+    Map<Integer, Bubble> SpeechBubble_left = new HashMap<>();
+    Map<Integer, Bubble> SpeechBubble_right = new HashMap<>();
 
     public enum Direction {
         LEFT, RIGHT, UP, DOWN, NONE
@@ -122,10 +122,9 @@ public class Controller {
 //        else if (e.getSource().equals(narrative)) {
 //            narrativeText();
 //        }
-        else if (e.getSource().equals(save)){
+        else if (e.getSource().equals(save)) {
             saveAndLoad.save(left, right, display, listView);
-        }
-        else if (e.getSource().equals(listView)){
+        } else if (e.getSource().equals(listView)) {
             int index = listView.getSelectionModel().getSelectedIndex();
             saveAndLoad.load(leftDisplayBox, rightDisplayBox, index, listView);
         }
@@ -710,18 +709,18 @@ public class Controller {
 //        }
 //    }
 
-    public void save(){
+    public void save() {
         GridPane view = new GridPane();
-        view.setPrefSize(225,225);
+        view.setPrefSize(225, 225);
         view.setGridLinesVisible(true);
-        current_left.put(pointer,left);
-        current_right.put(pointer,right);
-        leftText.put(pointer,leftLabel);
-        rightText.put(pointer,rightLabel);
-        SpeechBubble_left.put(pointer,leftBubble);
-        SpeechBubble_right.put(pointer,rightBubble);
-        try{
-            if(current_left.get(pointer).getImage() != null && current_right.get(pointer).getImage() != null) {
+        current_left.put(pointer, left);
+        current_right.put(pointer, right);
+        leftText.put(pointer, leftLabel);
+        rightText.put(pointer, rightLabel);
+        SpeechBubble_left.put(pointer, leftBubble);
+        SpeechBubble_right.put(pointer, rightBubble);
+        try {
+            if (current_left.get(pointer).getImage() != null && current_right.get(pointer).getImage() != null) {
                 ImageView leftImage = current_left.get(pointer).getImage();
                 ImageView rightImage = current_right.get(pointer).getImage();
 
@@ -743,8 +742,8 @@ public class Controller {
                     rightImage.setScaleX(1);
                 }
 
-                view.add(leftImage,0,0);
-                view.add(rightImage,1,0);
+                view.add(leftImage, 0, 0);
+                view.add(rightImage, 1, 0);
                 listView.getItems().add(view);
                 listView.setOrientation(Orientation.HORIZONTAL);
                 //saveListView.setPrefSize(675,138);
@@ -753,15 +752,14 @@ public class Controller {
                 rightDisplayBox.getChildren().clear();
                 pointer++;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Alert warning = new Alert(Alert.AlertType.WARNING);
             warning.setContentText("Please put both character");
             warning.show();
         }
     }
 
-    public void load(){
+    public void load() {
         GridPane test = new GridPane();
         System.out.println(test.getChildren());
 
@@ -771,9 +769,7 @@ public class Controller {
         System.out.println(test.getChildren().get(0));
 
 
-
-
-       // leftDisplayBox.getChildren().add(listView.getSelectionModel().getSelectedItem());
+        // leftDisplayBox.getChildren().add(listView.getSelectionModel().getSelectedItem());
 
     }
 }
