@@ -131,12 +131,7 @@ public class Controller {
         else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(
-                left,
-                right,
-                leftDisplayBox,
-                rightDisplayBox,
-                listView,
-                narrativeText);
+                left, right, leftDisplayBox, rightDisplayBox, listView, narrativeText);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -147,10 +142,10 @@ public class Controller {
               rightDisplayBox,
               listView.getSelectionModel().getSelectedIndex(),
               listView,
-                  speachBubbleLeft,
-                  speachBubbleRight,
-                  textLeft,
-                  textRight);
+              speachBubbleLeft,
+              speachBubbleRight,
+              textLeft,
+              textRight);
         }
       };
 
@@ -349,8 +344,7 @@ public class Controller {
     rightDisplayBox.getChildren().clear();
     speachBubbleLeft.getChildren().clear();
     speachBubbleRight.getChildren().clear();
-    textLeft.setText("");
-    textRight.setText("");
+
     if (left != null) {
       left.getImage().setScaleX(1);
     }
@@ -541,7 +535,7 @@ public class Controller {
     // left.getImage().setImage(outputImage);
     left.setImage(output);
     leftDisplayBox.getChildren().add(output);
-    //display.add(output, 0, 3);
+    // display.add(output, 0, 3);
   }
 
   public void changeRightHairColor() {
@@ -593,7 +587,7 @@ public class Controller {
     // right.getImage().setImage(outputImage);
     right.setImage(output);
     rightDisplayBox.getChildren().add(output);
-    //display.add(output, 1, 3);
+    // display.add(output, 1, 3);
   }
 
   public void changeLeftSkinColor() {
@@ -634,7 +628,7 @@ public class Controller {
     leftDisplayBox.getChildren().remove(left.getImage());
     left.setImage(output);
     leftDisplayBox.getChildren().add(output);
-    //display.add(output, 0, 3);
+    // display.add(output, 0, 3);
   }
 
   public void changeRightSkinColor() {
@@ -675,7 +669,7 @@ public class Controller {
     rightDisplayBox.getChildren().remove(right.getImage());
     right.setImage(output);
     rightDisplayBox.getChildren().add(output);
-    //display.add(output, 1, 3);
+    // display.add(output, 1, 3);
   }
 
   public Bubble findNextBubble(Direction d, String name) {
@@ -695,7 +689,7 @@ public class Controller {
     return bubble;
   }
 
-  public void leftSpeechBubble () {
+  public void leftSpeechBubble() {
     if (left == null) {
       throw new IllegalArgumentException("Please add character before adding text");
     }
@@ -707,7 +701,7 @@ public class Controller {
 
     String newBubble = "arrow";
     if (leftBubble != null) {
-      //display.getChildren().remove(leftBubble.getImage());
+      // display.getChildren().remove(leftBubble.getImage());
       if (leftBubble.getName().equals("arrow")) {
         newBubble = "circles";
       } else {
@@ -733,7 +727,7 @@ public class Controller {
     left.setText(leftLabel.getText());
   }
 
-  public void rightSpeechBubble () {
+  public void rightSpeechBubble() {
     if (right == null) {
       throw new IllegalArgumentException("Please add character before adding text");
     }
@@ -746,7 +740,7 @@ public class Controller {
 
     String newBubble = "arrow";
     if (rightBubble != null) {
-      //display.getChildren().remove(rightBubble.getImage());
+      // display.getChildren().remove(rightBubble.getImage());
       if (rightBubble.getName().equals("arrow")) {
         newBubble = "circles";
       } else {
