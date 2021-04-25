@@ -266,7 +266,7 @@ public class Controller {
         toStore.getImage().setFitWidth(150);
 
         // add to display
-        boolean add = currentlySelected.getChildren().add(toStore.getImage());
+        currentlySelected.getChildren().add(toStore.getImage());
 
         if (currentlySelected.equals(leftDisplayBox)) {
             left = toStore;
