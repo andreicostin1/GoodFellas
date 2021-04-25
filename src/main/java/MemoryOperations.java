@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 
-public class SaveAndLoad {
+public class MemoryOperations {
 
     GridPane savedSlide;
     private ArrayList<SavedSlide> slideArrayList = new ArrayList<>();

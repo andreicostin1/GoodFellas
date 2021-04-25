@@ -1,20 +1,14 @@
 package main.java;
 
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -96,7 +90,7 @@ public class Controller {
     //where the narrative text currently is
     Direction narrativeDirection = Direction.NONE;
 
-    SaveAndLoad saveAndLoad = new SaveAndLoad();
+    MemoryOperations memoryOperations = new MemoryOperations();
     Character left = null;
     Character right = null;
     Bubble leftBubble = null;
@@ -121,10 +115,10 @@ public class Controller {
 //            narrativeText();
 //        }
         else if (e.getSource().equals(save)) {
-            saveAndLoad.save(left, right, display, listView);
+            memoryOperations.save(left, right, display, listView);
         } else if (e.getSource().equals(listView)) {
             int index = listView.getSelectionModel().getSelectedIndex();
-            saveAndLoad.load(leftDisplayBox, rightDisplayBox, index, listView);
+            memoryOperations.load(leftDisplayBox, rightDisplayBox, index, listView);
         }
     };
 
