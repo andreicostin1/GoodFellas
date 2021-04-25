@@ -37,6 +37,8 @@ public class Controller {
     @FXML
     Button RightSpeechBubble = new Button();
     @FXML
+    Button Delete = new Button();
+    @FXML
     Button save = new Button();
     @FXML
     Button narrative = new Button();
@@ -110,6 +112,8 @@ public class Controller {
             LeftSpeechBubble();
         } else if (e.getSource().equals(RightSpeechBubble)) {
             RightSpeechBubble();
+        } else if (e.getSource().equals(Delete)) {
+            memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
         }
 //        else if (e.getSource().equals(narrative)) {
 //            narrativeText();
@@ -117,8 +121,7 @@ public class Controller {
         else if (e.getSource().equals(save)) {
             memoryOperations.save(left, right, display, listView);
         } else if (e.getSource().equals(listView)) {
-            int index = listView.getSelectionModel().getSelectedIndex();
-            memoryOperations.load(leftDisplayBox, rightDisplayBox, index, listView);
+            memoryOperations.load(leftDisplayBox, rightDisplayBox, listView.getSelectionModel().getSelectedIndex(), listView);
         }
     };
 

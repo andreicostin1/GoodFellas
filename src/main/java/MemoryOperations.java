@@ -46,6 +46,11 @@ public class MemoryOperations {
         id--;
     }
 
+    public void delete(int index, ListView<GridPane> listView) {
+        listView.getItems().remove(index);
+        id--;
+    }
+
     public GridPane generateSlide(Character left, Character right) {
         GridPane generatedSlide = new GridPane();
 
