@@ -504,16 +504,18 @@ public class Controller {
     }
 
     ImageView output = new ImageView(outputImage);
-    output.setFitHeight(100);
-    output.setFitWidth(100);
+    output.setFitHeight(150);
+    output.setFitWidth(150);
     if (left.getImage().getScaleX() == -1) {
       output.setScaleX(-1);
     } else {
       output.setScaleX(1);
     }
+    leftDisplayBox.getChildren().remove(left.getImage());
     // left.getImage().setImage(outputImage);
     left.setImage(output);
-    display.add(output, 0, 1);
+    leftDisplayBox.getChildren().add(output);
+    //display.add(output, 0, 3);
   }
 
   public void changeRightHairColor() {
@@ -554,16 +556,18 @@ public class Controller {
     }
 
     ImageView output = new ImageView(outputImage);
-    output.setFitHeight(100);
-    output.setFitWidth(100);
+    output.setFitHeight(150);
+    output.setFitWidth(150);
     if (right.getImage().getScaleX() == -1) {
       output.setScaleX(-1);
     } else {
       output.setScaleX(1);
     }
+    rightDisplayBox.getChildren().remove(right.getImage());
     // right.getImage().setImage(outputImage);
     right.setImage(output);
-    display.add(output, 1, 1);
+    rightDisplayBox.getChildren().add(output);
+    //display.add(output, 1, 3);
   }
 
   public void changeLeftSkinColor() {
@@ -594,15 +598,17 @@ public class Controller {
     }
 
     ImageView output = new ImageView(outputImage);
-    output.setFitHeight(100);
-    output.setFitWidth(100);
+    output.setFitHeight(150);
+    output.setFitWidth(150);
     if (left.getImage().getScaleX() == -1) {
       output.setScaleX(-1);
     } else {
       output.setScaleX(1);
     }
+    leftDisplayBox.getChildren().remove(left.getImage());
     left.setImage(output);
-    display.add(output, 0, 1);
+    leftDisplayBox.getChildren().add(output);
+    //display.add(output, 0, 3);
   }
 
   public void changeRightSkinColor() {
@@ -633,15 +639,17 @@ public class Controller {
     }
 
     ImageView output = new ImageView(outputImage);
-    output.setFitHeight(100);
-    output.setFitWidth(100);
+    output.setFitHeight(150);
+    output.setFitWidth(150);
     if (right.getImage().getScaleX() == -1) {
       output.setScaleX(-1);
     } else {
       output.setScaleX(1);
     }
+    rightDisplayBox.getChildren().remove(right.getImage());
     right.setImage(output);
-    display.add(output, 1, 1);
+    rightDisplayBox.getChildren().add(output);
+    //display.add(output, 1, 3);
   }
 
   public Bubble findNextBubble(Direction d, String name) {
