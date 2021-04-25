@@ -45,8 +45,6 @@ public class Controller {
     @FXML
     Button save = new Button();
     @FXML
-    Button load = new Button();
-    @FXML
     Button narrative = new Button();
     @FXML
     ComboBox characterMenu = new ComboBox();
@@ -757,19 +755,5 @@ public class Controller {
             warning.setContentText("Please put both character");
             warning.show();
         }
-    }
-
-    public void load() {
-        GridPane test = new GridPane();
-        System.out.println(test.getChildren());
-
-        test = listView.getItems().get(0);
-        test.getChildren().get(0);
-
-        System.out.println(test.getChildren().get(0));
-
-
-        // leftDisplayBox.getChildren().add(listView.getSelectionModel().getSelectedItem());
-
     }
 }

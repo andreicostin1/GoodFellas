@@ -20,7 +20,7 @@ public class Main extends Application {
 
             primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Comic Builder");
+            primaryStage.setTitle("Splash Screen");
             primaryStage.show();
 
         } catch (Exception e) {

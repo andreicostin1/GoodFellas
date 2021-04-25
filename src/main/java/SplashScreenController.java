@@ -46,7 +46,7 @@ public class SplashScreenController implements Initializable {
                         Stage stage = new Stage();
 
                         stage.setScene(scene);
-                        stage.setTitle("Splash Screen");
+                        stage.setTitle("Excelsior Comic Maker");
                         stage.show();
 
                         splashPane.getScene().getWindow().hide();
