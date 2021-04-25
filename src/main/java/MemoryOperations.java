@@ -16,11 +16,31 @@ public class MemoryOperations {
   private ArrayList<SavedSlide> slideArrayList = new ArrayList<>();
   private int id = 0;
 
-  public void save(Character left, Character right, HBox leftDisplay, HBox rightDisplay, ListView<GridPane> listView, Label leftLabel, Label rightLabel, TextField narrativeText, Bubble leftBubble, Bubble rightBubble) {
+  public void save(
+      Character left,
+      Character right,
+      HBox leftDisplay,
+      HBox rightDisplay,
+      ListView<GridPane> listView,
+      Label leftLabel,
+      Label rightLabel,
+      TextField narrativeText,
+      Bubble leftBubble,
+      Bubble rightBubble) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
-    savedSlide = generateSlide(left, right, leftDisplay, rightDisplay, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
+    savedSlide =
+        generateSlide(
+            left,
+            right,
+            leftDisplay,
+            rightDisplay,
+            leftLabel,
+            rightLabel,
+            narrativeText,
+            leftBubble,
+            rightBubble);
 
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
@@ -31,7 +51,12 @@ public class MemoryOperations {
     id++;
   }
 
-  public void load(GridPane display, HBox leftDisplay, HBox rightDisplay, int index, ListView<GridPane> listView) {
+  public void load(
+      GridPane display,
+      HBox leftDisplay,
+      HBox rightDisplay,
+      int index,
+      ListView<GridPane> listView) {
     if (slideArrayList.size() == 0) {
       return;
     }
@@ -58,10 +83,21 @@ public class MemoryOperations {
     id--;
   }
 
-  public GridPane generateSlide(Character left, Character right, HBox leftDisplay, HBox rightDisplay, Label leftLabel, Label rightLabel, TextField narrativeText, Bubble leftBubble, Bubble rightBubble) {
+  public GridPane generateSlide(
+      Character left,
+      Character right,
+      HBox leftDisplay,
+      HBox rightDisplay,
+      Label leftLabel,
+      Label rightLabel,
+      TextField narrativeText,
+      Bubble leftBubble,
+      Bubble rightBubble) {
     GridPane generatedSlide = new GridPane();
 
-    SavedSlide slide = new SavedSlide(id, left, right, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
+    SavedSlide slide =
+        new SavedSlide(
+            id, left, right, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
     slideArrayList.add(slide);
 
     ImageView leftImage = slide.getCharacterLeft().getImage();

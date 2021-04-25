@@ -80,7 +80,6 @@ public class Controller {
   Bubble rightBubble = null;
 
   HBox currentlySelected = null;
-  Bubble arrow = null;
 
   String out = "";
   Label leftLabel = new Label();
@@ -130,7 +129,6 @@ public class Controller {
                 narrativeText,
                 leftBubble,
                 rightBubble);
-            // clearPane();
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -687,6 +685,8 @@ public class Controller {
       display.add(leftLabel, 0, 1);
     }
     display.add(leftBubble.getImage(), 0, 2);
+    left.setBubble(leftBubble);
+    left.setText(leftLabel.getText());
   }
 
   public void RightSpeechBubble() {
@@ -713,6 +713,8 @@ public class Controller {
       display.add(rightLabel, 1, 1);
     }
     display.add(rightBubble.getImage(), 1, 2);
+    right.setBubble(rightBubble);
+    right.setText(rightLabel.getText());
   }
 
   //    public void narrativeText() {
