@@ -91,9 +91,17 @@ public class Controller {
             throwAlertMessage("Error adding character", f);
           }
         } else if (e.getSource().equals(flipCharacter)) {
-          flip(currentlySelected);
+          try {
+            flip(currentlySelected);
+          } catch (Exception f) {
+            throwAlertMessage("Error flipping character", f);
+          }
         } else if (e.getSource().equals(leftGender)) {
-          changeGender(currentlySelected);
+          try {
+            changeGender(currentlySelected);
+          } catch (Exception f) {
+            throwAlertMessage("Error changing gender", f);
+          }
         } else if (e.getSource().equals(LeftSpeechBubble)) {
           LeftSpeechBubble();
         } else if (e.getSource().equals(RightSpeechBubble)) {
@@ -330,6 +338,10 @@ public class Controller {
   public void flip(HBox currentlySelected) {
     Character toFlip = null;
 
+    if (currentlySelected == null) {
+      throw new IllegalArgumentException("Please select a character to flip");
+    }
+
     if (currentlySelected.equals(leftDisplayBox)) {
       toFlip = left;
       leftDisplayBox.getChildren().clear();
@@ -435,9 +447,7 @@ public class Controller {
         rightDisplayBox.getChildren().add(output);
       }
     } catch (Exception e) {
-      Alert warning = new Alert(Alert.AlertType.WARNING);
-      warning.setContentText("Please select a character to change");
-      warning.show();
+      throw new IllegalArgumentException("Please select a character to change its gender");
     }
   }
 
