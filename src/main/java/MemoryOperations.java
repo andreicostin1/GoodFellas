@@ -1,12 +1,14 @@
 package main.java;
 
 import javafx.geometry.Orientation;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -22,11 +24,7 @@ public class MemoryOperations {
       HBox leftDisplay,
       HBox rightDisplay,
       ListView<GridPane> listView,
-      Label leftLabel,
-      Label rightLabel,
-      TextField narrativeText,
-      Bubble leftBubble,
-      Bubble rightBubble) {
+      TextField narrativeText) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
@@ -36,11 +34,8 @@ public class MemoryOperations {
             right,
             leftDisplay,
             rightDisplay,
-            leftLabel,
-            rightLabel,
-            narrativeText,
-            leftBubble,
-            rightBubble);
+            narrativeText
+            );
 
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
@@ -56,7 +51,11 @@ public class MemoryOperations {
       HBox leftDisplay,
       HBox rightDisplay,
       int index,
-      ListView<GridPane> listView) {
+      ListView<GridPane> listView,
+      HBox speachBubbleLeft,
+      HBox speachBubbleRight,
+      TextField textLeft,
+      TextField textRight) {
     if (slideArrayList.size() == 0) {
       return;
     }
@@ -73,9 +72,24 @@ public class MemoryOperations {
     left.setFitWidth(150);
     leftDisplay.getChildren().add(left);
 
+    if (slideToLoad.getCharacterLeft().getBubble().getImage() != null){
+      speachBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
+    }
+    if (slideToLoad.getCharacterLeft().getText() != null){
+      textLeft.setText(slideToLoad.getCharacterLeft().getText());
+    }
+
+
     right.setFitHeight(150);
     right.setFitWidth(150);
     rightDisplay.getChildren().add(right);
+
+    if (slideToLoad.getCharacterRight().getBubble().getImage() != null){
+      speachBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
+    }
+    if (slideToLoad.getCharacterRight().getText() != null){
+      textRight.setText(slideToLoad.getCharacterRight().getText());
+    }
   }
 
   public void delete(int index, ListView<GridPane> listView) {
@@ -88,16 +102,12 @@ public class MemoryOperations {
       Character right,
       HBox leftDisplay,
       HBox rightDisplay,
-      Label leftLabel,
-      Label rightLabel,
-      TextField narrativeText,
-      Bubble leftBubble,
-      Bubble rightBubble) {
+      TextField narrativeText) {
     GridPane generatedSlide = new GridPane();
 
     SavedSlide slide =
         new SavedSlide(
-            id, left, right, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
+            id, left, right, narrativeText);
     slideArrayList.add(slide);
 
     ImageView leftImage = slide.getCharacterLeft().getImage();

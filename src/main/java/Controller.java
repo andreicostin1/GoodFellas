@@ -36,6 +36,8 @@ public class Controller {
   @FXML ListView<GridPane> listView = new ListView<>();
   @FXML HBox leftDisplayBox = new HBox();
   @FXML HBox rightDisplayBox = new HBox();
+  @FXML HBox speachBubbleLeft = new HBox();
+  @FXML HBox speachBubbleRight = new HBox();
   @FXML ColorPicker leftHairColorPicker = new ColorPicker();
   @FXML ColorPicker rightHairColorPicker = new ColorPicker();
   @FXML ColorPicker leftSkinColorPicker = new ColorPicker();
@@ -43,6 +45,8 @@ public class Controller {
   @FXML TextField usertxt;
   @FXML TextField usertxt2;
   @FXML TextField narrativeText;
+  @FXML TextField textLeft;
+  @FXML TextField textRight;
 
   ArrayList<Character> poseList = new ArrayList<>();
   ArrayList<Bubble> rightBubbleList = new ArrayList<>();
@@ -124,11 +128,7 @@ public class Controller {
                 leftDisplayBox,
                 rightDisplayBox,
                 listView,
-                leftLabel,
-                rightLabel,
-                narrativeText,
-                leftBubble,
-                rightBubble);
+                narrativeText);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -138,7 +138,11 @@ public class Controller {
               leftDisplayBox,
               rightDisplayBox,
               listView.getSelectionModel().getSelectedIndex(),
-              listView);
+              listView,
+                  speachBubbleLeft,
+                  speachBubbleRight,
+                  textLeft,
+                  textRight);
         }
       };
 
@@ -325,6 +329,10 @@ public class Controller {
   public void clearPane() {
     leftDisplayBox.getChildren().clear();
     rightDisplayBox.getChildren().clear();
+    speachBubbleLeft.getChildren().clear();
+    speachBubbleRight.getChildren().clear();
+    textLeft.setText("");
+    textRight.setText("");
     if (left != null) {
       left.getImage().setScaleX(1);
     }
@@ -684,7 +692,8 @@ public class Controller {
       leftLabel.setText("     " + out);
       display.add(leftLabel, 0, 1);
     }
-    display.add(leftBubble.getImage(), 0, 2);
+    speachBubbleLeft.getChildren().clear();
+    speachBubbleLeft.getChildren().add(leftBubble.getImage());
     left.setBubble(leftBubble);
     left.setText(leftLabel.getText());
   }
@@ -712,7 +721,8 @@ public class Controller {
       rightLabel.setText("     " + out);
       display.add(rightLabel, 1, 1);
     }
-    display.add(rightBubble.getImage(), 1, 2);
+    speachBubbleRight.getChildren().clear();
+    speachBubbleRight.getChildren().add(rightBubble.getImage());
     right.setBubble(rightBubble);
     right.setText(rightLabel.getText());
   }
