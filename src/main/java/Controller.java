@@ -707,12 +707,13 @@ public class Controller {
 
     String newBubble = "arrow";
     if (leftBubble != null) {
-      display.getChildren().remove(leftBubble.getImage());
+      //display.getChildren().remove(leftBubble.getImage());
       if (leftBubble.getName().equals("arrow")) {
         newBubble = "circles";
       } else {
         leftBubble = null;
         leftLabel.setText("   ");
+        speachBubbleLeft.getChildren().clear();
         return;
       }
     }
@@ -745,12 +746,13 @@ public class Controller {
 
     String newBubble = "arrow";
     if (rightBubble != null) {
-      display.getChildren().remove(rightBubble.getImage());
+      //display.getChildren().remove(rightBubble.getImage());
       if (rightBubble.getName().equals("arrow")) {
         newBubble = "circles";
       } else {
         rightBubble = null;
         rightLabel.setText("   ");
+        speachBubbleRight.getChildren().clear();
         return;
       }
     }

@@ -213,6 +213,10 @@
             <children>
                 <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3" />
                 <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <HBox fx:id="speachBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                <HBox fx:id="speachBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField editable="false" visible="false" GridPane.rowIndex="1" />
+                <TextField editable="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
         </GridPane>
         <ListView fx:id="listView" layoutX="12.0" layoutY="469.0" prefHeight="138.0" prefWidth="675.0"
