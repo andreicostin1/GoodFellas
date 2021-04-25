@@ -32,19 +32,25 @@ public class MemoryOperations {
   }
 
   public void load(GridPane display, HBox leftDisplay, HBox rightDisplay, int index, ListView<GridPane> listView) {
+    if (slideArrayList.size() == 0) {
+      return;
+    }
+
     leftDisplay.getChildren().clear();
     rightDisplay.getChildren().clear();
 
     SavedSlide slideToLoad = slideArrayList.get(index);
 
-    slideToLoad.getCharacterLeft().getImage().setFitHeight(150);
-    slideToLoad.getCharacterLeft().getImage().setFitWidth(150);
-    leftDisplay.getChildren().add(slideToLoad.getCharacterLeft().getImage());
-    display.add(slideToLoad.getLeftBubble().getImage(), 0, 2);
+    ImageView left = new ImageView(slideToLoad.getCharacterLeft().getImage().getImage());
+    ImageView right = new ImageView(slideToLoad.getCharacterRight().getImage().getImage());
 
-    slideToLoad.getCharacterRight().getImage().setFitHeight(150);
-    slideToLoad.getCharacterRight().getImage().setFitWidth(150);
-    rightDisplay.getChildren().add(slideToLoad.getCharacterRight().getImage());
+    left.setFitHeight(150);
+    left.setFitWidth(150);
+    leftDisplay.getChildren().add(left);
+
+    right.setFitHeight(150);
+    right.setFitWidth(150);
+    rightDisplay.getChildren().add(right);
   }
 
   public void delete(int index, ListView<GridPane> listView) {

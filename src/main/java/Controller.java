@@ -112,19 +112,31 @@ public class Controller {
           RightSpeechBubble();
         } else if (e.getSource().equals(Delete)) {
           memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
+          clearPane();
         }
         //        else if (e.getSource().equals(narrative)) {
         //            narrativeText();
         //        }
         else if (e.getSource().equals(save)) {
           try {
-            memoryOperations.save(left, right, leftDisplayBox, rightDisplayBox, listView, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
-            //clearPane();
+            memoryOperations.save(
+                left,
+                right,
+                leftDisplayBox,
+                rightDisplayBox,
+                listView,
+                leftLabel,
+                rightLabel,
+                narrativeText,
+                leftBubble,
+                rightBubble);
+            // clearPane();
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
         } else if (e.getSource().equals(listView)) {
-          memoryOperations.load(display,
+          memoryOperations.load(
+              display,
               leftDisplayBox,
               rightDisplayBox,
               listView.getSelectionModel().getSelectedIndex(),
@@ -194,7 +206,7 @@ public class Controller {
         });
   }
 
-  public void throwAlertMessage (String error, Exception f) {
+  public void throwAlertMessage(String error, Exception f) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText(error);
