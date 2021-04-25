@@ -85,7 +85,11 @@ public class Controller {
   EventHandler<MouseEvent> eventHandler =
       e -> {
         if (e.getSource().equals(addCharacter)) {
-          addPose(currentlySelected);
+          try {
+            addPose(currentlySelected);
+          } catch (Exception f) {
+            throwAlertMessage("Error adding character", f);
+          }
         } else if (e.getSource().equals(flipCharacter)) {
           flip(currentlySelected);
         } else if (e.getSource().equals(leftGender)) {
@@ -104,12 +108,7 @@ public class Controller {
           try {
           memoryOperations.save(left, right, display, listView);
           } catch (Exception f) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error Saving Frame");
-            alert.setContentText(f.getMessage());
-
-            alert.showAndWait();
+            throwAlertMessage("Error saving Frame", f);
           }
         } else if (e.getSource().equals(listView)) {
           memoryOperations.load(
@@ -182,6 +181,13 @@ public class Controller {
         });
   }
 
+  public void throwAlertMessage (String error, Exception f) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(error);
+    alert.setContentText(f.getMessage());
+    alert.showAndWait();
+  }
   // Creates a list of main.java.Character objects for each image
   public void createPoseList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/characters/").toURI();
@@ -246,9 +252,12 @@ public class Controller {
     String menuValue;
 
     if (characterMenu.getSelectionModel().isEmpty()) {
-      return;
+      throw new IllegalArgumentException("Please select a character");
     }
 
+    if (currentlySelected == null) {
+      throw new IllegalArgumentException("Please select a frame");
+    }
     menuValue = characterMenu.getValue().toString();
 
     // if character is already defined, override
