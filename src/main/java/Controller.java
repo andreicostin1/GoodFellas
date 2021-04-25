@@ -175,6 +175,7 @@ public class Controller {
         rightSkinColorPicker.setOnAction(actionEventHandler);
         save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+        Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         rightDisplayBox.setOnMouseClicked((MouseEvent e) -> {
             characterSelected(rightDisplayBox);
