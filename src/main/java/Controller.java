@@ -110,9 +110,17 @@ public class Controller {
             throwAlertMessage("Error changing gender", f);
           }
         } else if (e.getSource().equals(LeftSpeechBubble)) {
-          LeftSpeechBubble();
+          try {
+            leftSpeechBubble();
+          } catch (Exception f) {
+            throwAlertMessage("Error adding bubble", f);
+          }
         } else if (e.getSource().equals(RightSpeechBubble)) {
-          RightSpeechBubble();
+          try {
+            rightSpeechBubble();
+          } catch (Exception f) {
+            throwAlertMessage("Error adding bubble", f);
+          }
         } else if (e.getSource().equals(Delete)) {
           memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
           clearPane();
@@ -687,8 +695,16 @@ public class Controller {
     return bubble;
   }
 
-  public void LeftSpeechBubble() {
+  public void leftSpeechBubble () {
+    if (left == null) {
+      throw new IllegalArgumentException("Please add character before adding text");
+    }
     out = usertxt.getText();
+
+    if (out == "") {
+      throw new IllegalArgumentException("Please add text");
+    }
+
     String newBubble = "arrow";
     if (leftBubble != null) {
       display.getChildren().remove(leftBubble.getImage());
@@ -716,8 +732,17 @@ public class Controller {
     left.setText(leftLabel.getText());
   }
 
-  public void RightSpeechBubble() {
+  public void rightSpeechBubble () {
+    if (right == null) {
+      throw new IllegalArgumentException("Please add character before adding text");
+    }
+
     out = usertxt2.getText();
+
+    if (out == "") {
+      throw new IllegalArgumentException("Please add text");
+    }
+
     String newBubble = "arrow";
     if (rightBubble != null) {
       display.getChildren().remove(rightBubble.getImage());
