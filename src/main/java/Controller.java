@@ -219,8 +219,9 @@ public class Controller {
   public void createPoseList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/characters/").toURI();
     Path myPath;
+    FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
-      FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+      fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
       myPath = fileSystem.getPath("/main/resources/characters/");
     } else {
       myPath = Paths.get(uri);
@@ -241,13 +242,18 @@ public class Controller {
     }
     // to make list alphabetical
     poseList.sort(Comparator.comparing(o -> o.name));
+
+    if (fileSystem != null) {
+      fileSystem.close();
+    }
   }
 
   public void createBubbleList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/bubbles/").toURI();
     Path myPath;
+    FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
-      FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+      fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
       myPath = fileSystem.getPath("/main/resources/bubbles/");
     } else {
       myPath = Paths.get(uri);
@@ -271,6 +277,10 @@ public class Controller {
     // to make list alphabetical
     rightBubbleList.sort(Comparator.comparing(Bubble::getName));
     leftBubbleList.sort(Comparator.comparing(Bubble::getName));
+
+    if (fileSystem != null) {
+      fileSystem.close();
+    }
   }
 
   // method for adding poses
