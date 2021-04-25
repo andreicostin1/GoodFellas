@@ -82,6 +82,10 @@ public class Controller {
   HBox currentlySelected = null;
   Bubble arrow = null;
 
+  String out = "";
+  Label leftLabel = new Label();
+  Label rightLabel = new Label();
+
   EventHandler<MouseEvent> eventHandler =
       e -> {
         if (e.getSource().equals(addCharacter)) {
@@ -114,12 +118,13 @@ public class Controller {
         //        }
         else if (e.getSource().equals(save)) {
           try {
-          memoryOperations.save(left, right, display, listView);
+            memoryOperations.save(left, right, leftDisplayBox, rightDisplayBox, listView, leftLabel, rightLabel, narrativeText, leftBubble, rightBubble);
+            //clearPane();
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
         } else if (e.getSource().equals(listView)) {
-          memoryOperations.load(
+          memoryOperations.load(display,
               leftDisplayBox,
               rightDisplayBox,
               listView.getSelectionModel().getSelectedIndex(),
@@ -645,10 +650,6 @@ public class Controller {
     }
     return bubble;
   }
-
-  String out = "";
-  Label leftLabel = new Label();
-  Label rightLabel = new Label();
 
   public void LeftSpeechBubble() {
     out = usertxt.getText();

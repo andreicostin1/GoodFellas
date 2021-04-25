@@ -3,13 +3,15 @@ package main.java;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Character implements Cloneable {
+public class Character {
 
   String name;
   ImageView image;
   Color hairColor;
   Color braidColor;
   Color skin;
+  String text;
+  Bubble bubble;
 
   public Character(String name, ImageView image) {
     this.name = name;
@@ -17,6 +19,8 @@ public class Character implements Cloneable {
     hairColor = null;
     skin = null;
     braidColor = null;
+    text = null;
+    bubble = null;
   }
 
   public Character() {}
@@ -59,5 +63,21 @@ public class Character implements Cloneable {
 
   public Color getBraidColor() {
     return braidColor;
+  }
+
+  public String getText() {
+    return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
+  }
+
+  public Bubble getBubble() {
+    return bubble;
+  }
+
+  public void setBubble(Bubble bubble) {
+    this.bubble = bubble;
   }
 }
