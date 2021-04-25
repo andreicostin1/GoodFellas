@@ -110,9 +110,17 @@ public class Controller {
             throwAlertMessage("Error changing gender", f);
           }
         } else if (e.getSource().equals(LeftSpeechBubble)) {
-          LeftSpeechBubble();
+          try {
+            leftSpeechBubble();
+          } catch (Exception f) {
+            throwAlertMessage("Error adding bubble", f);
+          }
         } else if (e.getSource().equals(RightSpeechBubble)) {
-          RightSpeechBubble();
+          try {
+            rightSpeechBubble();
+          } catch (Exception f) {
+            throwAlertMessage("Error adding bubble", f);
+          }
         } else if (e.getSource().equals(Delete)) {
           memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
           clearPane();
@@ -219,8 +227,9 @@ public class Controller {
   public void createPoseList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/characters/").toURI();
     Path myPath;
+    FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
-      FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+      fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
       myPath = fileSystem.getPath("/main/resources/characters/");
     } else {
       myPath = Paths.get(uri);
@@ -241,13 +250,18 @@ public class Controller {
     }
     // to make list alphabetical
     poseList.sort(Comparator.comparing(o -> o.name));
+
+    if (fileSystem != null) {
+      fileSystem.close();
+    }
   }
 
   public void createBubbleList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/bubbles/").toURI();
     Path myPath;
+    FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
-      FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+      fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
       myPath = fileSystem.getPath("/main/resources/bubbles/");
     } else {
       myPath = Paths.get(uri);
@@ -271,6 +285,10 @@ public class Controller {
     // to make list alphabetical
     rightBubbleList.sort(Comparator.comparing(Bubble::getName));
     leftBubbleList.sort(Comparator.comparing(Bubble::getName));
+
+    if (fileSystem != null) {
+      fileSystem.close();
+    }
   }
 
   // method for adding poses
@@ -677,8 +695,16 @@ public class Controller {
     return bubble;
   }
 
-  public void LeftSpeechBubble() {
+  public void leftSpeechBubble () {
+    if (left == null) {
+      throw new IllegalArgumentException("Please add character before adding text");
+    }
     out = usertxt.getText();
+
+    if (out == "") {
+      throw new IllegalArgumentException("Please add text");
+    }
+
     String newBubble = "arrow";
     if (leftBubble != null) {
       display.getChildren().remove(leftBubble.getImage());
@@ -706,8 +732,17 @@ public class Controller {
     left.setText(leftLabel.getText());
   }
 
-  public void RightSpeechBubble() {
+  public void rightSpeechBubble () {
+    if (right == null) {
+      throw new IllegalArgumentException("Please add character before adding text");
+    }
+
     out = usertxt2.getText();
+
+    if (out == "") {
+      throw new IllegalArgumentException("Please add text");
+    }
+
     String newBubble = "arrow";
     if (rightBubble != null) {
       display.getChildren().remove(rightBubble.getImage());
