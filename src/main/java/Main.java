@@ -9,26 +9,25 @@ import javafx.stage.StageStyle;
 
 import java.net.URL;
 
-
 public class Main extends Application {
-    @Override
-    public void start(Stage primaryStage) {
-        try {
-            URL url = getClass().getResource("/main/resources/view/SplashScreen.fxml");
-            Pane root = FXMLLoader.load(url);
-            Scene scene = new Scene(root, 700, 475);
+  @Override
+  public void start(Stage primaryStage) {
+    try {
+      URL url = getClass().getResource("/main/resources/view/SplashScreen.fxml");
+      Pane root = FXMLLoader.load(url);
+      Scene scene = new Scene(root, 700, 475);
 
-            primaryStage.initStyle(StageStyle.UNDECORATED);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Splash Screen");
-            primaryStage.show();
+      primaryStage.initStyle(StageStyle.UNDECORATED);
+      primaryStage.setScene(scene);
+      primaryStage.setTitle("Splash Screen");
+      primaryStage.show();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  public static void main(String[] args) {
+    launch(args);
+  }
 }

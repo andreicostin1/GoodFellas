@@ -15,47 +15,47 @@ import java.util.ResourceBundle;
 
 public class SplashScreenController implements Initializable {
 
-    @FXML
-    private Pane splashPane;
+  @FXML private Pane splashPane;
+
+  @Override
+  public void initialize(URL url, ResourceBundle resourceBundle) {
+    new SplashScreen().start();
+  }
+
+  class SplashScreen extends Thread {
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        new SplashScreen().start();
+    public void run() {
+      try {
+        Thread.sleep(2000);
+
+        Platform.runLater(
+            new Runnable() {
+              @Override
+              public void run() {
+                Pane root = null;
+                URL url = getClass().getResource("/main/resources/view/GUI.fxml");
+
+                try {
+                  root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+
+                stage.setScene(scene);
+                stage.setTitle("Excelsior Comic Maker");
+                stage.show();
+
+                splashPane.getScene().getWindow().hide();
+              }
+            });
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
-
-    class SplashScreen extends Thread {
-
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(2000);
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        Pane root = null;
-                        URL url = getClass().getResource("/main/resources/view/GUI.fxml");
-
-                        try {
-                            root = FXMLLoader.load(url);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        Scene scene = new Scene(root);
-                        Stage stage = new Stage();
-
-                        stage.setScene(scene);
-                        stage.setTitle("Excelsior Comic Maker");
-                        stage.show();
-
-                        splashPane.getScene().getWindow().hide();
-                    }
-                });
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+  }
 }
