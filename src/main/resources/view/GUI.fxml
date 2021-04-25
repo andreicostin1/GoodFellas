@@ -18,182 +18,154 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0"
-      prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/16"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
     <children>
         <MenuBar prefHeight="25.0" prefWidth="700.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
         <GridPane alignment="CENTER" layoutX="396.0" layoutY="38.0" prefHeight="400.0" prefWidth="290.0">
             <columnConstraints>
-                <ColumnConstraints/>
-                <ColumnConstraints/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="65.0" minHeight="30.0" prefHeight="59.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="65.0" minHeight="30.0" prefHeight="59.0" />
             </rowConstraints>
             <children>
-                <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="3"
-                        GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                     <tooltip>
-                        <Tooltip text="Select canvas"/>
+                        <Tooltip text="Select canvas" />
                     </tooltip>
                 </Button>
-                <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="3"
-                        GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets top="20.0"/>
+                        <Insets top="20.0" />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="L Bubble" GridPane.columnIndex="2"
-                        GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
-                <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="R Bubble" GridPane.columnIndex="4"
-                        GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
-                <Button fx:id="save" mnemonicParsing="false" text="Save" GridPane.columnIndex="2"
-                        GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="L Bubble" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="R Bubble" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                <Button fx:id="save" mnemonicParsing="false" text="Save" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane"
-                        GridPane.columnIndex="4" GridPane.halignment="CENTER"/>
+                <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
 
-                <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY"
-                       GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip"
-                        GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </GridPane.margin>
                 </Button>
-                <ComboBox fx:id="characterMenu" prefWidth="150.0" GridPane.columnIndex="3"/>
-                <ColorPicker fx:id="rightHairColorPicker" editable="true" promptText="Hair"
-                             style="-fx-color-label-visible: false;" GridPane.columnIndex="4"
-                             GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <ComboBox fx:id="characterMenu" prefWidth="150.0" GridPane.columnIndex="3" />
+                <ColorPicker fx:id="rightHairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <value>
-                        <Color red="0.9411764740943909" green="1.0"/>
+                        <Color red="0.9411764740943909" green="1.0" />
                     </value>
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </ColorPicker>
-                <ColorPicker fx:id="leftHairColorPicker" editable="true" promptText="Hair"
-                             style="-fx-color-label-visible: false;" GridPane.columnIndex="2"
-                             GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <ColorPicker fx:id="leftHairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <value>
-                        <Color red="0.9411764740943909" green="1.0"/>
+                        <Color red="0.9411764740943909" green="1.0" />
                     </value>
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </ColorPicker>
-                <Label prefHeight="17.0" prefWidth="34.0" text="L Hair" GridPane.columnIndex="2"
-                       GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <Label prefHeight="17.0" prefWidth="34.0" text="L Hair" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets top="5.0"/>
+                        <Insets top="5.0" />
                     </GridPane.margin>
                 </Label>
-                <Label prefHeight="17.0" prefWidth="37.0" text="R Hair" GridPane.columnIndex="4"
-                       GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <Label prefHeight="17.0" prefWidth="37.0" text="R Hair" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                     <GridPane.margin>
-                        <Insets top="5.0"/>
+                        <Insets top="5.0" />
                     </GridPane.margin>
                 </Label>
-                <ColorPicker fx:id="leftSkinColorPicker" editable="true" style="-fx-color-label-visible: false;"
-                             GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2"
-                             GridPane.valignment="BOTTOM">
+                <ColorPicker fx:id="leftSkinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                     <value>
-                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163"/>
+                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163" />
                     </value>
                     <GridPane.margin>
-                        <Insets left="25.0"/>
+                        <Insets left="25.0" />
                     </GridPane.margin>
                 </ColorPicker>
-                <ColorPicker fx:id="rightSkinColorPicker" editable="true" style="-fx-color-label-visible: false;"
-                             GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2"
-                             GridPane.valignment="BOTTOM">
+                <ColorPicker fx:id="rightSkinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                     <value>
-                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163"/>
+                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163" />
                     </value>
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </ColorPicker>
-                <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="37.0" text="L Skin"
-                       GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2"
-                       GridPane.valignment="BOTTOM">
+                <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="37.0" text="L Skin" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </Label>
-                <Label layoutX="10.0" layoutY="292.0" prefHeight="25.0" prefWidth="38.0" text="R Skin"
-                       GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2"
-                       GridPane.valignment="BOTTOM">
+                <Label layoutX="10.0" layoutY="292.0" prefHeight="25.0" prefWidth="38.0" text="R Skin" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
-                        <Insets/>
+                        <Insets />
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="narrative" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false"
-                        text="Add Narrative" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                        GridPane.valignment="CENTER"/>
-                <Button fx:id="Delete" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" text="Delete"
-                        GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4"
-                        GridPane.valignment="CENTER"/>
+                <Button fx:id="narrative" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" text="Add Narrative" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                <Button fx:id="Delete" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
             </children>
         </GridPane>
-        <TextField fx:id="usertxt" layoutX="14.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0"/>
-        <TextField fx:id="narrativeText" layoutX="12.0" layoutY="426.0" prefHeight="35.0" prefWidth="360.0"
-                   promptText="Enter Narrative Text here..."/>
-        <GridPane fx:id="display" layoutX="12.0" layoutY="100.0" prefHeight="319.0" prefWidth="360.0"
-                  style="-fx-background-color: white; -fx-border-color: black;">
+        <TextField fx:id="usertxt" layoutX="14.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0" />
+        <TextField fx:id="narrativeText" layoutX="12.0" layoutY="426.0" prefHeight="35.0" prefWidth="360.0" promptText="Enter Narrative Text here..." />
+        <GridPane fx:id="display" layoutX="12.0" layoutY="100.0" prefHeight="319.0" prefWidth="360.0" style="-fx-background-color: white; -fx-border-color: black;">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3"/>
-                <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1"
-                      GridPane.rowIndex="3"/>
+                <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3" />
+                <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox fx:id="speachBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
+            <HBox fx:id="speachBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField editable="false" visible="false" GridPane.rowIndex="1" />
+            <TextField editable="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
         </GridPane>
-        <ListView fx:id="listView" layoutX="12.0" layoutY="469.0" prefHeight="138.0" prefWidth="675.0"
-                  style="-fx-background-color: white; -fx-border-color: black;">
+        <ListView fx:id="listView" layoutX="12.0" layoutY="469.0" prefHeight="138.0" prefWidth="675.0" style="-fx-background-color: white; -fx-border-color: black;">
         </ListView>
-        <TextField fx:id="usertxt2" layoutX="202.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0"/>
+        <TextField fx:id="usertxt2" layoutX="202.0" layoutY="55.0" prefHeight="35.0" prefWidth="170.0" />
     </children>
 </Pane>
