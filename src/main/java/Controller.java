@@ -101,7 +101,16 @@ public class Controller {
         //            narrativeText();
         //        }
         else if (e.getSource().equals(save)) {
+          try {
           memoryOperations.save(left, right, display, listView);
+          } catch (Exception f) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error Saving Frame");
+            alert.setContentText(f.getMessage());
+
+            alert.showAndWait();
+          }
         } else if (e.getSource().equals(listView)) {
           memoryOperations.load(
               leftDisplayBox,

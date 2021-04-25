@@ -15,6 +15,9 @@ public class MemoryOperations {
   private int id = 0;
 
   public void save(Character left, Character right, GridPane display, ListView<GridPane> listView) {
+    if (left == null  || right == null) {
+      throw new IllegalArgumentException("Needs two characters in frame");
+    }
     savedSlide = generateSlide(left, right);
 
     savedSlide.setPrefSize(225, 225);
