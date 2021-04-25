@@ -200,14 +200,14 @@ public class Controller {
 
         for (Iterator<Path> it = walk.iterator(); it.hasNext(); ) {
             Path inLoop = it.next();
-            ImageView poseImage = new ImageView(inLoop.toUri().toURL().toString());
+            Image poseImage = new Image(inLoop.toUri().toURL().toString());
             String name = inLoop.getFileName().toString();
             if (!name.equals("characters")) {
                 //Removes extension from file name
                 if (name.indexOf(".") > 0) {
                     name = name.substring(0, name.lastIndexOf("."));
                 }
-                poseList.add(new Character(name, poseImage));
+                poseList.add(new Character(name, new ImageView(poseImage)));
             }
         }
         // to make list alphabetical
@@ -266,7 +266,7 @@ public class Controller {
         toStore.getImage().setFitWidth(150);
 
         // add to display
-        currentlySelected.getChildren().add(toStore.getImage());
+        boolean add = currentlySelected.getChildren().add(toStore.getImage());
 
         if (currentlySelected.equals(leftDisplayBox)) {
             left = toStore;
@@ -280,8 +280,6 @@ public class Controller {
     }
 
     public void characterSelected(HBox side) {
-
-
         String border_style = "-fx-border-color: red;" + "-fx-border-width: 1;";
 
         if (side.equals(leftDisplayBox)) {
@@ -315,7 +313,7 @@ public class Controller {
         for (Character c : poseList) {
             if (name.equals(c.getName())) {
                 character.setName(c.getName());
-                character.setImage(c.getImage());
+                character.setImage(new ImageView(c.getImage().getImage()));
                 character.setHairColor(new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1));
                 character.setSkin(new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1));
                 character.setBraidColor(new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1));
@@ -370,7 +368,6 @@ public class Controller {
             WritableImage outputImage = new WritableImage(width, height);
             PixelReader reader = input.getPixelReader();
             PixelWriter writer = outputImage.getPixelWriter();
-
 
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
