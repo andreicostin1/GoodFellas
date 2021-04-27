@@ -45,8 +45,8 @@ public class Controller {
   @FXML TextField usertxt;
   @FXML TextField usertxt2;
   @FXML TextField narrativeText;
-  @FXML TextField textLeft;
-  @FXML TextField textRight;
+  @FXML TextField textLeft = new TextField();
+  @FXML TextField textRight = new TextField();
 
   ArrayList<Character> poseList = new ArrayList<>();
   ArrayList<Bubble> rightBubbleList = new ArrayList<>();
@@ -344,6 +344,8 @@ public class Controller {
     rightDisplayBox.getChildren().clear();
     speachBubbleLeft.getChildren().clear();
     speachBubbleRight.getChildren().clear();
+    leftLabel.setText(" ");
+    leftLabel.setText(" ");
 
     if (left != null) {
       left.getImage().setScaleX(1);
