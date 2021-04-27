@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
     <children>
         <MenuBar prefHeight="25.0" prefWidth="700.0">
             <menus>
@@ -55,12 +55,12 @@
                 <RowConstraints maxHeight="65.0" minHeight="30.0" prefHeight="59.0" />
             </rowConstraints>
             <children>
-                <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+                <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <tooltip>
                         <Tooltip text="Add character to selected canvas" />
                     </tooltip>
                 </Button>
-                <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="20.0" />
                     </GridPane.margin>
@@ -89,12 +89,12 @@
                         <Tooltip text="Clear panel" />
                     </tooltip></Button>
 
-                <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="10.0" />
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets top="10.0" />
                     </GridPane.margin>
@@ -102,7 +102,7 @@
                         <Tooltip text="Flip selected character" />
                     </tooltip>
                 </Button>
-                <ComboBox fx:id="characterMenu" prefWidth="150.0" GridPane.columnIndex="3">
+                <ComboBox fx:id="characterMenu" prefWidth="176.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <tooltip>
                         <Tooltip text="Select character" />
                     </tooltip></ComboBox>
