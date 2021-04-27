@@ -2,7 +2,6 @@ package main.java;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 
 public class SavedSlide {
 

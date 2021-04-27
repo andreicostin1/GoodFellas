@@ -1,14 +1,11 @@
 package main.java;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -76,7 +73,7 @@ public class MemoryOperations {
       speachBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
     }
     if (slideToLoad.getCharacterLeft().getText() != null){
-      textLeft.setText(slideToLoad.getCharacterLeft().getText());
+      //textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
 
@@ -88,7 +85,7 @@ public class MemoryOperations {
       speachBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
     }
     if (slideToLoad.getCharacterRight().getText() != null){
-      textRight.setText(slideToLoad.getCharacterRight().getText());
+      //textRight.setText(slideToLoad.getCharacterRight().getText());
     }
   }
 

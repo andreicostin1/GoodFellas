@@ -345,7 +345,7 @@ public class Controller {
     speachBubbleLeft.getChildren().clear();
     speachBubbleRight.getChildren().clear();
     leftLabel.setText(" ");
-    leftLabel.setText(" ");
+    rightLabel.setText(" ");
 
     if (left != null) {
       left.getImage().setScaleX(1);
