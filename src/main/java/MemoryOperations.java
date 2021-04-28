@@ -36,7 +36,6 @@ public class MemoryOperations {
 
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
-
     listView.getItems().add(savedSlide);
     listView.setOrientation(Orientation.HORIZONTAL);
 

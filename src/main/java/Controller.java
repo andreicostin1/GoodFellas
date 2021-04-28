@@ -58,14 +58,6 @@ public class Controller {
   Label upperNarrative = new Label();
   Label lowerNarrative = new Label();
 
-  int pointer = 0;
-  Map<Integer, Character> current_left = new HashMap<>();
-  Map<Integer, Character> current_right = new HashMap<>();
-  Map<Integer, Label> leftText = new HashMap<>();
-  Map<Integer, Label> rightText = new HashMap<>();
-  Map<Integer, Bubble> SpeechBubble_left = new HashMap<>();
-  Map<Integer, Bubble> SpeechBubble_right = new HashMap<>();
-
   public enum Direction {
     LEFT,
     RIGHT,
@@ -125,9 +117,9 @@ public class Controller {
           memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
           clearPane();
         }
-        //        else if (e.getSource().equals(narrative)) {
-        //            narrativeText();
-        //        }
+                else if (e.getSource().equals(narrative)) {
+                    narrativeText();
+                }
         else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(
