@@ -13,11 +13,14 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class Controller {
@@ -226,7 +229,14 @@ public class Controller {
     File file = fileChooser.showSaveDialog(Main.primaryStage);
 
     if (file != null) {
-      //saveTextToFile(sampleText, file);
+      PrintWriter writer;
+      try {
+        writer = new PrintWriter(file);
+        writer.println("test");
+        writer.close();
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      }
     }
   }
 
