@@ -10,8 +10,12 @@ import javafx.stage.StageStyle;
 import java.net.URL;
 
 public class Main extends Application {
+  public static Stage primaryStage;
+
   @Override
   public void start(Stage primaryStage) {
+    Main.primaryStage = primaryStage;
+
     try {
       URL url = getClass().getResource("/main/resources/view/SplashScreen.fxml");
       Pane root = FXMLLoader.load(url);

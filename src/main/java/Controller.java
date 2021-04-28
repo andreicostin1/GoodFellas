@@ -10,7 +10,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,6 +21,11 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class Controller {
+
+  //Menu Items
+  @FXML MenuItem saveXML = new MenuItem();
+  @FXML MenuItem loadXML = new MenuItem();
+  @FXML MenuItem close = new MenuItem();
 
   @FXML Button addCharacter = new Button();
   @FXML Button clearPane = new Button();
@@ -156,6 +163,10 @@ public class Controller {
       };
 
   public void initialize() {
+    //Menu Bar
+    saveXML.setOnAction(event -> saveAsXML());
+    loadXML.setOnAction(event -> loadXML());
+
     try {
       createPoseList();
     } catch (Exception e) {
@@ -202,6 +213,36 @@ public class Controller {
         (MouseEvent e) -> {
           characterSelected(leftDisplayBox);
         });
+  }
+
+  public void saveAsXML() {
+    FileChooser fileChooser = new FileChooser();
+
+    //Set extension filter for text files
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    //Show save file dialog
+    File file = fileChooser.showSaveDialog(Main.primaryStage);
+
+    if (file != null) {
+      //saveTextToFile(sampleText, file);
+    }
+  }
+
+  public void loadXML() {
+    FileChooser fileChooser = new FileChooser();
+
+    //Set extension filter for text files
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    //Show save file dialog
+    File file = fileChooser.showOpenDialog(Main.primaryStage);
+
+    if (file != null) {
+
+    }
   }
 
   public void throwAlertMessage(String error, Exception f) {
