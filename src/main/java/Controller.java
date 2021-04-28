@@ -768,72 +768,21 @@ public class Controller {
     right.setText(rightLabel.getText());
   }
 
-  //    public void narrativeText() {
-  //        switch (narrativeDirection) {
-  //            case UP -> {
-  //                upperNarrative.setText(" ");
-  //                lowerNarrative.setText(narrativeText.getText());
-  //                narrativeDirection = Direction.DOWN;
-  //            }
-  //            case DOWN -> {
-  //                lowerNarrative.setText(" ");
-  //                narrativeDirection = Direction.NONE;
-  //            }
-  //            default -> {
-  //                upperNarrative.setText(narrativeText.getText());
-  //                narrativeDirection = Direction.UP;
-  //            }
-  //        }
-  //    }
-
-  public void save() {
-    GridPane view = new GridPane();
-    view.setPrefSize(225, 225);
-    view.setGridLinesVisible(true);
-    current_left.put(pointer, left);
-    current_right.put(pointer, right);
-    leftText.put(pointer, leftLabel);
-    rightText.put(pointer, rightLabel);
-    SpeechBubble_left.put(pointer, leftBubble);
-    SpeechBubble_right.put(pointer, rightBubble);
-    try {
-      if (current_left.get(pointer).getImage() != null
-          && current_right.get(pointer).getImage() != null) {
-        ImageView leftImage = current_left.get(pointer).getImage();
-        ImageView rightImage = current_right.get(pointer).getImage();
-
-        leftImage.setFitHeight(110);
-        leftImage.setFitWidth(110);
-        rightImage.setFitWidth(110);
-        rightImage.setFitHeight(110);
-        System.out.print(left.getImage().getScaleX() + "     ");
-
-        if (left.getImage().getScaleX() == -1) {
-          leftImage.setScaleX(-1);
-        } else {
-          leftImage.setScaleX(1);
-        }
-
-        if (right.getImage().getScaleX() == -1) {
-          rightImage.setScaleX(-1);
-        } else {
-          rightImage.setScaleX(1);
-        }
-
-        view.add(leftImage, 0, 0);
-        view.add(rightImage, 1, 0);
-        listView.getItems().add(view);
-        listView.setOrientation(Orientation.HORIZONTAL);
-        // saveListView.setPrefSize(675,138);
-
-        leftDisplayBox.getChildren().clear();
-        rightDisplayBox.getChildren().clear();
-        pointer++;
+      public void narrativeText() {
+          switch (narrativeDirection) {
+              case UP -> {
+                  upperNarrative.setText(" ");
+                  lowerNarrative.setText(narrativeText.getText());
+                  narrativeDirection = Direction.DOWN;
+              }
+              case DOWN -> {
+                  lowerNarrative.setText(" ");
+                  narrativeDirection = Direction.NONE;
+              }
+              default -> {
+                  upperNarrative.setText(narrativeText.getText());
+                  narrativeDirection = Direction.UP;
+              }
+          }
       }
-    } catch (Exception e) {
-      Alert warning = new Alert(Alert.AlertType.WARNING);
-      warning.setContentText("Please put both character");
-      warning.show();
-    }
-  }
 }

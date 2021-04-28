@@ -115,13 +115,13 @@ public class MemoryOperations {
     rightImage.setFitWidth(110);
     rightImage.setFitHeight(110);
 
-    if (leftDisplay.getScaleX() == -1) {
+    if (left.getImage().getScaleX() == -1) {
       leftImage.setScaleX(-1);
     } else {
       leftImage.setScaleX(1);
     }
 
-    if (rightDisplay.getScaleX() == -1) {
+    if (right.getImage().getScaleX() == -1) {
       rightImage.setScaleX(-1);
     } else {
       rightImage.setScaleX(1);
