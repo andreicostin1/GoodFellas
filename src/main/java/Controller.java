@@ -3,7 +3,6 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -80,6 +79,8 @@ public class Controller {
   String out = "";
   Label leftLabel = new Label();
   Label rightLabel = new Label();
+  int leftscale=1;
+  int rightscale=1;
 
   EventHandler<MouseEvent> eventHandler =
       e -> {
@@ -123,7 +124,7 @@ public class Controller {
         else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(
-                left, right, leftDisplayBox, rightDisplayBox, listView, narrativeText);
+                left, right, leftDisplayBox, rightDisplayBox, listView, narrativeText,leftscale,rightscale);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -391,6 +392,11 @@ public class Controller {
       left = toFlip;
     } else {
       right = toFlip;
+    }
+    if (currentlySelected.equals(leftDisplayBox)){
+      leftscale=(int)currentlySelected.getScaleX();
+    } else {
+      rightscale=(int)currentlySelected.getScaleX();
     }
   }
 
