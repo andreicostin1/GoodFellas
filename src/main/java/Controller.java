@@ -47,8 +47,7 @@ public class Controller {
   @FXML HBox speachBubbleLeft = new HBox();
   @FXML HBox speachBubbleRight = new HBox();
   @FXML ColorPicker hairColorPicker = new ColorPicker();
-  @FXML ColorPicker leftSkinColorPicker = new ColorPicker();
-  @FXML ColorPicker rightSkinColorPicker = new ColorPicker();
+  @FXML ColorPicker skinColorPicker = new ColorPicker();
   @FXML TextField usertxt;
   @FXML TextField usertxt2;
   @FXML TextField narrativeText;
@@ -154,10 +153,8 @@ public class Controller {
       e -> {
         if (e.getSource().equals(hairColorPicker)) {
           changeHairColor(currentlySelected);
-        } else if (e.getSource().equals(leftSkinColorPicker)) {
-          changeLeftSkinColor();
-        } else if (e.getSource().equals(rightSkinColorPicker)) {
-          changeRightSkinColor();
+        } else if (e.getSource().equals(skinColorPicker)) {
+          changeSkinColor();
         }
       };
 
@@ -197,8 +194,7 @@ public class Controller {
     RightSpeechBubble.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     narrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     hairColorPicker.setOnAction(actionEventHandler);
-    leftSkinColorPicker.setOnAction(actionEventHandler);
-    rightSkinColorPicker.setOnAction(actionEventHandler);
+    skinColorPicker.setOnAction(actionEventHandler);
     save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -354,13 +350,12 @@ public class Controller {
 
     if (currentlySelected.equals(leftDisplayBox)) {
       left = toStore;
-      leftSkinColorPicker.setValue(toStore.getSkin());
-      hairColorPicker.setValue(toStore.getHairColor());
     } else {
       right = toStore;
-      rightSkinColorPicker.setValue(toStore.getSkin());
-      hairColorPicker.setValue(toStore.getHairColor());
     }
+
+    skinColorPicker.setValue(toStore.getSkin());
+    hairColorPicker.setValue(toStore.getHairColor());
   }
 
   public void characterSelected(HBox side) {
@@ -595,18 +590,29 @@ public class Controller {
     // display.add(output, 0, 3);
   }
 
-  public void changeLeftSkinColor() {
-    if (left == null) {
-      return;
+  public void changeSkinColor() {
+    if (currentlySelected == null) {
+      throw new IllegalArgumentException("Please select a character");
     }
 
-    Color originalSkin = left.getSkin();
-    left.setSkin(leftSkinColorPicker.getValue());
+    Character updatedCharacter = new Character();
+    HBox panelSide = new HBox();
 
-    Image input = left.getImage().getImage();
+    if(currentlySelected.equals(leftDisplayBox)){
+      updatedCharacter = left;
+      panelSide = leftDisplayBox;
+    } else {
+      updatedCharacter = right;
+      panelSide = rightDisplayBox;
+    }
+
+    Color originalSkin = updatedCharacter.getSkin();
+    updatedCharacter.setSkin(skinColorPicker.getValue());
+
+    Image input = updatedCharacter.getImage().getImage();
     int width = (int) input.getWidth();
     int height = (int) input.getHeight();
-    display.getChildren().remove(left.getImage());
+    panelSide.getChildren().remove(updatedCharacter.getImage());
     WritableImage outputImage = new WritableImage(width, height);
     PixelReader reader = input.getPixelReader();
     PixelWriter writer = outputImage.getPixelWriter();
@@ -615,7 +621,7 @@ public class Controller {
       for (int j = 0; j < width; j++) {
         Color currColor = reader.getColor(j, i);
         if (currColor.equals(originalSkin)) {
-          writer.setColor(j, i, left.getSkin());
+          writer.setColor(j, i, updatedCharacter.getSkin());
         } else {
           writer.setColor(j, i, currColor);
         }
@@ -625,56 +631,15 @@ public class Controller {
     ImageView output = new ImageView(outputImage);
     output.setFitHeight(150);
     output.setFitWidth(150);
-    if (left.getImage().getScaleX() == -1) {
+    if (updatedCharacter.getImage().getScaleX() == -1) {
       output.setScaleX(-1);
     } else {
       output.setScaleX(1);
     }
-    leftDisplayBox.getChildren().remove(left.getImage());
-    left.setImage(output);
-    leftDisplayBox.getChildren().add(output);
+    panelSide.getChildren().remove(updatedCharacter.getImage());
+    updatedCharacter.setImage(output);
+    panelSide.getChildren().add(output);
     // display.add(output, 0, 3);
-  }
-
-  public void changeRightSkinColor() {
-    if (right == null) {
-      return;
-    }
-
-    Color originalSkin = right.getSkin();
-    right.setSkin(rightSkinColorPicker.getValue());
-
-    Image input = right.getImage().getImage();
-    int width = (int) input.getWidth();
-    int height = (int) input.getHeight();
-    display.getChildren().remove(right.getImage());
-    WritableImage outputImage = new WritableImage(width, height);
-    PixelReader reader = input.getPixelReader();
-    PixelWriter writer = outputImage.getPixelWriter();
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        Color currColor = reader.getColor(j, i);
-        if (currColor.equals(originalSkin)) {
-          writer.setColor(j, i, right.getSkin());
-        } else {
-          writer.setColor(j, i, currColor);
-        }
-      }
-    }
-
-    ImageView output = new ImageView(outputImage);
-    output.setFitHeight(150);
-    output.setFitWidth(150);
-    if (right.getImage().getScaleX() == -1) {
-      output.setScaleX(-1);
-    } else {
-      output.setScaleX(1);
-    }
-    rightDisplayBox.getChildren().remove(right.getImage());
-    right.setImage(output);
-    rightDisplayBox.getChildren().add(output);
-    // display.add(output, 1, 3);
   }
 
   public Bubble findNextBubble(Direction d, String name) {

@@ -112,7 +112,7 @@
                         <Tooltip text="Select character" />
                     </tooltip>
                 </ComboBox>
-                <ColorPicker fx:id="hairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <ColorPicker fx:id="hairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <value>
                         <Color red="0.9411764740943909" green="1.0" />
                     </value>
@@ -123,12 +123,12 @@
                         <Tooltip text="Change hair color of left character" />
                     </tooltip>
                 </ColorPicker>
-                <Label prefHeight="17.0" prefWidth="34.0" text="Hair" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                <Label prefHeight="17.0" prefWidth="34.0" text="Hair" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                     <GridPane.margin>
                         <Insets top="5.0" />
                     </GridPane.margin>
                 </Label>
-                <ColorPicker fx:id="leftSkinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                <ColorPicker fx:id="skinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                     <value>
                         <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163" />
                     </value>
@@ -139,23 +139,7 @@
                         <Tooltip text="Change skin color of left character" />
                     </tooltip>
                 </ColorPicker>
-                <ColorPicker fx:id="rightSkinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                    <value>
-                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163" />
-                    </value>
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Change skin color of right character" />
-                    </tooltip>
-                </ColorPicker>
-                <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="37.0" text="L Skin" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                </Label>
-                <Label layoutX="10.0" layoutY="292.0" prefHeight="25.0" prefWidth="38.0" text="R Skin" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="37.0" text="Skin" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>
