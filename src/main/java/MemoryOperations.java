@@ -28,15 +28,7 @@ public class MemoryOperations {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
     savedSlide =
-        generateSlide(
-            left,
-            right,
-            leftDisplay,
-            rightDisplay,
-            narrativeText,
-                leftScale,
-                rightScale
-            );
+        generateSlide(left, right, leftDisplay, rightDisplay, narrativeText, leftScale, rightScale);
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
     listView.getItems().add(savedSlide);
@@ -70,23 +62,22 @@ public class MemoryOperations {
     left.setFitWidth(150);
     leftDisplay.getChildren().add(left);
 
-    if (slideToLoad.getCharacterLeft().getBubble().getImage() != null){
+    if (slideToLoad.getCharacterLeft().getBubble().getImage() != null) {
       speachBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
     }
-    if (slideToLoad.getCharacterLeft().getText() != null){
-      //textLeft.setText(slideToLoad.getCharacterLeft().getText());
+    if (slideToLoad.getCharacterLeft().getText() != null) {
+      // textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
-
 
     right.setFitHeight(150);
     right.setFitWidth(150);
     rightDisplay.getChildren().add(right);
 
-    if (slideToLoad.getCharacterRight().getBubble().getImage() != null){
+    if (slideToLoad.getCharacterRight().getBubble().getImage() != null) {
       speachBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
     }
-    if (slideToLoad.getCharacterRight().getText() != null){
-      //textRight.setText(slideToLoad.getCharacterRight().getText());
+    if (slideToLoad.getCharacterRight().getText() != null) {
+      // textRight.setText(slideToLoad.getCharacterRight().getText());
     }
   }
 
@@ -105,9 +96,7 @@ public class MemoryOperations {
       int rightScale) {
     GridPane generatedSlide = new GridPane();
 
-    SavedSlide slide =
-        new SavedSlide(
-            id, left, right, narrativeText);
+    SavedSlide slide = new SavedSlide(id, left, right, narrativeText);
     slideArrayList.add(slide);
 
     ImageView leftImage = slide.getCharacterLeft().getImage();
@@ -117,8 +106,8 @@ public class MemoryOperations {
     leftImage.setFitWidth(110);
     rightImage.setFitWidth(110);
     rightImage.setFitHeight(110);
-    System.out.print((int)left.getImage().getScaleX()+"|");
-    System.out.print((int)right.getImage().getScaleX()+"|");
+    System.out.print((int) left.getImage().getScaleX() + "|");
+    System.out.print((int) right.getImage().getScaleX() + "|");
     if (leftScale == -1) {
       leftImage.setScaleX(-1);
     } else {
