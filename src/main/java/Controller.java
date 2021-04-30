@@ -219,11 +219,15 @@ public class Controller {
     //Show save file dialog
     File file = fileChooser.showSaveDialog(Main.primaryStage);
 
+
     if (file != null) {
       PrintWriter writer;
       try {
         writer = new PrintWriter(file);
-        writer.println("test");
+        ArrayList<String> strings = memoryOperations.toXML();
+        for(String string : strings) {
+          writer.println(string);
+        }
         writer.close();
       } catch (FileNotFoundException e) {
         e.printStackTrace();

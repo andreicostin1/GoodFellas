@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public class Character {
 
   String name;
+  String gender;
   ImageView image;
   Color hairColor;
   Color braidColor;
@@ -13,9 +14,13 @@ public class Character {
   String text;
   Bubble bubble;
 
+  String facing;
+
   public Character(String name, ImageView image) {
     this.name = name;
     this.image = image;
+    gender = "female";
+    facing = "right";
     hairColor = null;
     skin = null;
     braidColor = null;
@@ -32,6 +37,10 @@ public class Character {
   public void setName(String name) {
     this.name = name;
   }
+
+  public String getGender() { return gender; }
+
+  public void setGender() { this.gender = gender; }
 
   public ImageView getImage() {
     return image;
@@ -80,4 +89,8 @@ public class Character {
   public void setBubble(Bubble bubble) {
     this.bubble = bubble;
   }
+
+  public String getFacing() { return facing; }
+
+  public void setFacing(String facing) { this.facing = facing; }
 }
