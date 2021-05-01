@@ -44,8 +44,8 @@ public class Controller {
   @FXML ListView<GridPane> listView = new ListView<>();
   @FXML HBox leftDisplayBox = new HBox();
   @FXML HBox rightDisplayBox = new HBox();
-  @FXML HBox speachBubbleLeft = new HBox();
-  @FXML HBox speachBubbleRight = new HBox();
+  @FXML HBox speechBubbleLeft = new HBox();
+  @FXML HBox speechBubbleRight = new HBox();
   @FXML ColorPicker hairColorPicker = new ColorPicker();
   @FXML ColorPicker skinColorPicker = new ColorPicker();
   @FXML TextField usertxt;
@@ -141,8 +141,8 @@ public class Controller {
                     leftDisplayBox,
                     rightDisplayBox,
                     listView.getSelectionModel().getSelectedIndex(),
-                    speachBubbleLeft,
-                    speachBubbleRight,
+                    speechBubbleLeft,
+                    speechBubbleRight,
                     textLeft,
                     textRight);
           } catch (Exception f) {
@@ -382,8 +382,8 @@ public class Controller {
   public void clearPane() {
     leftDisplayBox.getChildren().clear();
     rightDisplayBox.getChildren().clear();
-    speachBubbleLeft.getChildren().clear();
-    speachBubbleRight.getChildren().clear();
+    speechBubbleLeft.getChildren().clear();
+    speechBubbleRight.getChildren().clear();
     leftLabel.setText(" ");
     rightLabel.setText(" ");
 
@@ -447,6 +447,7 @@ public class Controller {
       } else {
         changingCharacter = right;
       }
+      changingCharacter.setGender();
 
       currentlySelected.getChildren().clear();
 
@@ -503,12 +504,7 @@ public class Controller {
       ImageView output = new ImageView(outputImage);
       output.setFitHeight(150);
       output.setFitWidth(150);
-
-      if (changingCharacter.getImage().getScaleX() == -1) {
-        output.setScaleX(-1);
-      } else {
-        output.setScaleX(1);
-      }
+      output.setScaleX(changingCharacter.getScale());
 
       if (currentlySelected.equals(leftDisplayBox)) {
         left = changingCharacter;
@@ -674,7 +670,7 @@ public class Controller {
       } else {
         leftBubble = null;
         leftLabel.setText("   ");
-        speachBubbleLeft.getChildren().clear();
+        speechBubbleLeft.getChildren().clear();
         return;
       }
     }
@@ -688,8 +684,8 @@ public class Controller {
       leftLabel.setText("     " + out);
       display.add(leftLabel, 0, 1);
     }
-    speachBubbleLeft.getChildren().clear();
-    speachBubbleLeft.getChildren().add(leftBubble.getImage());
+    speechBubbleLeft.getChildren().clear();
+    speechBubbleLeft.getChildren().add(leftBubble.getImage());
     left.setBubble(leftBubble);
     left.setText(leftLabel.getText());
   }
@@ -713,7 +709,7 @@ public class Controller {
       } else {
         rightBubble = null;
         rightLabel.setText("   ");
-        speachBubbleRight.getChildren().clear();
+        speechBubbleRight.getChildren().clear();
         return;
       }
     }
@@ -727,8 +723,8 @@ public class Controller {
       rightLabel.setText("     " + out);
       display.add(rightLabel, 1, 1);
     }
-    speachBubbleRight.getChildren().clear();
-    speachBubbleRight.getChildren().add(rightBubble.getImage());
+    speechBubbleRight.getChildren().clear();
+    speechBubbleRight.getChildren().add(rightBubble.getImage());
     right.setBubble(rightBubble);
     right.setText(rightLabel.getText());
   }

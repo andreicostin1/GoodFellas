@@ -173,8 +173,8 @@
             <children>
                 <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3" />
                 <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <HBox fx:id="speachBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
-                <HBox fx:id="speachBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <HBox fx:id="speechBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                <HBox fx:id="speechBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="textLeft" editable="false" visible="false" GridPane.rowIndex="1" />
                 <TextField fx:id="textRight" editable="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
