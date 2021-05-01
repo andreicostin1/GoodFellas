@@ -17,11 +17,15 @@ public class MemoryOperations {
   private int id = 0;
 
   public void save(
-      Character left, Character right, ListView<GridPane> listView, TextField narrativeText) {
+      Character left,
+      Character right,
+      ListView<GridPane> listView,
+      TextField aboveNarrativeText,
+      TextField belowNarrativeText) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
-    savedSlide = generateSlide(left, right, narrativeText);
+    savedSlide = generateSlide(left, right, aboveNarrativeText, belowNarrativeText);
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
     listView.getItems().add(savedSlide);
@@ -80,10 +84,10 @@ public class MemoryOperations {
     id--;
   }
 
-  public GridPane generateSlide(Character left, Character right, TextField narrativeText) {
+  public GridPane generateSlide(Character left, Character right, TextField aboveNarrativeText, TextField belowNarrativeText) {
     GridPane generatedSlide = new GridPane();
 
-    SavedSlide slide = new SavedSlide(id, left, right, narrativeText);
+    SavedSlide slide = new SavedSlide(id, left, right, aboveNarrativeText, belowNarrativeText);
     slideArrayList.add(slide);
 
     ImageView leftImage = slide.getCharacterLeft().getImage();
@@ -117,8 +121,8 @@ public class MemoryOperations {
     for (SavedSlide slide : slideArrayList) {
       strings.add("<panel>");
 
-      if (slide.getAboveNarrativeText() != null) {
-        strings.add("<above>" + slide.getAboveNarrativeText() + "</above>");
+      if (!slide.getAboveNarrativeText().getText().isEmpty()) {
+        strings.add("<above>" + slide.getAboveNarrativeText().getText() + "</above>");
       }
 
       // Left Character
@@ -207,8 +211,8 @@ public class MemoryOperations {
       }
       strings.add("<right>");
 
-      if (slide.getBelowNarrativeText() != null) {
-        strings.add("<below>" + slide.getBelowNarrativeText() + "</below>");
+      if (!slide.getBelowNarrativeText().getText().isEmpty()) {
+        strings.add("<below>" + slide.getBelowNarrativeText().getText() + "</below>");
       }
       strings.add("</panel>");
     }

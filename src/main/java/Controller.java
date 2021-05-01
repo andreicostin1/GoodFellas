@@ -11,7 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,7 +54,8 @@ public class Controller {
   @FXML ColorPicker skinColorPicker = new ColorPicker();
   @FXML TextField usertxt;
   @FXML TextField usertxt2;
-  @FXML TextField narrativeText;
+  @FXML TextField aboveNarrativeText;
+  @FXML TextField belowNarrativeText;
   @FXML TextField textLeft = new TextField();
   @FXML TextField textRight = new TextField();
 
@@ -67,13 +72,8 @@ public class Controller {
   public enum Direction {
     LEFT,
     RIGHT,
-    UP,
-    DOWN,
     NONE
   }
-
-  // where the narrative text currently is
-  Direction narrativeDirection = Direction.NONE;
 
   MemoryOperations memoryOperations = new MemoryOperations();
   Character left = new Character();
@@ -130,8 +130,7 @@ public class Controller {
           narrativeText();
         } else if (e.getSource().equals(save)) {
           try {
-            memoryOperations.save(
-                left, right, listView, narrativeText);
+            memoryOperations.save(left, right, listView, aboveNarrativeText, belowNarrativeText);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -243,7 +242,15 @@ public class Controller {
     File file = fileChooser.showOpenDialog(Main.primaryStage);
 
     if (file != null) {
-
+      try {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+        doc.getDocumentElement().normalize();
+        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 
@@ -725,21 +732,8 @@ public class Controller {
     right.setText(rightLabel.getText());
   }
 
-    public void narrativeText() {
-        switch (narrativeDirection) {
-            case UP -> {
-                upperNarrative.setText(" ");
-                lowerNarrative.setText(narrativeText.getText());
-                narrativeDirection = Direction.DOWN;
-            }
-            case DOWN -> {
-                lowerNarrative.setText(" ");
-                narrativeDirection = Direction.NONE;
-            }
-            default -> {
-                upperNarrative.setText(narrativeText.getText());
-                narrativeDirection = Direction.UP;
-            }
-        }
-    }
+  public void narrativeText() {
+      upperNarrative.setText(aboveNarrativeText.getText());
+      lowerNarrative.setText(belowNarrativeText.getText());
+  }
 }
