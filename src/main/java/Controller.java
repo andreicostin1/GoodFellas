@@ -202,13 +202,9 @@ public class Controller {
     Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
     rightDisplayBox.setOnMouseClicked(
-        (MouseEvent e) -> {
-          characterSelected(rightDisplayBox);
-        });
+        (MouseEvent e) -> characterSelected(rightDisplayBox));
     leftDisplayBox.setOnMouseClicked(
-        (MouseEvent e) -> {
-          characterSelected(leftDisplayBox);
-        });
+        (MouseEvent e) -> characterSelected(leftDisplayBox));
   }
 
   public void saveAsXML() {
@@ -285,7 +281,7 @@ public class Controller {
       }
     }
     // to make list alphabetical
-    poseList.sort(Comparator.comparing(o -> o.getName()));
+    poseList.sort(Comparator.comparing(Character::getName));
 
     if (fileSystem != null) {
       fileSystem.close();
@@ -439,7 +435,7 @@ public class Controller {
   }
 
   public void changeGender(HBox currentlySelected) {
-    Character changingCharacter = new Character();
+    Character changingCharacter;
 
     try {
       if (currentlySelected.equals(leftDisplayBox)) {
@@ -525,8 +521,8 @@ public class Controller {
         throw new IllegalArgumentException("Please select a character");
     }
 
-    Character updatedCharacter = new Character();
-    HBox panelSide = new HBox();
+    Character updatedCharacter;
+    HBox panelSide;
 
     if(currentlySelected.equals(leftDisplayBox)){
       updatedCharacter = left;
@@ -588,8 +584,8 @@ public class Controller {
       throw new IllegalArgumentException("Please select a character");
     }
 
-    Character updatedCharacter = new Character();
-    HBox panelSide = new HBox();
+    Character updatedCharacter;
+    HBox panelSide;
 
     if(currentlySelected.equals(leftDisplayBox)){
       updatedCharacter = left;
@@ -658,7 +654,7 @@ public class Controller {
     }
     out = usertxt.getText();
 
-    if (out == "") {
+    if (out.equals("")) {
       throw new IllegalArgumentException("Please add text");
     }
 
@@ -697,7 +693,7 @@ public class Controller {
 
     out = usertxt2.getText();
 
-    if (out == "") {
+    if (out.equals("")) {
       throw new IllegalArgumentException("Please add text");
     }
 
