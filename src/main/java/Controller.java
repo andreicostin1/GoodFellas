@@ -86,8 +86,8 @@ public class Controller {
   String out = "";
   Label leftLabel = new Label();
   Label rightLabel = new Label();
-  int leftscale=1;
-  int rightscale=1;
+  int leftScale = 1;
+  int rightScale = 1;
 
   EventHandler<MouseEvent> eventHandler =
       e -> {
@@ -122,30 +122,34 @@ public class Controller {
             throwAlertMessage("Error adding bubble", f);
           }
         } else if (e.getSource().equals(Delete)) {
-          memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
-          clearPane();
-        }
-                else if (e.getSource().equals(narrative)) {
-                    narrativeText();
-                }
-        else if (e.getSource().equals(save)) {
+          try {
+            memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
+            clearPane();
+          } catch (Exception f) {
+            throwAlertMessage("Error deleting character", f);
+          }
+        } else if (e.getSource().equals(narrative)) {
+          narrativeText();
+        } else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(
-                left, right, leftDisplayBox, rightDisplayBox, listView, narrativeText,leftscale,rightscale);
+                left, right, listView, narrativeText, leftScale, rightScale);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
         } else if (e.getSource().equals(listView)) {
-          memoryOperations.load(
-              display,
-              leftDisplayBox,
-              rightDisplayBox,
-              listView.getSelectionModel().getSelectedIndex(),
-              listView,
-              speachBubbleLeft,
-              speachBubbleRight,
-              textLeft,
-              textRight);
+          try {
+            memoryOperations.load(
+                    leftDisplayBox,
+                    rightDisplayBox,
+                    listView.getSelectionModel().getSelectedIndex(),
+                    speachBubbleLeft,
+                    speachBubbleRight,
+                    textLeft,
+                    textRight);
+          } catch (Exception f) {
+            throwAlertMessage("Error loading Frame", f);
+          }
         }
       };
 
@@ -218,7 +222,6 @@ public class Controller {
 
     //Show save file dialog
     File file = fileChooser.showSaveDialog(Main.primaryStage);
-
 
     if (file != null) {
       PrintWriter writer;
@@ -439,9 +442,9 @@ public class Controller {
       right = toFlip;
     }
     if (currentlySelected.equals(leftDisplayBox)){
-      leftscale=(int)currentlySelected.getScaleX();
+      leftScale =(int)currentlySelected.getScaleX();
     } else {
-      rightscale=(int)currentlySelected.getScaleX();
+      rightScale =(int)currentlySelected.getScaleX();
     }
   }
 

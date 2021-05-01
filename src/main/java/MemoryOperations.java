@@ -19,8 +19,6 @@ public class MemoryOperations {
   public void save(
       Character left,
       Character right,
-      HBox leftDisplay,
-      HBox rightDisplay,
       ListView<GridPane> listView,
       TextField narrativeText,
       int leftScale,
@@ -28,8 +26,7 @@ public class MemoryOperations {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
-    savedSlide =
-        generateSlide(left, right, leftDisplay, rightDisplay, narrativeText, leftScale, rightScale);
+    savedSlide = generateSlide(left, right, narrativeText, leftScale, rightScale);
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
     listView.getItems().add(savedSlide);
@@ -38,17 +35,15 @@ public class MemoryOperations {
   }
 
   public void load(
-      GridPane display,
       HBox leftDisplay,
       HBox rightDisplay,
       int index,
-      ListView<GridPane> listView,
-      HBox speachBubbleLeft,
-      HBox speachBubbleRight,
+      HBox speechBubbleLeft,
+      HBox speechBubbleRight,
       TextField textLeft,
       TextField textRight) {
     if (slideArrayList.size() == 0) {
-      return;
+      throw new IllegalArgumentException("Pleasea add a slide before trying to load it");
     }
 
     leftDisplay.getChildren().clear();
@@ -63,38 +58,35 @@ public class MemoryOperations {
     left.setFitWidth(150);
     leftDisplay.getChildren().add(left);
 
-    if (slideToLoad.getCharacterLeft().getBubble().getImage() != null) {
-      speachBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
+    if (slideToLoad.getCharacterLeft().getBubble() != null) {
+      speechBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
     }
     if (slideToLoad.getCharacterLeft().getText() != null) {
-      // textLeft.setText(slideToLoad.getCharacterLeft().getText());
+      textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
     right.setFitHeight(150);
     right.setFitWidth(150);
     rightDisplay.getChildren().add(right);
 
-    if (slideToLoad.getCharacterRight().getBubble().getImage() != null) {
-      speachBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
+    if (slideToLoad.getCharacterRight().getBubble() != null) {
+      speechBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
     }
     if (slideToLoad.getCharacterRight().getText() != null) {
-      // textRight.setText(slideToLoad.getCharacterRight().getText());
+      textRight.setText(slideToLoad.getCharacterRight().getText());
     }
   }
 
   public void delete(int index, ListView<GridPane> listView) {
+    if (listView.getItems().size() == 0) {
+      throw new IllegalArgumentException("Please add a slide before deleting");
+    }
     listView.getItems().remove(index);
     id--;
   }
 
   public GridPane generateSlide(
-      Character left,
-      Character right,
-      HBox leftDisplay,
-      HBox rightDisplay,
-      TextField narrativeText,
-      int leftScale,
-      int rightScale) {
+      Character left, Character right, TextField narrativeText, int leftScale, int rightScale) {
     GridPane generatedSlide = new GridPane();
 
     SavedSlide slide = new SavedSlide(id, left, right, narrativeText);
@@ -107,8 +99,7 @@ public class MemoryOperations {
     leftImage.setFitWidth(110);
     rightImage.setFitWidth(110);
     rightImage.setFitHeight(110);
-    System.out.print((int) left.getImage().getScaleX() + "|");
-    System.out.print((int) right.getImage().getScaleX() + "|");
+
     if (leftScale == -1) {
       leftImage.setScaleX(-1);
     } else {
@@ -139,107 +130,101 @@ public class MemoryOperations {
     strings.add("<comic>");
     strings.add("<panels>");
 
-    for(SavedSlide slide : slideArrayList) {
+    for (SavedSlide slide : slideArrayList) {
       strings.add("<panel>");
 
-      if(slide.getAboveNarrativeText() != null) {
-        strings.add("<above>"+slide.getAboveNarrativeText()+"</above>");
+      if (slide.getAboveNarrativeText() != null) {
+        strings.add("<above>" + slide.getAboveNarrativeText() + "</above>");
       }
 
-      //Left Character
+      // Left Character
       strings.add("<left>");
-      if(slide.getCharacterLeft() != null) {
+      if (slide.getCharacterLeft() != null) {
         character = slide.getCharacterLeft();
         strings.add("<figure>");
-        strings.add("<name>"+character.getName()+"</name>");
-        strings.add("<appearance>"+character.getGender()+"</appearance>");
+        strings.add("<name>" + character.getName() + "</name>");
+        strings.add("<appearance>" + character.getGender() + "</appearance>");
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
         Color braid = character.getBraidColor();
 
-        //skin
-        if(skin.equals(defaultSkin)) {
+        // skin
+        if (skin.equals(defaultSkin)) {
           strings.add("</skin>default</skin>");
-        }
-        else
-        {
-          strings.add("</skin>"+skin.toString()+"</skin>");
+        } else {
+          strings.add("</skin>" + skin.toString() + "</skin>");
         }
 
-        //hair
-        if(hair.equals(defaultHair)) {
+        // hair
+        if (hair.equals(defaultHair)) {
           strings.add("</hair>default</hair>");
-        }
-        else {
-          strings.add("</hair>"+hair.toString()+"</hair>");
+        } else {
+          strings.add("</hair>" + hair.toString() + "</hair>");
         }
 
-        //braid
-        if(braid.equals(defaultBraid)) {
+        // braid
+        if (braid.equals(defaultBraid)) {
           strings.add("<braid>default</braid>");
         } else {
-          strings.add("<braid>"+braid.toString()+"</braid>");
+          strings.add("<braid>" + braid.toString() + "</braid>");
         }
 
-        strings.add("<facing>"+character.getFacing()+"</facing>");
+        strings.add("<facing>" + character.getFacing() + "</facing>");
         strings.add("</figure>");
 
-        //bubble
-        if(character.getBubble() != null) {
-          strings.add("<balloon status = \""+character.getBubble().getName()+"\">");
-          strings.add("<content>"+character.getText()+"<content>");
+        // bubble
+        if (character.getBubble() != null) {
+          strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
+          strings.add("<content>" + character.getText() + "<content>");
         }
       }
       strings.add("</left>");
 
-      //Right Character
+      // Right Character
       strings.add("<right>");
-      if(slide.getCharacterRight() != null) {
+      if (slide.getCharacterRight() != null) {
         character = slide.getCharacterRight();
         strings.add("<figure>");
-        strings.add("<name>"+character.getName()+"</name>");
-        strings.add("<appearance>"+character.getGender()+"</appearance>");
+        strings.add("<name>" + character.getName() + "</name>");
+        strings.add("<appearance>" + character.getGender() + "</appearance>");
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
         Color braid = character.getBraidColor();
 
-        //skin
-        if(skin.equals(defaultSkin)) {
+        // skin
+        if (skin.equals(defaultSkin)) {
           strings.add("</skin>default</skin>");
-        }
-        else
-        {
-          strings.add("</skin>"+skin.toString()+"</skin>");
+        } else {
+          strings.add("</skin>" + skin.toString() + "</skin>");
         }
 
-        //hair
-        if(hair.equals(defaultHair)) {
+        // hair
+        if (hair.equals(defaultHair)) {
           strings.add("</hair>default</hair>");
-        }
-        else {
-          strings.add("</hair>"+hair.toString()+"</hair>");
+        } else {
+          strings.add("</hair>" + hair.toString() + "</hair>");
         }
 
-        //braid
-        if(braid.equals(defaultBraid)) {
+        // braid
+        if (braid.equals(defaultBraid)) {
           strings.add("<braid>default</braid>");
         } else {
-          strings.add("<braid>"+braid.toString()+"</braid>");
+          strings.add("<braid>" + braid.toString() + "</braid>");
         }
 
-        strings.add("<facing>"+character.getFacing()+"</facing>");
+        strings.add("<facing>" + character.getFacing() + "</facing>");
         strings.add("</figure>");
 
-        //bubble
-        if(character.getBubble() != null) {
-          strings.add("<balloon status = \""+character.getBubble().getName()+"\">");
-          strings.add("<content>"+character.getText()+"<content>");
+        // bubble
+        if (character.getBubble() != null) {
+          strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
+          strings.add("<content>" + character.getText() + "<content>");
         }
       }
       strings.add("<right>");
 
-      if(slide.getBelowNarrativeText() != null) {
-        strings.add("<below>"+slide.getBelowNarrativeText()+"</below>");
+      if (slide.getBelowNarrativeText() != null) {
+        strings.add("<below>" + slide.getBelowNarrativeText() + "</below>");
       }
       strings.add("</panel>");
     }
