@@ -17,10 +17,7 @@ public class MemoryOperations {
   private int id = 0;
 
   public void save(
-      Character left,
-      Character right,
-      ListView<GridPane> listView,
-      TextField narrativeText) {
+      Character left, Character right, ListView<GridPane> listView, TextField narrativeText) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
@@ -41,7 +38,7 @@ public class MemoryOperations {
       TextField textLeft,
       TextField textRight) {
     if (slideArrayList.size() == 0) {
-      throw new IllegalArgumentException("Pleasea add a slide before trying to load it");
+      throw new IllegalArgumentException("Please add a slide before trying to load it");
     }
 
     leftDisplay.getChildren().clear();
@@ -83,8 +80,7 @@ public class MemoryOperations {
     id--;
   }
 
-  public GridPane generateSlide(
-      Character left, Character right, TextField narrativeText) {
+  public GridPane generateSlide(Character left, Character right, TextField narrativeText) {
     GridPane generatedSlide = new GridPane();
 
     SavedSlide slide = new SavedSlide(id, left, right, narrativeText);

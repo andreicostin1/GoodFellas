@@ -13,7 +13,8 @@ public class SavedSlide {
   private TextField belowNarrativeText;
   private Bubble leftBubble, rightBubble;
 
-  public SavedSlide(int ID, Character characterLeft, Character characterRight, TextField narrativeText) {
+  public SavedSlide(
+      int ID, Character characterLeft, Character characterRight, TextField narrativeText) {
     this.ID = ID;
     this.characterLeft = characterLeft;
     this.characterRight = characterRight;
@@ -52,11 +53,19 @@ public class SavedSlide {
     this.narrativeText = narrativeText;
   }
 
-  public TextField getAboveNarrativeText() { return aboveNarrativeText; }
+  public TextField getAboveNarrativeText() {
+    return aboveNarrativeText;
+  }
 
-  public void setAboveNarrativeText(TextField aboveNarrativeText) { this.aboveNarrativeText = aboveNarrativeText; }
+  public void setAboveNarrativeText(TextField aboveNarrativeText) {
+    this.aboveNarrativeText = aboveNarrativeText;
+  }
 
-  public TextField getBelowNarrativeText() { return belowNarrativeText; }
+  public TextField getBelowNarrativeText() {
+    return belowNarrativeText;
+  }
 
-  public void setBelowNarrativeText(TextField belowNarrativeText) { this.belowNarrativeText = belowNarrativeText; }
+  public void setBelowNarrativeText(TextField belowNarrativeText) {
+    this.belowNarrativeText = belowNarrativeText;
+  }
 }
