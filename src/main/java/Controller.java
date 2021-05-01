@@ -76,18 +76,16 @@ public class Controller {
   Direction narrativeDirection = Direction.NONE;
 
   MemoryOperations memoryOperations = new MemoryOperations();
-  Character left = null;
-  Character right = null;
-  Bubble leftBubble = null;
-  Bubble rightBubble = null;
+  Character left = new Character();
+  Character right = new Character();
+  Bubble leftBubble = new Bubble();
+  Bubble rightBubble = new Bubble();
 
   HBox currentlySelected = null;
 
   String out = "";
   Label leftLabel = new Label();
   Label rightLabel = new Label();
-  int leftScale = 1;
-  int rightScale = 1;
 
   EventHandler<MouseEvent> eventHandler =
       e -> {
@@ -133,7 +131,7 @@ public class Controller {
         } else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(
-                left, right, listView, narrativeText, leftScale, rightScale);
+                left, right, listView, narrativeText);
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -260,6 +258,7 @@ public class Controller {
     alert.setContentText(f.getMessage());
     alert.showAndWait();
   }
+
   // Creates a list of main.java.Character objects for each image
   public void createPoseList() throws URISyntaxException, IOException {
     URI uri = getClass().getResource("/main/resources/characters/").toURI();
@@ -286,7 +285,7 @@ public class Controller {
       }
     }
     // to make list alphabetical
-    poseList.sort(Comparator.comparing(o -> o.name));
+    poseList.sort(Comparator.comparing(o -> o.getName()));
 
     if (fileSystem != null) {
       fileSystem.close();
@@ -394,8 +393,8 @@ public class Controller {
     if (right != null) {
       right.getImage().setScaleX(1);
     }
-    left = null;
-    right = null;
+    left = new Character();
+    right = new Character();
   }
 
   // function to find character in list
@@ -414,7 +413,7 @@ public class Controller {
   }
 
   public void flip(HBox currentlySelected) {
-    Character toFlip = null;
+    Character toFlip = new Character();
 
     if (currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character to flip");
@@ -426,14 +425,10 @@ public class Controller {
     } else if (currentlySelected.equals(rightDisplayBox)) {
       toFlip = right;
       rightDisplayBox.getChildren().clear();
-    } else if (toFlip == null) {
-      return;
     }
-    if (currentlySelected.getScaleX() == -1) {
-      currentlySelected.setScaleX(1);
-    } else {
-      currentlySelected.setScaleX(-1);
-    }
+
+    toFlip.setScale();
+    currentlySelected.setScaleX(toFlip.getScale());
     currentlySelected.getChildren().add(toFlip.getImage());
 
     if (currentlySelected.equals(leftDisplayBox)) {
@@ -441,15 +436,10 @@ public class Controller {
     } else {
       right = toFlip;
     }
-    if (currentlySelected.equals(leftDisplayBox)){
-      leftScale =(int)currentlySelected.getScaleX();
-    } else {
-      rightScale =(int)currentlySelected.getScaleX();
-    }
   }
 
   public void changeGender(HBox currentlySelected) {
-    Character changingCharacter = null;
+    Character changingCharacter = new Character();
 
     try {
       if (currentlySelected.equals(leftDisplayBox)) {
@@ -743,21 +733,21 @@ public class Controller {
     right.setText(rightLabel.getText());
   }
 
-      public void narrativeText() {
-          switch (narrativeDirection) {
-              case UP -> {
-                  upperNarrative.setText(" ");
-                  lowerNarrative.setText(narrativeText.getText());
-                  narrativeDirection = Direction.DOWN;
-              }
-              case DOWN -> {
-                  lowerNarrative.setText(" ");
-                  narrativeDirection = Direction.NONE;
-              }
-              default -> {
-                  upperNarrative.setText(narrativeText.getText());
-                  narrativeDirection = Direction.UP;
-              }
-          }
-      }
+    public void narrativeText() {
+        switch (narrativeDirection) {
+            case UP -> {
+                upperNarrative.setText(" ");
+                lowerNarrative.setText(narrativeText.getText());
+                narrativeDirection = Direction.DOWN;
+            }
+            case DOWN -> {
+                lowerNarrative.setText(" ");
+                narrativeDirection = Direction.NONE;
+            }
+            default -> {
+                upperNarrative.setText(narrativeText.getText());
+                narrativeDirection = Direction.UP;
+            }
+        }
+    }
 }

@@ -20,13 +20,11 @@ public class MemoryOperations {
       Character left,
       Character right,
       ListView<GridPane> listView,
-      TextField narrativeText,
-      int leftScale,
-      int rightScale) {
+      TextField narrativeText) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
-    savedSlide = generateSlide(left, right, narrativeText, leftScale, rightScale);
+    savedSlide = generateSlide(left, right, narrativeText);
     savedSlide.setPrefSize(225, 225);
     savedSlide.setGridLinesVisible(true);
     listView.getItems().add(savedSlide);
@@ -86,7 +84,7 @@ public class MemoryOperations {
   }
 
   public GridPane generateSlide(
-      Character left, Character right, TextField narrativeText, int leftScale, int rightScale) {
+      Character left, Character right, TextField narrativeText) {
     GridPane generatedSlide = new GridPane();
 
     SavedSlide slide = new SavedSlide(id, left, right, narrativeText);
@@ -97,20 +95,10 @@ public class MemoryOperations {
 
     leftImage.setFitHeight(110);
     leftImage.setFitWidth(110);
+    leftImage.setScaleX(left.getScale());
     rightImage.setFitWidth(110);
     rightImage.setFitHeight(110);
-
-    if (leftScale == -1) {
-      leftImage.setScaleX(-1);
-    } else {
-      leftImage.setScaleX(1);
-    }
-
-    if (rightScale == -1) {
-      rightImage.setScaleX(-1);
-    } else {
-      rightImage.setScaleX(1);
-    }
+    rightImage.setScaleX(right.getScale());
 
     generatedSlide.add(leftImage, 0, 0);
     generatedSlide.add(rightImage, 1, 0);

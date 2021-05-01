@@ -5,32 +5,40 @@ import javafx.scene.paint.Color;
 
 public class Character {
 
-  public enum Facing {LEFT, RIGHT}
-  public enum Gender {MALE, FEMALE}
+  public enum Gender {
+    MALE,
+    FEMALE
+  }
 
-  String name;
-  ImageView image;
-  Color hairColor;
-  Color braidColor;
-  Color skin;
-  String text;
-  Bubble bubble;
-  Facing facing;
-  Gender gender;
+  public enum Facing {
+    LEFT,
+    RIGHT
+  }
+
+  private String name;
+  private ImageView image;
+  private Color hairColor;
+  private Color braidColor;
+  private Color skin;
+  private String text;
+  private Bubble bubble;
+  private int scale;
+  private Facing facing;
+  private Gender gender;
 
   public Character(String name, ImageView image) {
     this.name = name;
     this.image = image;
     gender = Gender.FEMALE;
-    facing = Facing.RIGHT;
-    hairColor = null;
-    skin = null;
-    braidColor = null;
-    text = null;
-    bubble = null;
+    scale = 1;
+    setFacing();
   }
 
-  public Character() {}
+  public Character() {
+    gender = Gender.FEMALE;
+    scale = 1;
+    setFacing();
+  }
 
   public String getName() {
     return name;
@@ -40,9 +48,17 @@ public class Character {
     this.name = name;
   }
 
-  public Gender getGender() { return gender; }
+  public Gender getGender() {
+    return gender;
+  }
 
-  public void setGender() { this.gender = gender; }
+  public void setGender() {
+    if (gender == Gender.FEMALE) {
+      gender = Gender.MALE;
+    } else {
+      gender = Gender.FEMALE;
+    }
+  }
 
   public ImageView getImage() {
     return image;
@@ -92,7 +108,24 @@ public class Character {
     this.bubble = bubble;
   }
 
-  public Facing getFacing() { return facing; }
+  public int getScale() {
+    return scale;
+  }
 
-  public void setFacing(Facing facing) { this.facing = facing; }
+  public void setScale() {
+    scale *= -1;
+    setFacing();
+  }
+
+  public Facing getFacing() {
+    return facing;
+  }
+
+  public void setFacing() {
+    if (scale == 1) {
+      facing = Facing.LEFT;
+    } else {
+      facing = Facing.RIGHT;
+    }
+  }
 }
