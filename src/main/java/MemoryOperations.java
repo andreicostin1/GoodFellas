@@ -131,23 +131,23 @@ public class MemoryOperations {
         character = slide.getCharacterLeft();
         strings.add("<figure>");
         strings.add("<name>" + character.getName() + "</name>");
-        strings.add("<appearance>" + character.getGender() + "</appearance>");
+        strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
         Color braid = character.getBraidColor();
 
         // skin
         if (skin.equals(defaultSkin)) {
-          strings.add("</skin>default</skin>");
+          strings.add("<skin>default</skin>");
         } else {
-          strings.add("</skin>" + skin.toString() + "</skin>");
+          strings.add("<skin>" + skin.toString() + "</skin>");
         }
 
         // hair
         if (hair.equals(defaultHair)) {
-          strings.add("</hair>default</hair>");
+          strings.add("<hair>default</hair>");
         } else {
-          strings.add("</hair>" + hair.toString() + "</hair>");
+          strings.add("<hair>" + hair.toString() + "</hair>");
         }
 
         // braid
@@ -157,7 +157,7 @@ public class MemoryOperations {
           strings.add("<braid>" + braid.toString() + "</braid>");
         }
 
-        strings.add("<facing>" + character.getFacing() + "</facing>");
+        strings.add("<facing>" + character.getFacing().toString() + "</facing>");
         strings.add("</figure>");
 
         // bubble
@@ -174,23 +174,23 @@ public class MemoryOperations {
         character = slide.getCharacterRight();
         strings.add("<figure>");
         strings.add("<name>" + character.getName() + "</name>");
-        strings.add("<appearance>" + character.getGender() + "</appearance>");
+        strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
         Color braid = character.getBraidColor();
 
         // skin
         if (skin.equals(defaultSkin)) {
-          strings.add("</skin>default</skin>");
+          strings.add("<skin>default</skin>");
         } else {
-          strings.add("</skin>" + skin.toString() + "</skin>");
+          strings.add("<skin>" + skin.toString() + "</skin>");
         }
 
         // hair
         if (hair.equals(defaultHair)) {
-          strings.add("</hair>default</hair>");
+          strings.add("<hair>default</hair>");
         } else {
-          strings.add("</hair>" + hair.toString() + "</hair>");
+          strings.add("<hair>" + hair.toString() + "</hair>");
         }
 
         // braid
@@ -200,7 +200,7 @@ public class MemoryOperations {
           strings.add("<braid>" + braid.toString() + "</braid>");
         }
 
-        strings.add("<facing>" + character.getFacing() + "</facing>");
+        strings.add("<facing>" + character.getFacing().toString() + "</facing>");
         strings.add("</figure>");
 
         // bubble
@@ -209,7 +209,7 @@ public class MemoryOperations {
           strings.add("<content>" + character.getText() + "<content>");
         }
       }
-      strings.add("<right>");
+      strings.add("</right>");
 
       if (!slide.getBelowNarrativeText().getText().isEmpty()) {
         strings.add("<below>" + slide.getBelowNarrativeText().getText() + "</below>");
