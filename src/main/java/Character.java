@@ -5,22 +5,24 @@ import javafx.scene.paint.Color;
 
 public class Character {
 
+  public enum Facing {LEFT, RIGHT}
+  public enum Gender {MALE, FEMALE}
+
   String name;
-  String gender;
   ImageView image;
   Color hairColor;
   Color braidColor;
   Color skin;
   String text;
   Bubble bubble;
-
-  String facing;
+  Facing facing;
+  Gender gender;
 
   public Character(String name, ImageView image) {
     this.name = name;
     this.image = image;
-    gender = "female";
-    facing = "right";
+    gender = Gender.FEMALE;
+    facing = Facing.RIGHT;
     hairColor = null;
     skin = null;
     braidColor = null;
@@ -38,7 +40,7 @@ public class Character {
     this.name = name;
   }
 
-  public String getGender() { return gender; }
+  public Gender getGender() { return gender; }
 
   public void setGender() { this.gender = gender; }
 
@@ -90,7 +92,7 @@ public class Character {
     this.bubble = bubble;
   }
 
-  public String getFacing() { return facing; }
+  public Facing getFacing() { return facing; }
 
-  public void setFacing(String facing) { this.facing = facing; }
+  public void setFacing(Facing facing) { this.facing = facing; }
 }
