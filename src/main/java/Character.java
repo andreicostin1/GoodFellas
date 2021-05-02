@@ -114,6 +114,7 @@ public class Character {
 
   public void setScale() {
     scale *= -1;
+    image.setScaleX(scale);
     setFacing();
   }
 

@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
@@ -29,7 +30,7 @@ import java.util.stream.Stream;
 
 public class Controller {
 
-  //Menu Items
+  // Menu Items
   @FXML MenuItem saveXML = new MenuItem();
   @FXML MenuItem loadXML = new MenuItem();
   @FXML MenuItem close = new MenuItem();
@@ -130,7 +131,8 @@ public class Controller {
           narrativeText();
         } else if (e.getSource().equals(save)) {
           try {
-            memoryOperations.save(left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
+            memoryOperations.save(
+                left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
             clearPane();
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
@@ -138,15 +140,15 @@ public class Controller {
         } else if (e.getSource().equals(listView)) {
           try {
             memoryOperations.load(
-                    leftDisplayBox,
-                    rightDisplayBox,
-                    listView.getSelectionModel().getSelectedIndex(),
-                    speechBubbleLeft,
-                    speechBubbleRight,
-                    textLeft,
-                    textRight,
-                    upperNarrative,
-                    lowerNarrative);
+                leftDisplayBox,
+                rightDisplayBox,
+                listView.getSelectionModel().getSelectedIndex(),
+                speechBubbleLeft,
+                speechBubbleRight,
+                textLeft,
+                textRight,
+                upperNarrative,
+                lowerNarrative);
           } catch (Exception f) {
             throwAlertMessage("Error loading Frame", f);
           }
@@ -163,7 +165,7 @@ public class Controller {
       };
 
   public void initialize() {
-    //Menu Bar
+    // Menu Bar
     saveXML.setOnAction(event -> saveAsXML());
     loadXML.setOnAction(event -> loadXML());
 
@@ -203,20 +205,18 @@ public class Controller {
     listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
-    rightDisplayBox.setOnMouseClicked(
-        (MouseEvent e) -> characterSelected(rightDisplayBox));
-    leftDisplayBox.setOnMouseClicked(
-        (MouseEvent e) -> characterSelected(leftDisplayBox));
+    rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
+    leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
   }
 
   public void saveAsXML() {
     FileChooser fileChooser = new FileChooser();
 
-    //Set extension filter for text files
+    // Set extension filter for text files
     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
     fileChooser.getExtensionFilters().add(extFilter);
 
-    //Show save file dialog
+    // Show save file dialog
     File file = fileChooser.showSaveDialog(Main.primaryStage);
 
     if (file != null) {
@@ -224,7 +224,7 @@ public class Controller {
       try {
         writer = new PrintWriter(file);
         ArrayList<String> strings = memoryOperations.toXML();
-        for(String string : strings) {
+        for (String string : strings) {
           writer.println(string);
         }
         writer.close();
@@ -237,11 +237,11 @@ public class Controller {
   public void loadXML() {
     FileChooser fileChooser = new FileChooser();
 
-    //Set extension filter for text files
+    // Set extension filter for text files
     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
     fileChooser.getExtensionFilters().add(extFilter);
 
-    //Show save file dialog
+    // Show save file dialog
     File file = fileChooser.showOpenDialog(Main.primaryStage);
 
     if (file != null) {
@@ -251,12 +251,10 @@ public class Controller {
         Document doc = dBuilder.parse(file);
         doc.getDocumentElement().normalize();
 
-
-        if(!doc.getDocumentElement().getNodeName().equals("comic")) {
-          //alert the user their file is not valid
+        if (!doc.getDocumentElement().getNodeName().equals("comic")) {
+          // alert the user their file is not valid
           throwAlertMessage("File invalid", new Exception());
-        }
-        else {
+        } else {
           clearPane();
           memoryOperations.clear(listView);
 
@@ -264,8 +262,8 @@ public class Controller {
           Element panelsElement = (Element) panelsNode;
           NodeList panels = panelsElement.getElementsByTagName("panel");
 
-          //get each panel
-          for(int i = 0; i < panels.getLength(); i++) {
+          // get each panel
+          for (int i = 0; i < panels.getLength(); i++) {
             Element panel = (Element) panels.item(i);
             Element above = (Element) panel.getElementsByTagName("above").item(0);
             Element below = (Element) panel.getElementsByTagName("below").item(0);
@@ -278,8 +276,10 @@ public class Controller {
             Element leftFigureName = (Element) leftFigure.getElementsByTagName("name").item(0);
             Element rightFigureName = (Element) rightFigure.getElementsByTagName("name").item(0);
 
-            Element leftFigureAppearance = (Element) leftFigure.getElementsByTagName("appearance").item(0);
-            Element rightFigureAppearance = (Element) rightFigure.getElementsByTagName("appearance").item(0);
+            Element leftFigureAppearance =
+                (Element) leftFigure.getElementsByTagName("appearance").item(0);
+            Element rightFigureAppearance =
+                (Element) rightFigure.getElementsByTagName("appearance").item(0);
 
             Element leftFigureSkin = (Element) leftFigure.getElementsByTagName("skin").item(0);
             Element rightFigureSkin = (Element) rightFigure.getElementsByTagName("skin").item(0);
@@ -288,57 +288,59 @@ public class Controller {
             Element rightFigureHair = (Element) rightFigure.getElementsByTagName("hair").item(0);
 
             Element leftFigureFacing = (Element) leftFigure.getElementsByTagName("facing").item(0);
-            Element rightFigureFacing = (Element) rightFigure.getElementsByTagName("facing").item(0);
+            Element rightFigureFacing =
+                (Element) rightFigure.getElementsByTagName("facing").item(0);
 
-            //Left Character
+            // Left Character
             currentlySelected = leftDisplayBox;
             left = findCharacter(leftFigureName.getTextContent());
             left.getImage().setFitHeight(150);
             left.getImage().setFitWidth(150);
-            if(leftFigureAppearance.getTextContent().equals("MALE")) {
+            if (leftFigureAppearance.getTextContent().equals("MALE")) {
               changeGender(leftDisplayBox);
             }
-            if(!leftFigureSkin.getTextContent().equals("default")) {
+            if (!leftFigureSkin.getTextContent().equals("default")) {
               skinColorPicker.setValue(Color.web(leftFigureSkin.getTextContent()));
               changeSkinColor();
             }
-            if(!leftFigureHair.getTextContent().equals("default")) {
+            if (!leftFigureHair.getTextContent().equals("default")) {
               hairColorPicker.setValue(Color.web(leftFigureHair.getTextContent()));
               changeHairColor();
             }
-            if(leftFigureFacing.getTextContent().equals("RIGHT")) {
+            if (leftFigureFacing.getTextContent().equals("RIGHT")) {
               flip();
             }
 
-            //Right Character
+            // Right Character
             currentlySelected = rightDisplayBox;
             right = findCharacter(rightFigureName.getTextContent());
             right.getImage().setFitHeight(150);
             right.getImage().setFitWidth(150);
-            if(rightFigureAppearance.getTextContent().equals("MALE")) {
+            if (rightFigureAppearance.getTextContent().equals("MALE")) {
               changeGender(rightDisplayBox);
             }
-            if(!rightFigureSkin.getTextContent().equals("default")) {
+            if (!rightFigureSkin.getTextContent().equals("default")) {
               skinColorPicker.setValue(Color.web(rightFigureSkin.getTextContent()));
               changeSkinColor();
             }
-            if(!rightFigureHair.getTextContent().equals("default")) {
+            if (!rightFigureHair.getTextContent().equals("default")) {
               hairColorPicker.setValue(Color.web(rightFigureHair.getTextContent()));
               changeHairColor();
             }
-            if(rightFigureFacing.getTextContent().equals("RIGHT")) {
+            if (rightFigureFacing.getTextContent().equals("RIGHT")) {
               flip();
             }
 
-            if(above != null) {
+            if (above != null) {
               aboveNarrativeText.setText(above.getTextContent());
             }
 
-            if(below != null) {
+            if (below != null) {
               belowNarrativeText.setText(below.getTextContent());
             }
 
-            memoryOperations.save(left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
+            memoryOperations.save(
+                left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
           }
         }
       } catch (Exception e) {
@@ -527,7 +529,6 @@ public class Controller {
     }
 
     toFlip.setScale();
-    currentlySelected.setScaleX(toFlip.getScale());
     currentlySelected.getChildren().add(toFlip.getImage());
 
     if (currentlySelected.equals(leftDisplayBox)) {
@@ -607,7 +608,7 @@ public class Controller {
 
       if (currentlySelected.equals(leftDisplayBox)) {
         left = changingCharacter;
-        left.getImage().setImage(outputImage);
+        left.setImage(output);
         leftDisplayBox.getChildren().add(output);
       } else {
         right = changingCharacter;
@@ -621,13 +622,13 @@ public class Controller {
 
   public void changeHairColor() {
     if (currentlySelected == null) {
-        throw new IllegalArgumentException("Please select a character");
+      throw new IllegalArgumentException("Please select a character");
     }
 
     Character updatedCharacter;
     HBox panelSide;
 
-    if(currentlySelected.equals(leftDisplayBox)){
+    if (currentlySelected.equals(leftDisplayBox)) {
       updatedCharacter = left;
       panelSide = leftDisplayBox;
     } else {
@@ -690,7 +691,7 @@ public class Controller {
     Character updatedCharacter;
     HBox panelSide;
 
-    if(currentlySelected.equals(leftDisplayBox)){
+    if (currentlySelected.equals(leftDisplayBox)) {
       updatedCharacter = left;
       panelSide = leftDisplayBox;
     } else {
@@ -833,9 +834,9 @@ public class Controller {
   }
 
   public void narrativeText() {
-      upperNarrative.setText(aboveNarrativeText.getText());
-      lowerNarrative.setText(belowNarrativeText.getText());
-      aboveNarrativeText.clear();
-      belowNarrativeText.clear();
+    upperNarrative.setText(aboveNarrativeText.getText());
+    lowerNarrative.setText(belowNarrativeText.getText());
+    aboveNarrativeText.clear();
+    belowNarrativeText.clear();
   }
 }

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class Main extends Application {
   public static Stage primaryStage;
@@ -18,7 +19,7 @@ public class Main extends Application {
 
     try {
       URL url = getClass().getResource("/main/resources/view/SplashScreen.fxml");
-      Pane root = FXMLLoader.load(url);
+      Pane root = FXMLLoader.load(Objects.requireNonNull(url));
       Scene scene = new Scene(root, 700, 475);
 
       primaryStage.initStyle(StageStyle.UNDECORATED);
