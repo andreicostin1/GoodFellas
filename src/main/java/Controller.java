@@ -4,7 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,6 +23,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Controller {
@@ -66,8 +74,7 @@ public class Controller {
   ArrayList<Bubble> rightBubbleList = new ArrayList<>();
   ArrayList<Bubble> leftBubbleList = new ArrayList<>();
 
-  Color color_1 = Color.rgb(200, 200, 200);
-  Color color_2 = Color.rgb(100, 100, 100);
+  Color color_1 = Color.rgb(254, 254, 254);
 
   Label upperNarrative = new Label();
   Label lowerNarrative = new Label();
@@ -600,6 +607,7 @@ public class Controller {
   }
 
   public void changeGender(HBox currentlySelected) {
+
     Character changingCharacter;
 
     try {
@@ -636,25 +644,21 @@ public class Controller {
             double newBlue = (skinColor.getBlue() * 255) - 1;
             Color hideLipColor = new Color(255 / 255.0, 255 / 255.0, newBlue / 255.0, 1);
             writer.setColor(j, i, hideLipColor);
-          } else if (currColor.equals(
-              new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
+          } else if (currColor.equals(new Color(255 / 255.0, ((skinColor.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) {
             Color hideLipColor = new Color(255 / 255.0, 0 / 255.0, 0 / 255.0, 1);
             writer.setColor(j, i, hideLipColor);
-          } else if (currColor.equals(
-                  new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))
-              && color_1.equals(Color.rgb(200, 200, 200))) {
+          } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))
+              && color_1.equals(Color.rgb(254, 254, 254))) {
             Color hideLipColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
             writer.setColor(j, i, hideLipColor);
-          } else if (currColor.equals(
-              new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
+          } else if (currColor.equals(new Color(255 / 255.0, 255 / 255.0, ((skinColor.getBlue() * 255) - 1) / 255.0, 1))) {
             Color hideLipColor = new Color(236 / 255.0, 180 / 255.0, 181 / 255.0, 1);
             writer.setColor(j, i, hideLipColor);
           } else if (currColor.equals(color_1)) {
             double newRed = (skinColor.getRed() * 255) - 1;
             Color hideLipColor = new Color(newRed / 255.0, 255 / 255.0, 255 / 255.0, 1);
             writer.setColor(j, i, hideLipColor);
-          } else if (currColor.equals(
-              new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))) {
+          } else if (currColor.equals(new Color(((skinColor.getRed() * 255) - 1) / 255.0, 255 / 255.0, 255 / 255.0, 1))) {
             writer.setColor(j, i, color_1);
           } else {
             writer.setColor(j, i, currColor);
@@ -673,7 +677,7 @@ public class Controller {
         leftDisplayBox.getChildren().add(output);
       } else {
         right = changingCharacter;
-        right.getImage().setImage(outputImage);
+        right.setImage(output);
         rightDisplayBox.getChildren().add(output);
       }
     } catch (Exception e) {
@@ -849,7 +853,6 @@ public class Controller {
     speechBubbleLeft.getChildren().add(leftBubble.getImage());
     left.setBubble(leftBubble);
     left.setText(leftLabel.getText());
-
     usertxt.clear();
   }
 
@@ -899,7 +902,6 @@ public class Controller {
     if(bubbleName.equals("Bubbles")) {
       return;
     }
-
     if(currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character");
     }
@@ -913,7 +915,16 @@ public class Controller {
       speakingCharacter = right;
       out = usertxt2.getText();
     }
-
+    BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = img.createGraphics();
+    FontMetrics fm = g2d.getFontMetrics();
+    double textLength_1=fm.stringWidth(out);
+    g2d.dispose();
+    double textLength_2=fm.stringWidth(out);
+    //System.out.print(textLength_1+"  ");
+    if(textLength_1>170 || textLength_2>170){
+      throw new IllegalArgumentException("message to long enter again");
+    }
     if (speakingCharacter == null) {
       throw new IllegalArgumentException("Please add character before adding text");
     }
