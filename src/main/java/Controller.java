@@ -132,6 +132,8 @@ public class Controller {
         } else if (e.getSource().equals(save)) {
           try {
             memoryOperations.save(left, right, listView, aboveNarrativeText, belowNarrativeText);
+            upperNarrative.setText("");
+            lowerNarrative.setText("");
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -144,7 +146,9 @@ public class Controller {
                     speechBubbleLeft,
                     speechBubbleRight,
                     textLeft,
-                    textRight);
+                    textRight,
+                    upperNarrative,
+                    lowerNarrative);
           } catch (Exception f) {
             throwAlertMessage("Error loading Frame", f);
           }
@@ -473,14 +477,15 @@ public class Controller {
 
   // function to clear the display
   public void clearPane() {
+
     leftDisplayBox.getChildren().clear();
     rightDisplayBox.getChildren().clear();
     speechBubbleLeft.getChildren().clear();
     speechBubbleRight.getChildren().clear();
     leftLabel.setText(" ");
     rightLabel.setText(" ");
-    aboveNarrativeText.setText(" ");
-    belowNarrativeText.setText(" ");
+    upperNarrative.setText(" ");
+    lowerNarrative.setText(" ");
 
     if (left != null) {
       left.getImage().setScaleX(1);
@@ -783,6 +788,8 @@ public class Controller {
     speechBubbleLeft.getChildren().add(leftBubble.getImage());
     left.setBubble(leftBubble);
     left.setText(leftLabel.getText());
+
+    usertxt.clear();
   }
 
   public void rightSpeechBubble() {
@@ -822,10 +829,14 @@ public class Controller {
     speechBubbleRight.getChildren().add(rightBubble.getImage());
     right.setBubble(rightBubble);
     right.setText(rightLabel.getText());
+
+    usertxt2.clear();
   }
 
   public void narrativeText() {
       upperNarrative.setText(aboveNarrativeText.getText());
       lowerNarrative.setText(belowNarrativeText.getText());
+      aboveNarrativeText.clear();
+      belowNarrativeText.clear();
   }
 }

@@ -1,6 +1,7 @@
 package main.java;
 
 import javafx.geometry.Orientation;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -38,13 +39,15 @@ public class MemoryOperations {
   }
 
   public void load(
-      HBox leftDisplay,
-      HBox rightDisplay,
-      int index,
-      HBox speechBubbleLeft,
-      HBox speechBubbleRight,
-      TextField textLeft,
-      TextField textRight) {
+          HBox leftDisplay,
+          HBox rightDisplay,
+          int index,
+          HBox speechBubbleLeft,
+          HBox speechBubbleRight,
+          TextField textLeft,
+          TextField textRight,
+          Label upperNarrative,
+          Label lowerNarrative) {
     if (slideArrayList.size() == 0) {
       throw new IllegalArgumentException("Please add a slide before trying to load it");
     }
@@ -68,9 +71,17 @@ public class MemoryOperations {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
+
     right.setFitHeight(150);
     right.setFitWidth(150);
     rightDisplay.getChildren().add(right);
+
+    if (slideToLoad.getAboveNarrativeText() != null) {
+      upperNarrative.setText(slideToLoad.getAboveNarrativeText().getText());
+    }
+    if (slideToLoad.getBelowNarrativeText() != null) {
+      lowerNarrative.setText(slideToLoad.getBelowNarrativeText().getText());
+    }
 
     if (slideToLoad.getCharacterRight().getBubble() != null) {
       speechBubbleRight.getChildren().add(slideToLoad.getCharacterRight().getBubble().getImage());
