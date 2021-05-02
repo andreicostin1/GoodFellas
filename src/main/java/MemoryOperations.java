@@ -7,6 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 
@@ -81,7 +85,13 @@ public class MemoryOperations {
       throw new IllegalArgumentException("Please add a slide before deleting");
     }
     listView.getItems().remove(index);
+    slideArrayList.remove(index);
     id--;
+  }
+
+  public void clear(ListView<GridPane> listView) {
+    listView.getItems().clear();
+    slideArrayList.clear();
   }
 
   public GridPane generateSlide(Character left, Character right, TextField aboveNarrativeText, TextField belowNarrativeText) {
@@ -132,29 +142,24 @@ public class MemoryOperations {
         strings.add("<figure>");
         strings.add("<name>" + character.getName() + "</name>");
         strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
+
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
-        Color braid = character.getBraidColor();
+        String skinHex = "#" + (format(skin.getRed()) + format(skin.getGreen()) + format(skin.getBlue()) + format(skin.getOpacity())).toUpperCase();
+        String hairHex = "#" + (format(hair.getRed()) + format(hair.getGreen()) + format(hair.getBlue()) + format(hair.getOpacity())).toUpperCase();
 
         // skin
         if (skin.equals(defaultSkin)) {
           strings.add("<skin>default</skin>");
         } else {
-          strings.add("<skin>" + skin.toString() + "</skin>");
+          strings.add("<skin>" + skinHex + "</skin>");
         }
 
         // hair
         if (hair.equals(defaultHair)) {
           strings.add("<hair>default</hair>");
         } else {
-          strings.add("<hair>" + hair.toString() + "</hair>");
-        }
-
-        // braid
-        if (braid.equals(defaultBraid)) {
-          strings.add("<braid>default</braid>");
-        } else {
-          strings.add("<braid>" + braid.toString() + "</braid>");
+          strings.add("<hair>" + hairHex + "</hair>");
         }
 
         strings.add("<facing>" + character.getFacing().toString() + "</facing>");
@@ -175,29 +180,25 @@ public class MemoryOperations {
         strings.add("<figure>");
         strings.add("<name>" + character.getName() + "</name>");
         strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
+
         Color skin = character.getSkin();
         Color hair = character.getHairColor();
-        Color braid = character.getBraidColor();
+
+        String skinHex = "#" + (format(skin.getRed()) + format(skin.getGreen()) + format(skin.getBlue()) + format(skin.getOpacity())).toUpperCase();
+        String hairHex = "#" + (format(hair.getRed()) + format(hair.getGreen()) + format(hair.getBlue()) + format(hair.getOpacity())).toUpperCase();
 
         // skin
         if (skin.equals(defaultSkin)) {
           strings.add("<skin>default</skin>");
         } else {
-          strings.add("<skin>" + skin.toString() + "</skin>");
+          strings.add("<skin>" + skinHex + "</skin>");
         }
 
         // hair
         if (hair.equals(defaultHair)) {
           strings.add("<hair>default</hair>");
         } else {
-          strings.add("<hair>" + hair.toString() + "</hair>");
-        }
-
-        // braid
-        if (braid.equals(defaultBraid)) {
-          strings.add("<braid>default</braid>");
-        } else {
-          strings.add("<braid>" + braid.toString() + "</braid>");
+          strings.add("<hair>" + hairHex + "</hair>");
         }
 
         strings.add("<facing>" + character.getFacing().toString() + "</facing>");
@@ -221,5 +222,11 @@ public class MemoryOperations {
     strings.add("</comic>");
 
     return strings;
+  }
+
+  //helper method for converting color to hex
+  private String format(double val) {
+    String in = Integer.toHexString((int) Math.round(val * 255));
+    return in.length() == 1 ? "0" + in : in;
   }
 }
