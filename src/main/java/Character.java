@@ -32,6 +32,7 @@ public class Character {
     gender = Gender.FEMALE;
     scale = 1;
     setFacing();
+    text = "";
   }
 
   public Character() {
