@@ -67,6 +67,7 @@ public class MemoryOperations {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
+    //TODO actually make characters that apear on screen, not just images, so that those characters can be edited
 
     right.setFitHeight(150);
     right.setFitWidth(150);
