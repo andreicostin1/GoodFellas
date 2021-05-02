@@ -131,9 +131,10 @@ public class Controller {
           narrativeText();
         } else if (e.getSource().equals(save)) {
           try {
-            memoryOperations.save(left, right, listView, aboveNarrativeText, belowNarrativeText);
-            upperNarrative.setText("");
-            lowerNarrative.setText("");
+            memoryOperations.save(left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
+            clearPane();
+            //upperNarrative.setText("");
+            //lowerNarrative.setText("");
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -339,7 +340,7 @@ public class Controller {
               belowNarrativeText.setText(below.getTextContent());
             }
 
-            memoryOperations.save(left, right, listView, aboveNarrativeText, belowNarrativeText);
+            memoryOperations.save(left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
           }
         }
       } catch (Exception e) {
