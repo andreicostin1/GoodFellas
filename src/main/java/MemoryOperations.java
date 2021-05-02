@@ -179,7 +179,8 @@ public class MemoryOperations {
         // bubble
         if (character.getBubble() != null) {
           strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
-          strings.add("<content>" + character.getText() + "<content>");
+          strings.add("<content>" + character.getText() + "</content>");
+          strings.add("</balloon>");
         }
       }
       strings.add("</left>");
@@ -218,7 +219,8 @@ public class MemoryOperations {
         // bubble
         if (character.getBubble() != null) {
           strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
-          strings.add("<content>" + character.getText() + "<content>");
+          strings.add("<content>" + character.getText() + "</content>");
+          strings.add("</balloon>");
         }
       }
       strings.add("</right>");
