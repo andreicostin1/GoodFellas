@@ -17,7 +17,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -133,8 +132,6 @@ public class Controller {
           try {
             memoryOperations.save(left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
             clearPane();
-            //upperNarrative.setText("");
-            //lowerNarrative.setText("");
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
@@ -257,6 +254,7 @@ public class Controller {
 
         if(!doc.getDocumentElement().getNodeName().equals("comic")) {
           //alert the user their file is not valid
+          throwAlertMessage("File invalid", new Exception());
         }
         else {
           clearPane();
@@ -359,7 +357,7 @@ public class Controller {
 
   // Creates a list of main.java.Character objects for each image
   public void createPoseList() throws URISyntaxException, IOException {
-    URI uri = getClass().getResource("/main/resources/characters/").toURI();
+    URI uri = Objects.requireNonNull(getClass().getResource("/main/resources/characters/")).toURI();
     Path myPath;
     FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
@@ -391,7 +389,7 @@ public class Controller {
   }
 
   public void createBubbleList() throws URISyntaxException, IOException {
-    URI uri = getClass().getResource("/main/resources/bubbles/").toURI();
+    URI uri = Objects.requireNonNull(getClass().getResource("/main/resources/bubbles/")).toURI();
     Path myPath;
     FileSystem fileSystem = null;
     if (uri.getScheme().equals("jar")) {
