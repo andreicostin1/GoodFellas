@@ -60,6 +60,7 @@ public class Controller {
   @FXML TextField belowNarrativeText;
   @FXML TextField textLeft = new TextField();
   @FXML TextField textRight = new TextField();
+  @FXML SplitMenuButton bubbleSelector = new SplitMenuButton();
 
   ArrayList<Character> poseList = new ArrayList<>();
   ArrayList<Bubble> rightBubbleList = new ArrayList<>();
@@ -162,6 +163,13 @@ public class Controller {
         } else if (e.getSource().equals(skinColorPicker)) {
           changeSkinColor();
         }
+        else if (e.getSource().equals(bubbleSelector)) {
+          try {
+            bubble();
+          } catch (Exception f) {
+            throwAlertMessage("Error loading Bubble", f);
+          }
+        }
       };
 
   public void initialize() {
@@ -204,6 +212,7 @@ public class Controller {
     save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+    bubbleSelector.setOnAction(actionEventHandler);
 
     rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
     leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
@@ -270,6 +279,10 @@ public class Controller {
 
             Element leftE = (Element) panel.getElementsByTagName("left").item(0);
             Element rightE = (Element) panel.getElementsByTagName("right").item(0);
+
+            Element leftBalloon = (Element) leftE.getElementsByTagName("balloon").item(0);
+            Element rightBalloon = (Element) rightE.getElementsByTagName("balloon").item(0);
+
             Element leftFigure = (Element) leftE.getElementsByTagName("figure").item(0);
             Element rightFigure = (Element) rightE.getElementsByTagName("figure").item(0);
 
@@ -311,7 +324,19 @@ public class Controller {
               flip();
             }
 
-            // Right Character
+            if(leftBalloon != null) {
+              Element leftBalloonContent = (Element) leftBalloon.getElementsByTagName("content").item(0);
+
+              for(MenuItem menuItem : bubbleSelector.getItems()) {
+                if(menuItem.getText().equals(leftBalloon.getAttribute("status"))) {
+                  bubbleSelector.setText(leftBalloon.getAttribute("status"));
+                  usertxt.setText(leftBalloonContent.getTextContent());
+                  bubble();
+                }
+              }
+            }
+
+            //Right Character
             currentlySelected = rightDisplayBox;
             right = findCharacter(rightFigureName.getTextContent());
             right.getImage().setFitHeight(150);
@@ -339,8 +364,21 @@ public class Controller {
               belowNarrativeText.setText(below.getTextContent());
             }
 
+            if(rightBalloon != null) {
+              Element rightBalloonContent = (Element) rightBalloon.getElementsByTagName("content").item(0);
+
+              for(MenuItem menuItem : bubbleSelector.getItems()) {
+                if(menuItem.getText().equals(rightBalloon.getAttribute("status"))) {
+                  bubbleSelector.setText(rightBalloon.getAttribute("status"));
+                  usertxt2.setText(rightBalloonContent.getTextContent());
+                  bubble();
+                }
+              }
+            }
+
             memoryOperations.save(
-                left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
+                    left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
+            clearPane();
           }
         }
       } catch (Exception e) {
@@ -420,6 +458,17 @@ public class Controller {
     rightBubbleList.sort(Comparator.comparing(Bubble::getName));
     leftBubbleList.sort(Comparator.comparing(Bubble::getName));
 
+    for(Bubble bubble : rightBubbleList) {
+      bubbleSelector.getItems().add(new MenuItem(bubble.getName()));
+    }
+    bubbleSelector.getItems().add(new MenuItem("none"));
+
+    for(MenuItem bubbleItem : bubbleSelector.getItems()) {
+      bubbleItem.setOnAction((event) -> {
+        bubbleSelector.setText(bubbleItem.getText());
+      });
+    }
+
     if (fileSystem != null) {
       fileSystem.close();
     }
@@ -479,6 +528,8 @@ public class Controller {
   // function to clear the display
   public void clearPane() {
 
+    aboveNarrativeText.clear();
+    belowNarrativeText.clear();
     leftDisplayBox.getChildren().clear();
     rightDisplayBox.getChildren().clear();
     speechBubbleLeft.getChildren().clear();
@@ -487,6 +538,7 @@ public class Controller {
     rightLabel.setText(" ");
     upperNarrative.setText(" ");
     lowerNarrative.setText(" ");
+
 
     if (left != null) {
       left.getImage().setScaleX(1);
@@ -831,6 +883,80 @@ public class Controller {
     right.setText(rightLabel.getText());
 
     usertxt2.clear();
+  }
+
+  public void bubble() {
+    String bubbleName = bubbleSelector.getText();
+    if(bubbleName.equals("Bubbles")) {
+      return;
+    }
+
+    if(currentlySelected == null) {
+      throw new IllegalArgumentException("Please select a character");
+    }
+
+    Character speakingCharacter;
+
+    if(currentlySelected.equals(leftDisplayBox)){
+      speakingCharacter = left;
+      out = usertxt.getText();
+    } else {
+      speakingCharacter = right;
+      out = usertxt2.getText();
+    }
+
+    if (speakingCharacter == null) {
+      throw new IllegalArgumentException("Please add character before adding text");
+    }
+
+    if (out.equals("") && !bubbleName.equals("none")) {
+      throw new IllegalArgumentException("Please add text");
+    }
+
+    if(currentlySelected.equals(leftDisplayBox)){
+
+      if(leftBubble != null) {
+        display.getChildren().remove(leftLabel);
+        speechBubbleLeft.getChildren().remove(leftBubble.getImage());
+        leftBubble = null;
+        left.setBubble(null);
+        left.setText("");
+      }
+
+      if(!bubbleName.equals("none")) {
+        leftBubble = findNextBubble(Direction.LEFT, bubbleName);
+        leftBubble.getImage().setFitWidth(90);
+        leftBubble.getImage().setFitHeight(25);
+        leftLabel.setText("     " + out);
+        display.add(leftLabel, 0, 1);
+        speechBubbleLeft.getChildren().add(leftBubble.getImage());
+        left.setBubble(leftBubble);
+        left.setText(leftLabel.getText());
+      }
+      usertxt.clear();
+
+    } else {
+
+      if(rightBubble != null) {
+        display.getChildren().remove(rightLabel);
+        speechBubbleRight.getChildren().remove(rightBubble.getImage());
+        rightBubble = null;
+        right.setBubble(null);
+        right.setText("");
+      }
+
+      if(!bubbleName.equals("none")) {
+        rightBubble = findNextBubble(Direction.RIGHT, bubbleName);
+        rightBubble.getImage().setFitWidth(90);
+        rightBubble.getImage().setFitHeight(25);
+        rightLabel.setText("     " + out);
+        display.add(rightLabel, 1, 1);
+        speechBubbleRight.getChildren().add(rightBubble.getImage());
+        right.setBubble(rightBubble);
+        right.setText(rightLabel.getText());
+      }
+      usertxt2.clear();
+    }
   }
 
   public void narrativeText() {

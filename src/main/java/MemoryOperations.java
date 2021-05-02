@@ -127,7 +127,6 @@ public class MemoryOperations {
   public ArrayList<String> toXML() {
     Color defaultSkin = new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1);
     Color defaultHair = new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1);
-    Color defaultBraid = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
 
     Character character;
 
