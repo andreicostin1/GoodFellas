@@ -671,7 +671,7 @@ public class Controller {
     } else {
       output.setScaleX(1);
     }
-    panelSide.getChildren().remove(updatedCharacter.getImage());
+    panelSide.getChildren().clear();
     // left.getImage().setImage(outputImage);
     updatedCharacter.setImage(output);
     panelSide.getChildren().add(output);
