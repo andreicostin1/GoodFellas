@@ -321,7 +321,6 @@ public class Controller {
             // Left Character
             currentlySelected = leftDisplayBox;
             left = findCharacter(leftFigureName.getTextContent());
-            left.setText("");
             left.getImage().setFitHeight(150);
             left.getImage().setFitWidth(150);
             if (leftFigureAppearance.getTextContent().equals("MALE")) {
@@ -354,7 +353,6 @@ public class Controller {
             //Right Character
             currentlySelected = rightDisplayBox;
             right = findCharacter(rightFigureName.getTextContent());
-            right.setText("");
             right.getImage().setFitHeight(150);
             right.getImage().setFitWidth(150);
             if (rightFigureAppearance.getTextContent().equals("MALE")) {
@@ -573,6 +571,7 @@ public class Controller {
       if (name.equals(c.getName())) {
         character.setName(c.getName());
         character.setImage(new ImageView(c.getImage().getImage()));
+        character.setText("");
         character.setHairColor(new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1));
         character.setSkin(new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1));
         character.setBraidColor(new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1));
