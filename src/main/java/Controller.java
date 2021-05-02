@@ -149,7 +149,9 @@ public class Controller {
                 textLeft,
                 textRight,
                 upperNarrative,
-                lowerNarrative);
+                lowerNarrative,
+                leftLabel,
+                rightLabel);
           } catch (Exception f) {
             throwAlertMessage("Error loading Frame", f);
           }
@@ -199,6 +201,11 @@ public class Controller {
     lowerNarrative.setFont(new Font("Arial", 15));
     lowerNarrative.setText(" ");
     display.add(lowerNarrative, 0, 4, 2, 1);
+
+    leftLabel.setText("");
+    display.add(leftLabel, 0, 1);
+    rightLabel.setText("");
+    display.add(rightLabel, 1, 1);
 
     addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -307,6 +314,7 @@ public class Controller {
             // Left Character
             currentlySelected = leftDisplayBox;
             left = findCharacter(leftFigureName.getTextContent());
+            left.setText("");
             left.getImage().setFitHeight(150);
             left.getImage().setFitWidth(150);
             if (leftFigureAppearance.getTextContent().equals("MALE")) {
@@ -339,6 +347,7 @@ public class Controller {
             //Right Character
             currentlySelected = rightDisplayBox;
             right = findCharacter(rightFigureName.getTextContent());
+            right.setText("");
             right.getImage().setFitHeight(150);
             right.getImage().setFitWidth(150);
             if (rightFigureAppearance.getTextContent().equals("MALE")) {
@@ -916,7 +925,8 @@ public class Controller {
     if(currentlySelected.equals(leftDisplayBox)){
 
       if(leftBubble != null) {
-        display.getChildren().remove(leftLabel);
+        //display.getChildren().remove(leftLabel);
+        leftLabel.setText("");
         speechBubbleLeft.getChildren().remove(leftBubble.getImage());
         leftBubble = null;
         left.setBubble(null);
@@ -928,17 +938,18 @@ public class Controller {
         leftBubble.getImage().setFitWidth(90);
         leftBubble.getImage().setFitHeight(25);
         leftLabel.setText("     " + out);
-        display.add(leftLabel, 0, 1);
+        //display.add(leftLabel, 0, 1);
         speechBubbleLeft.getChildren().add(leftBubble.getImage());
         left.setBubble(leftBubble);
-        left.setText(leftLabel.getText());
+        left.setText(usertxt.getText());
       }
       usertxt.clear();
 
     } else {
 
       if(rightBubble != null) {
-        display.getChildren().remove(rightLabel);
+        //display.getChildren().remove(rightLabel);
+        rightLabel.setText("");
         speechBubbleRight.getChildren().remove(rightBubble.getImage());
         rightBubble = null;
         right.setBubble(null);
@@ -950,10 +961,10 @@ public class Controller {
         rightBubble.getImage().setFitWidth(90);
         rightBubble.getImage().setFitHeight(25);
         rightLabel.setText("     " + out);
-        display.add(rightLabel, 1, 1);
+        //display.add(rightLabel, 1, 1);
         speechBubbleRight.getChildren().add(rightBubble.getImage());
         right.setBubble(rightBubble);
-        right.setText(rightLabel.getText());
+        right.setText(usertxt2.getText());
       }
       usertxt2.clear();
     }

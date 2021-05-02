@@ -7,7 +7,7 @@ public class SavedSlide {
 
   private int ID;
   private Character characterLeft, characterRight;
-  private Label userTextLeft, userTextRight;
+  private String userTextLeft, userTextRight;
   private String aboveNarrativeText;
   private String belowNarrativeText;
   private Bubble leftBubble, rightBubble;

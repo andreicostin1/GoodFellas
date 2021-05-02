@@ -43,13 +43,17 @@ public class MemoryOperations {
           TextField textLeft,
           TextField textRight,
           Label upperNarrative,
-          Label lowerNarrative) {
+          Label lowerNarrative,
+          Label leftSpeech,
+          Label rightSpeech) {
     if (slideArrayList.size() == 0) {
       throw new IllegalArgumentException("Please add a slide before trying to load it");
     }
 
     leftDisplay.getChildren().clear();
     rightDisplay.getChildren().clear();
+    speechBubbleLeft.getChildren().clear();
+    speechBubbleRight.getChildren().clear();
 
     SavedSlide slideToLoad = slideArrayList.get(index);
 
@@ -86,6 +90,9 @@ public class MemoryOperations {
     if (slideToLoad.getCharacterRight().getText() != null) {
       textRight.setText(slideToLoad.getCharacterRight().getText());
     }
+
+    leftSpeech.setText("     " + slideToLoad.getCharacterLeft().getText());
+    rightSpeech.setText("     " + slideToLoad.getCharacterRight().getText());
   }
 
   public void delete(int index, ListView<GridPane> listView) {
