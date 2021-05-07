@@ -15,12 +15,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
@@ -41,6 +43,7 @@ public class Controller {
   // Menu Items
   @FXML MenuItem saveXML = new MenuItem();
   @FXML MenuItem loadXML = new MenuItem();
+  @FXML MenuItem saveHTML = new MenuItem();
   @FXML MenuItem close = new MenuItem();
 
   @FXML Button addCharacter = new Button();
@@ -169,6 +172,7 @@ public class Controller {
     // Menu Bar
     saveXML.setOnAction(event -> saveAsXML());
     loadXML.setOnAction(event -> loadXML());
+    saveHTML.setOnAction(event -> saveAsHTML());
 
     try {
       createPoseList();
@@ -378,6 +382,23 @@ public class Controller {
           }
         }
       } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void saveAsHTML() {
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    File file = directoryChooser.showDialog(Main.primaryStage);
+
+    if (file != null) {
+      try {
+        ArrayList<BufferedImage> images = memoryOperations.toImages();
+        for(BufferedImage image : images) {
+          File savedImage = new File(file.getPath()+"/"+images.indexOf(image)+".png");
+          ImageIO.write(image, "png", savedImage);
+        }
+      } catch (IOException e) {
         e.printStackTrace();
       }
     }

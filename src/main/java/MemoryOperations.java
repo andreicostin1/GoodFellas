@@ -1,5 +1,6 @@
 package main.java;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -9,6 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MemoryOperations {
@@ -244,5 +250,29 @@ public class MemoryOperations {
   private String format(double val) {
     String in = Integer.toHexString((int) Math.round(val * 255));
     return in.length() == 1 ? "0" + in : in;
+  }
+
+  public ArrayList<BufferedImage> toImages() throws IOException {
+    ArrayList<BufferedImage> images = new ArrayList<>();
+
+    for(SavedSlide slide : slideArrayList) {
+      BufferedImage pane = ImageIO.read(this.getClass().getResource("/main/resources/images/pane.png"));
+
+      Graphics g = pane.getGraphics();
+      ImageView left = slide.getCharacterLeft().getImage();
+      ImageView right = slide.getCharacterRight().getImage();
+
+      g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17, 342,375, 375, null);
+      g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402, 342, 375, 375, null);
+
+      g.setColor(java.awt.Color.BLACK);
+      g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+      g.drawString(slide.getAboveNarrativeText(), 5, 50);
+      g.drawString(slide.getBelowNarrativeText(), 5, 770);
+
+      images.add(pane);
+    }
+
+    return images;
   }
 }

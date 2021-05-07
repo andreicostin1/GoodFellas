@@ -27,6 +27,7 @@
                     <items>
                         <MenuItem fx:id="saveXML" mnemonicParsing="false" text="Save XML" />
                         <MenuItem fx:id="loadXML" mnemonicParsing="false" text="Load XML" />
+                  <MenuItem fx:id="saveHTML" mnemonicParsing="false" text="Save HTML" />
                         <MenuItem fx:id="close" mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
