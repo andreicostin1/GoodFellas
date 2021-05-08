@@ -262,8 +262,19 @@ public class MemoryOperations {
       ImageView left = slide.getCharacterLeft().getImage();
       ImageView right = slide.getCharacterRight().getImage();
 
-      g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17, 342,375, 375, null);
-      g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402, 342, 375, 375, null);
+
+      if(slide.getCharacterLeft().getScale() == -1) {
+        g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17+375, 342,-375, 375, null);
+      }
+      else {
+        g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17, 342,375, 375, null);
+      }
+
+      if(slide.getCharacterRight().getScale() == -1) {
+        g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402+375, 342, -375, 375, null);
+      } else {
+        g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402, 342, 375, 375, null);
+      }
 
       g.setColor(java.awt.Color.BLACK);
 
@@ -276,16 +287,61 @@ public class MemoryOperations {
       x = 5 + (790 - metrics.stringWidth(slide.getBelowNarrativeText())) / 2;
       g.drawString(slide.getBelowNarrativeText(), x, 770);
 
+      font = new Font("TimesRoman", Font.BOLD, 25);
+      g.setFont(font);
+      metrics = g.getFontMetrics(font);
       BufferedImage bubble;
+      int length;
+      int splitIndex;
+      String firstLine;
+      String secondLine;
       //Speech bubbles
       if(slide.getCharacterLeft().getBubble() != null) {
         bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterLeft().getBubble().getName()+".png"));
         g.drawImage(bubble, 30, 135, null);
+        if(metrics.stringWidth(slide.getCharacterLeft().getText()) <= 295) {//if text fits on 1 line
+          g.drawString(slide.getCharacterLeft().getText(), 200-(metrics.stringWidth(slide.getCharacterLeft().getText())/2), 250);
+        }
+        else {
+          length = slide.getCharacterLeft().getText().length();
+          splitIndex = slide.getCharacterLeft().getText().indexOf(" ", length/2);
+
+          if(splitIndex == -1) {
+            firstLine = slide.getCharacterLeft().getText().substring(0, length/2);
+            secondLine = slide.getCharacterLeft().getText().substring((length/2), length);
+          }
+          else {
+            firstLine = slide.getCharacterLeft().getText().substring(0, splitIndex);
+            secondLine = slide.getCharacterLeft().getText().substring(splitIndex+1, length);
+          }
+
+          g.drawString(firstLine, 200-(metrics.stringWidth(firstLine)/2), 250-metrics.getMaxDescent());
+          g.drawString(secondLine, 200-(metrics.stringWidth(secondLine)/2), 250+metrics.getMaxAscent());
+        }
       }
 
       if(slide.getCharacterRight().getBubble() != null) {
         bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterRight().getBubble().getName()+".png"));
         g.drawImage(bubble, 435, 135, null);
+        if(metrics.stringWidth(slide.getCharacterRight().getText()) <= 295) {//if text fits on 1 line
+          g.drawString(slide.getCharacterRight().getText(), 603-(metrics.stringWidth(slide.getCharacterRight().getText())/2), 250);
+        }
+        else {
+          length = slide.getCharacterRight().getText().length();
+          splitIndex = slide.getCharacterRight().getText().indexOf(" ", length/2);
+
+          if(splitIndex == -1) {
+            firstLine = slide.getCharacterRight().getText().substring(0, length/2);
+            secondLine = slide.getCharacterRight().getText().substring((length/2), length);
+          }
+          else {
+            firstLine = slide.getCharacterRight().getText().substring(0, splitIndex);
+            secondLine = slide.getCharacterRight().getText().substring(splitIndex+1, length);
+          }
+
+          g.drawString(firstLine, 603-(metrics.stringWidth(firstLine)/2), 250-metrics.getMaxDescent());
+          g.drawString(secondLine, 603-(metrics.stringWidth(secondLine)/2), 250+metrics.getMaxAscent());
+        }
       }
 
       images.add(pane);
