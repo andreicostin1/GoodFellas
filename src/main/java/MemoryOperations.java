@@ -266,9 +266,27 @@ public class MemoryOperations {
       g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402, 342, 375, 375, null);
 
       g.setColor(java.awt.Color.BLACK);
-      g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-      g.drawString(slide.getAboveNarrativeText(), 5, 50);
-      g.drawString(slide.getBelowNarrativeText(), 5, 770);
+
+      //Narrative
+      Font font = new Font("TimesRoman", Font.PLAIN, 25);
+      g.setFont(font);
+      FontMetrics metrics = g.getFontMetrics(font);
+      int x = 5 + (790 - metrics.stringWidth(slide.getBelowNarrativeText())) / 2;
+      g.drawString(slide.getAboveNarrativeText(), x, 50);
+      x = 5 + (790 - metrics.stringWidth(slide.getBelowNarrativeText())) / 2;
+      g.drawString(slide.getBelowNarrativeText(), x, 770);
+
+      BufferedImage bubble;
+      //Speech bubbles
+      if(slide.getCharacterLeft().getBubble() != null) {
+        bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterLeft().getBubble().getName()+".png"));
+        g.drawImage(bubble, 30, 135, null);
+      }
+
+      if(slide.getCharacterRight().getBubble() != null) {
+        bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterRight().getBubble().getName()+".png"));
+        g.drawImage(bubble, 435, 135, null);
+      }
 
       images.add(pane);
     }
