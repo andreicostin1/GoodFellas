@@ -3,6 +3,7 @@ package main.java;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -146,9 +147,12 @@ public class Controller {
                     }
                 } else if (e.getSource().equals(Delete)) {
                     try {
-                        memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
-                        disableSaveToFile(memoryOperations.isEmpty());
-                        clearPane();
+                        if(listView.getSelectionModel().getSelectedIndex() != 0) {
+                            memoryOperations.delete(listView.getSelectionModel().getSelectedIndex()-1, listView);
+                            disableSaveToFile(memoryOperations.isEmpty());
+                            clearPane();
+                            listView.getSelectionModel().selectFirst();
+                        }
                     } catch (Exception f) {
                         throwAlertMessage("Error deleting frame", f);
                     }
@@ -156,16 +160,25 @@ public class Controller {
                     narrativeText();
                 } else if (e.getSource().equals(save)) {
                     try {
-                        memoryOperations.save(
-                                left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
-                        disableSaveToFile(memoryOperations.isEmpty());
+                        if(listView.getSelectionModel().getSelectedIndex() > 0) {
+                            memoryOperations.update(left, right, upperNarrative.getText(), lowerNarrative.getText(), listView, listView.getSelectionModel().getSelectedIndex()-1);
+                        } else {
+                            memoryOperations.save(
+                                    left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
+                            disableSaveToFile(memoryOperations.isEmpty());
+                        }
                         clearPane();
+                        listView.getSelectionModel().selectFirst();
                     } catch (Exception f) {
                         throwAlertMessage("Error saving Frame", f);
                     }
                 } else if (e.getSource().equals(listView)) {
                     try {
-                        loadPane();
+                        if(listView.getSelectionModel().getSelectedIndex() == 0) {
+                            clearPane();
+                        } else {
+                            loadPane();
+                        }
                     } catch (Exception f) {
                         throwAlertMessage("Error loading Frame", f);
                     }
@@ -244,6 +257,13 @@ public class Controller {
 
         rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
         leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
+
+        GridPane emptyPane = new GridPane();
+        emptyPane.setPrefSize(225, 125);
+        emptyPane.add(new Label("New Panel"), 0, 0);
+        listView.getItems().add(emptyPane);
+        listView.setOrientation(Orientation.HORIZONTAL);
+        listView.getSelectionModel().selectFirst();
     }
 
     public void saveAsXML() {
@@ -671,7 +691,7 @@ public class Controller {
     // loads objects in saved frame
     public void loadPane() {
         SavedSlide slide = memoryOperations.load(leftDisplayBox, rightDisplayBox,
-                listView.getSelectionModel().getSelectedIndex(), speechBubbleLeft, speechBubbleRight, textLeft,
+                listView.getSelectionModel().getSelectedIndex()-1, speechBubbleLeft, speechBubbleRight, textLeft,
                 textRight, upperNarrative, lowerNarrative, leftLabel, rightLabel);
         left = slide.getCharacterLeft();
         right = slide.getCharacterRight();

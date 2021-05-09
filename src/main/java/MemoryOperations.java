@@ -32,12 +32,31 @@ public class MemoryOperations {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
-    savedSlide = generateSlide(left, right, aboveNarrativeText, belowNarrativeText);
-    savedSlide.setPrefSize(225, 225);
+    SavedSlide slide = new SavedSlide(id, left, right, aboveNarrativeText, belowNarrativeText);
+    slideArrayList.add(slide);
+
+    savedSlide = generateSlide(slide, left, right, aboveNarrativeText, belowNarrativeText);
+    savedSlide.setPrefSize(225, 125);
     savedSlide.setGridLinesVisible(true);
     listView.getItems().add(savedSlide);
     listView.setOrientation(Orientation.HORIZONTAL);
     id++;
+  }
+
+  public void update(Character left, Character right, String aboveNarrativeText, String belowNarrativeText,
+                     ListView<GridPane> listView, int index) {
+    if (left == null || right == null) {
+      throw new IllegalArgumentException("Needs two characters in frame");
+    }
+    SavedSlide oldSlide = slideArrayList.get(index);
+    SavedSlide slide = new SavedSlide(oldSlide.getID(), left, right, aboveNarrativeText, belowNarrativeText);
+    slideArrayList.set(index, slide);
+
+    savedSlide = generateSlide(slide, left, right, aboveNarrativeText, belowNarrativeText);
+    savedSlide.setPrefSize(225, 125);
+    savedSlide.setGridLinesVisible(true);
+    listView.getItems().set(index+1, savedSlide);
+    listView.setOrientation(Orientation.HORIZONTAL);
   }
 
   public SavedSlide load(
@@ -104,16 +123,16 @@ public class MemoryOperations {
   }
 
   public void delete(int index, ListView<GridPane> listView) {
-    if (listView.getItems().size() == 0) {
+    if (listView.getItems().size() == 1) {
       throw new IllegalArgumentException("Please add a slide before deleting");
     }
-    listView.getItems().remove(index);
+    listView.getItems().remove(index+1);
     slideArrayList.remove(index);
     id--;
   }
 
   public void clear(ListView<GridPane> listView) {
-    listView.getItems().clear();
+    listView.getItems().remove(1, listView.getItems().size());
     slideArrayList.clear();
   }
 
@@ -121,11 +140,8 @@ public class MemoryOperations {
     return slideArrayList.isEmpty();
   }
 
-  public GridPane generateSlide(Character left, Character right, String aboveNarrativeText, String belowNarrativeText) {
+  public GridPane generateSlide(SavedSlide slide, Character left, Character right, String aboveNarrativeText, String belowNarrativeText) {
     GridPane generatedSlide = new GridPane();
-
-    SavedSlide slide = new SavedSlide(id, left, right, aboveNarrativeText, belowNarrativeText);
-    slideArrayList.add(slide);
 
     ImageView leftImage = slide.getCharacterLeft().getImage();
     ImageView rightImage = slide.getCharacterRight().getImage();
