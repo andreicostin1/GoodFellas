@@ -40,7 +40,7 @@ public class MemoryOperations {
     id++;
   }
 
-  public void load(
+  public SavedSlide load(
           HBox leftDisplay,
           HBox rightDisplay,
           int index,
@@ -99,6 +99,8 @@ public class MemoryOperations {
 
     leftSpeech.setText("     " + slideToLoad.getCharacterLeft().getText());
     rightSpeech.setText("     " + slideToLoad.getCharacterRight().getText());
+
+    return slideToLoad;
   }
 
   public void delete(int index, ListView<GridPane> listView) {

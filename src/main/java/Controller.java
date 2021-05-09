@@ -165,18 +165,7 @@ public class Controller {
                     }
                 } else if (e.getSource().equals(listView)) {
                     try {
-                        memoryOperations.load(
-                                leftDisplayBox,
-                                rightDisplayBox,
-                                listView.getSelectionModel().getSelectedIndex(),
-                                speechBubbleLeft,
-                                speechBubbleRight,
-                                textLeft,
-                                textRight,
-                                upperNarrative,
-                                lowerNarrative,
-                                leftLabel,
-                                rightLabel);
+                        loadPane();
                     } catch (Exception f) {
                         throwAlertMessage("Error loading Frame", f);
                     }
@@ -186,9 +175,17 @@ public class Controller {
     EventHandler<ActionEvent> actionEventHandler =
             e -> {
                 if (e.getSource().equals(hairColorPicker)) {
-                    changeHairColor();
+                    try {
+                        changeHairColor();
+                    } catch (Exception f) {
+                        throwAlertMessage("Error changing hair color", f);
+                    }
                 } else if (e.getSource().equals(skinColorPicker)) {
-                    changeSkinColor();
+                    try {
+                        changeSkinColor();
+                    } catch (Exception f) {
+                        throwAlertMessage("Error changing skin color", f);
+                    }
                 } else if (e.getSource().equals(bubbleSelector)) {
                     try {
                         bubble();
@@ -667,8 +664,19 @@ public class Controller {
         upperNarrative.setText(" ");
         lowerNarrative.setText(" ");
 
-        left = new Character();
-        right = new Character();
+        left = null;
+        right = null;
+    }
+
+    // loads objects in saved frame
+    public void loadPane() {
+        SavedSlide slide = memoryOperations.load(leftDisplayBox, rightDisplayBox,
+                listView.getSelectionModel().getSelectedIndex(), speechBubbleLeft, speechBubbleRight, textLeft,
+                textRight, upperNarrative, lowerNarrative, leftLabel, rightLabel);
+        left = slide.getCharacterLeft();
+        right = slide.getCharacterRight();
+        leftBubble = left.getBubble();
+        rightBubble = right.getBubble();
     }
 
     // function to find character in list
@@ -753,6 +761,11 @@ public class Controller {
             updatedCharacter = right;
             panelSide = rightDisplayBox;
         }
+
+        if (updatedCharacter == null) {
+            throw new IllegalArgumentException("Please add a character");
+        }
+
         panelSide.getChildren().clear();
         updatedCharacter.setHairColor(hairColorPicker.getValue());
         panelSide.getChildren().add(updatedCharacter.getImage());
@@ -773,6 +786,10 @@ public class Controller {
         } else {
             updatedCharacter = right;
             panelSide = rightDisplayBox;
+        }
+
+        if (updatedCharacter == null) {
+            throw new IllegalArgumentException("Please add a character");
         }
 
         panelSide.getChildren().clear();
