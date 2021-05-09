@@ -150,7 +150,7 @@ public class Controller {
                         disableSaveToFile(memoryOperations.isEmpty());
                         clearPane();
                     } catch (Exception f) {
-                        throwAlertMessage("Error deleting character", f);
+                        throwAlertMessage("Error deleting frame", f);
                     }
                 } else if (e.getSource().equals(narrative)) {
                     narrativeText();
