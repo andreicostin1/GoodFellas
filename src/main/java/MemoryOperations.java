@@ -258,6 +258,7 @@ public class MemoryOperations {
 
   public ArrayList<BufferedImage> toImages() throws IOException {
     ArrayList<BufferedImage> images = new ArrayList<>();
+    BufferedImage endPane = ImageIO.read(this.getClass().getResource("/main/resources/images/end.png"));
 
     for(SavedSlide slide : slideArrayList) {
       BufferedImage pane = ImageIO.read(this.getClass().getResource("/main/resources/images/pane.png"));
@@ -350,6 +351,7 @@ public class MemoryOperations {
 
       images.add(pane);
     }
+    images.add(endPane);
 
     return images;
   }

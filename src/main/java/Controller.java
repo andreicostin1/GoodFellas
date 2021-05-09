@@ -515,37 +515,6 @@ public class Controller {
         printStream.println(html.toString());//将字符串写入文件
     }
 
-    private List<byte[]> getPNGList(String resourcePath) throws IOException {
-        final List<byte[]> records = new ArrayList<>();
-
-        final File[] pngFiles = new File(resourcePath + "/").listFiles();
-
-        if (pngFiles == null) {
-            throw new RuntimeException("The test png could not be found!");
-        }
-
-        for (File pngFile : pngFiles) {
-            if (!pngFile.getName().endsWith("png")) {
-                continue;
-            }
-            try (
-                    final FileInputStream inputStream = new FileInputStream(pngFile);
-                    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
-            ) {
-                final byte[] buffer = new byte[1024];
-                int read;
-                while ((read = inputStream.read(buffer)) > 0) {
-                    outputStream.write(buffer, 0, read);
-                }
-                outputStream.flush();
-                records.add(outputStream.toByteArray());
-            }
-        }
-
-        return records;
-    }
-
-
     public void throwAlertMessage(String error, Exception f) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
