@@ -667,13 +667,6 @@ public class Controller {
         upperNarrative.setText(" ");
         lowerNarrative.setText(" ");
 
-
-        if (left != null) {
-            left.getImage().setScaleX(1);
-        }
-        if (right != null) {
-            right.getImage().setScaleX(1);
-        }
         left = new Character();
         right = new Character();
     }
