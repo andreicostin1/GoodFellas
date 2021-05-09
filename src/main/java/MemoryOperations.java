@@ -87,7 +87,9 @@ public class MemoryOperations {
 
     left.setFitHeight(150);
     left.setFitWidth(150);
+    left.setScaleX(slideToLoad.getCharacterLeft().getScale());
     leftDisplay.getChildren().add(left);
+    slideToLoad.getCharacterLeft().setImage(left);
 
     if (slideToLoad.getCharacterLeft().getBubble() != null) {
       speechBubbleLeft.getChildren().add(slideToLoad.getCharacterLeft().getBubble().getImage());
@@ -96,11 +98,12 @@ public class MemoryOperations {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
-    //TODO actually make characters that apear on screen, not just images, so that those characters can be edited
 
     right.setFitHeight(150);
     right.setFitWidth(150);
+    right.setScaleX(slideToLoad.getCharacterRight().getScale());
     rightDisplay.getChildren().add(right);
+    slideToLoad.getCharacterRight().setImage(right);
 
     if (slideToLoad.getAboveNarrativeText() != null) {
       upperNarrative.setText(slideToLoad.getAboveNarrativeText());

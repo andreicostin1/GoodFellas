@@ -728,6 +728,8 @@ public class Controller {
         } else if (currentlySelected.equals(rightDisplayBox)) {
             toFlip = right;
             rightDisplayBox.getChildren().clear();
+        } else {
+            throw new IllegalArgumentException("Please select a character to flip");
         }
 
         toFlip.setScale();
