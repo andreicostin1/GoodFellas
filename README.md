@@ -17,4 +17,5 @@
 # Sprint 7: Story 15&16
 #When saving as an XML, a file chooser is displayed to select an existing XML file or create one. Each saved panel is looped through and XML code is written according to the panel details using PrintWriter. Using a document builder would be easier and faster so I intend to change this accordingly during the following sprint. When loading an XML file, a file chooser is displayed to allow the user to select an XML file and only XML files. When one is chosen, it does not allow invalid XML files to be parsed. Every panel is created and saved using the Java DOM parser.
 
-
+# Sprint 8
+Implements functionality to save html and gif. Also fixes some bugs due to the delete button. A note, there is now a permanent frame in the frame picker for "New Frame"... That is meant to add a new frame whenever required after editing a loaded frame. 
