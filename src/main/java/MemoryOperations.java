@@ -115,6 +115,10 @@ public class MemoryOperations {
     slideArrayList.clear();
   }
 
+  public boolean isEmpty() {
+    return slideArrayList.isEmpty();
+  }
+
   public GridPane generateSlide(Character left, Character right, String aboveNarrativeText, String belowNarrativeText) {
     GridPane generatedSlide = new GridPane();
 

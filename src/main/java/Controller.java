@@ -147,6 +147,7 @@ public class Controller {
                 } else if (e.getSource().equals(Delete)) {
                     try {
                         memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
+                        disableSaveToFile(memoryOperations.isEmpty());
                         clearPane();
                     } catch (Exception f) {
                         throwAlertMessage("Error deleting character", f);
@@ -157,6 +158,7 @@ public class Controller {
                     try {
                         memoryOperations.save(
                                 left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
+                        disableSaveToFile(memoryOperations.isEmpty());
                         clearPane();
                     } catch (Exception f) {
                         throwAlertMessage("Error saving Frame", f);
@@ -409,6 +411,7 @@ public class Controller {
                                 left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
                         clearPane();
                     }
+                    disableSaveToFile(memoryOperations.isEmpty());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -440,28 +443,22 @@ public class Controller {
     }
 
     public void saveAsGIF() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File file = directoryChooser.showDialog(Main.primaryStage);
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter for gif
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF File", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(Main.primaryStage);
 
         if (file != null) {
             try {
-                ArrayList<BufferedImage> images = memoryOperations.toImages();
-
-                for (BufferedImage image : images) {
-                    File savedImage = new File(file.getPath() + "/" + images.indexOf(image) + ".png");
-                    ImageIO.write(image, "png", savedImage);
-                }
-
-                final List<byte[]> pngBytes = getPNGList(file.getPath());
-                final List<BufferedImage> imgList = new ArrayList<>();
-
-                for (byte[] pngByte : pngBytes) {
-                    imgList.add(ImageIO.read(new ByteArrayInputStream(pngByte)));
-                }
+                ArrayList<BufferedImage> imgList = memoryOperations.toImages();
 
                 try (
-                        final FileImageOutputStream outputStream = new FileImageOutputStream(new File(file.getPath() + "/result.gif"));
-                        final GifSequenceWriter writer = new GifSequenceWriter(outputStream, imgList.get(0).getType(), 500, false)
+                        final FileImageOutputStream outputStream = new FileImageOutputStream(file);
+                        final GifSequenceWriter writer = new GifSequenceWriter(outputStream, imgList.get(0).getType(), 6000, false)
                 ) {
                     for (BufferedImage img : imgList) {
                         writer.writeToSequence(img);
@@ -489,7 +486,7 @@ public class Controller {
                 "</head>\n" +
                 "<center>\n" +
                 "<body style=\"background-color:white\">\n" +
-                "<h2>What if James Bond spied for Auric Goldfinger?</h2>\n" +
+                "<h2>Your Comic</h2>\n" +
                 "<table>");
 
         for (String name : imageNames) {
@@ -927,5 +924,11 @@ public class Controller {
         lowerNarrative.setText(belowNarrativeText.getText());
         aboveNarrativeText.clear();
         belowNarrativeText.clear();
+    }
+
+    public void disableSaveToFile(Boolean bool) {
+        saveXML.setDisable(bool);
+        saveHTML.setDisable(bool);
+        saveGIF.setDisable(bool);
     }
 }
