@@ -27,10 +27,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
@@ -394,14 +391,65 @@ public class Controller {
     if (file != null) {
       try {
         ArrayList<BufferedImage> images = memoryOperations.toImages();
-        for(BufferedImage image : images) {
-          File savedImage = new File(file.getPath()+"/"+images.indexOf(image)+".png");
+        ArrayList<String> imageNames = new ArrayList<String>(); //  To save the name of the generated series of images
+        StringBuilder exportPath = new StringBuilder();
+
+        for (BufferedImage image : images) {
+          File savedImage = new File(file.getPath() + "/" + images.indexOf(image) + ".png");
           ImageIO.write(image, "png", savedImage);
+          imageNames.add(savedImage.getName()); //  Store the name of the current image
         }
+
+        generateHTML(imageNames, file.getPath());
+
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
+  }
+
+  private void generateHTML(ArrayList<String> imageNames, String exportPath) throws FileNotFoundException {
+    int i = 0;
+    StringBuilder html = new StringBuilder();
+    html.append("<!DOCTYPE html>\n" +
+            "<html>\n" +
+            "<head>\n" +
+            "<style>\n" +
+            "table, th, td {\n" +
+            "border: 10px solid white;\n" +
+            "border-collapse: collapse;\n" +
+            "}\n" +
+            "</style>\n" +
+            "</head>\n" +
+            "<center>\n" +
+            "<body style=\"background-color:white\">\n" +
+            "<h2>What if James Bond spied for Auric Goldfinger?</h2>\n" +
+            "<table>");
+
+    for (String name : imageNames) {
+      if (i % 2 == 0) {
+        html.append("<tr>\n");
+      }
+      html.append("<td><center><img src=\"").append(name).append("\" width=\"500\" height=\"500\"></center></td>\n");
+
+      if (i % 2 == 1) {
+        html.append("<tr />\n");
+      }
+
+      i++;
+    }
+
+    if (i % 2 == 1) {
+      html.append("<tr />\n");
+    }
+
+    html.append("</body>\n" +
+            "</html>\n" +
+            "</center>");
+
+    File htmlFile = new File(exportPath + "/index.html");
+    PrintStream printStream = new PrintStream(new FileOutputStream(htmlFile));
+    printStream.println(html.toString());//将字符串写入文件
   }
 
   public void throwAlertMessage(String error, Exception f) {
