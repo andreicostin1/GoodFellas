@@ -14,20 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import main.java.gif.GifSequenceWriter.GifSequenceWriter;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -35,7 +27,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class Controller {
@@ -103,16 +94,10 @@ public class Controller {
 
     ArrayList<Character> poseList = new ArrayList<>();
     ArrayList<Bubble> bubbleList = new ArrayList<>();
-    //ArrayList<Bubble> rightBubbleList = new ArrayList<>();
-    //ArrayList<Bubble> leftBubbleList = new ArrayList<>();
 
     Label upperNarrative = new Label();
     Label lowerNarrative = new Label();
 
-    public enum Direction {
-        LEFT,
-        RIGHT
-    }
 
     MemoryOperations memoryOperations = new MemoryOperations();
     ExternalFileOperations externalFileOperations = new ExternalFileOperations();
@@ -223,8 +208,6 @@ public class Controller {
             }
             disableSaveToFile(memoryOperations.isEmpty());
         });
-        //saveXML.setOnAction(event -> saveAsXML());
-        //loadXML.setOnAction(event -> loadXML());
         saveHTML.setOnAction(event -> saveAsHTML());
         saveGIF.setOnAction(event -> saveAsGIF());
 
