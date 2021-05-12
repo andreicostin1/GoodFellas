@@ -378,8 +378,16 @@ public class Controller {
         currentlySelected.getChildren().add(toStore.getImage());
 
         if (currentlySelected.equals(leftDisplayBox)) {
+            if(left != null) {
+                toStore.setText(left.getText());
+                toStore.setBubble(left.getBubble());
+            }
             left = toStore;
         } else {
+            if(right != null) {
+                toStore.setText(right.getText());
+                toStore.setBubble(right.getBubble());
+            }
             right = toStore;
         }
 
