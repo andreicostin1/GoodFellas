@@ -208,8 +208,12 @@ public class Controller {
             }
             disableSaveToFile(memoryOperations.isEmpty());
         });
-        saveHTML.setOnAction(event -> saveAsHTML());
-        saveGIF.setOnAction(event -> saveAsGIF());
+        saveHTML.setOnAction(actionEvent -> {
+            externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides());
+        });
+        saveGIF.setOnAction(actionEvent -> {
+            externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides());
+        });
 
         try {
             createPoseList();
@@ -260,102 +264,6 @@ public class Controller {
         listView.getItems().add(emptyPane);
         listView.setOrientation(Orientation.HORIZONTAL);
         listView.getSelectionModel().selectFirst();
-    }
-
-    public void saveAsHTML() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File file = directoryChooser.showDialog(Main.primaryStage);
-
-        if (file != null) {
-            try {
-                ArrayList<BufferedImage> images = memoryOperations.toImages();
-                ArrayList<String> imageNames = new ArrayList<String>(); //  To save the name of the generated series of images
-
-                for (BufferedImage image : images) {
-                    File savedImage = new File(file.getPath() + "/" + images.indexOf(image) + ".png");
-                    ImageIO.write(image, "png", savedImage);
-                    imageNames.add(savedImage.getName()); //  Store the name of the current image
-                }
-
-                generateHTML(imageNames, file.getPath());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void saveAsGIF() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter for gif
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF File", "*.gif");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show save file dialog
-        File file = fileChooser.showSaveDialog(Main.primaryStage);
-
-        if (file != null) {
-            try {
-                ArrayList<BufferedImage> imgList = memoryOperations.toImages();
-
-                try (
-                        final FileImageOutputStream outputStream = new FileImageOutputStream(file);
-                        final GifSequenceWriter writer = new GifSequenceWriter(outputStream, imgList.get(0).getType(), 6000, false)
-                ) {
-                    for (BufferedImage img : imgList) {
-                        writer.writeToSequence(img);
-                    }
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void generateHTML(ArrayList<String> imageNames, String exportPath) throws FileNotFoundException {
-        int i = 0;
-        StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<style>\n" +
-                "table, th, td {\n" +
-                "border: 10px solid white;\n" +
-                "border-collapse: collapse;\n" +
-                "}\n" +
-                "</style>\n" +
-                "</head>\n" +
-                "<center>\n" +
-                "<body style=\"background-color:white\">\n" +
-                "<h2>Your Comic</h2>\n" +
-                "<table>");
-
-        for (String name : imageNames) {
-            if (i % 2 == 0) {
-                html.append("<tr>\n");
-            }
-            html.append("<td><center><img src=\"").append(name).append("\" width=\"500\" height=\"500\"></center></td>\n");
-
-            if (i % 2 == 1) {
-                html.append("<tr />\n");
-            }
-
-            i++;
-        }
-
-        if (i % 2 == 1) {
-            html.append("<tr />\n");
-        }
-
-        html.append("</body>\n" +
-                "</html>\n" +
-                "</center>");
-
-        File htmlFile = new File(exportPath + "/index.html");
-        PrintStream printStream = new PrintStream(new FileOutputStream(htmlFile));
-        printStream.println(html.toString());//将字符串写入文件
     }
 
     public void throwAlertMessage(String error, Exception f) {

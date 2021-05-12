@@ -1,25 +1,226 @@
 package main.java;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import main.java.gif.GifSequenceWriter.GifSequenceWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ExternalFileOperations {
+
+    public void saveAsGIF(ArrayList<SavedSlide> slideArrayList) {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter for gif
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("GIF File", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(Main.primaryStage);
+
+        if (file != null) {
+            try {
+                ArrayList<BufferedImage> imgList = toImages(slideArrayList);
+
+                try (
+                        final FileImageOutputStream outputStream = new FileImageOutputStream(file);
+                        final GifSequenceWriter writer = new GifSequenceWriter(outputStream, imgList.get(0).getType(), 6000, false)
+                ) {
+                    for (BufferedImage img : imgList) {
+                        writer.writeToSequence(img);
+                    }
+                }
+
+            } catch (IOException e) {
+                throwErrorMessage("Could not save as GIF", e);
+            }
+        }
+    }
+
+    public void saveAsHTML(ArrayList<SavedSlide> slideArrayList) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File file = directoryChooser.showDialog(Main.primaryStage);
+
+        if (file != null) {
+            try {
+                ArrayList<BufferedImage> images = toImages(slideArrayList);
+                ArrayList<String> imageNames = new ArrayList<String>(); //  To save the name of the generated series of images
+
+                for (BufferedImage image : images) {
+                    File savedImage = new File(file.getPath() + "/" + images.indexOf(image) + ".png");
+                    ImageIO.write(image, "png", savedImage);
+                    imageNames.add(savedImage.getName()); //  Store the name of the current image
+                }
+
+                generateHTML(imageNames, file.getPath());
+
+            } catch (IOException e) {
+                throwErrorMessage("Could not save as HTML", e);
+            }
+        }
+    }
+
+    public ArrayList<BufferedImage> toImages(ArrayList<SavedSlide> slideArrayList) throws IOException {
+        ArrayList<BufferedImage> images = new ArrayList<>();
+        BufferedImage endPane = ImageIO.read(this.getClass().getResource("/main/resources/images/end.png"));
+
+        for(SavedSlide slide : slideArrayList) {
+            BufferedImage pane = ImageIO.read(this.getClass().getResource("/main/resources/images/pane.png"));
+
+            Graphics g = pane.getGraphics();
+            ImageView left = slide.getCharacterLeft().getImage();
+            ImageView right = slide.getCharacterRight().getImage();
+
+
+            if(slide.getCharacterLeft().getScale() == -1) {
+                g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17+375, 342,-375, 375, null);
+            }
+            else {
+                g.drawImage(SwingFXUtils.fromFXImage(left.getImage(), null), 17, 342,375, 375, null);
+            }
+
+            if(slide.getCharacterRight().getScale() == -1) {
+                g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402+375, 342, -375, 375, null);
+            } else {
+                g.drawImage(SwingFXUtils.fromFXImage(right.getImage(), null), 402, 342, 375, 375, null);
+            }
+
+            g.setColor(java.awt.Color.BLACK);
+
+            //Narrative
+            Font font = new Font("TimesRoman", Font.PLAIN, 25);
+            g.setFont(font);
+            FontMetrics metrics = g.getFontMetrics(font);
+            int x = 5 + (790 - metrics.stringWidth(slide.getBelowNarrativeText())) / 2;
+            g.drawString(slide.getAboveNarrativeText(), x, 50);
+            x = 5 + (790 - metrics.stringWidth(slide.getBelowNarrativeText())) / 2;
+            g.drawString(slide.getBelowNarrativeText(), x, 770);
+
+            font = new Font("TimesRoman", Font.BOLD, 25);
+            g.setFont(font);
+            metrics = g.getFontMetrics(font);
+            BufferedImage bubble;
+            int length;
+            int splitIndex;
+            String firstLine;
+            String secondLine;
+            //Speech bubbles
+            if(slide.getCharacterLeft().getBubble() != null) {
+                bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterLeft().getBubble().getName()+".png"));
+                g.drawImage(bubble, 30, 135, null);
+                if(metrics.stringWidth(slide.getCharacterLeft().getText()) <= 295) {//if text fits on 1 line
+                    g.drawString(slide.getCharacterLeft().getText(), 200-(metrics.stringWidth(slide.getCharacterLeft().getText())/2), 250);
+                }
+                else {
+                    length = slide.getCharacterLeft().getText().length();
+                    splitIndex = slide.getCharacterLeft().getText().indexOf(" ", length/2);
+
+                    if(splitIndex == -1) {
+                        firstLine = slide.getCharacterLeft().getText().substring(0, length/2);
+                        secondLine = slide.getCharacterLeft().getText().substring((length/2), length);
+                    }
+                    else {
+                        firstLine = slide.getCharacterLeft().getText().substring(0, splitIndex);
+                        secondLine = slide.getCharacterLeft().getText().substring(splitIndex+1, length);
+                    }
+
+                    g.drawString(firstLine, 200-(metrics.stringWidth(firstLine)/2), 250-metrics.getMaxDescent());
+                    g.drawString(secondLine, 200-(metrics.stringWidth(secondLine)/2), 250+metrics.getMaxAscent());
+                }
+            }
+
+            if(slide.getCharacterRight().getBubble() != null) {
+                bubble = ImageIO.read(this.getClass().getResource("/main/resources/images/"+slide.getCharacterRight().getBubble().getName()+".png"));
+                g.drawImage(bubble, 435, 135, null);
+                if(metrics.stringWidth(slide.getCharacterRight().getText()) <= 295) {//if text fits on 1 line
+                    g.drawString(slide.getCharacterRight().getText(), 603-(metrics.stringWidth(slide.getCharacterRight().getText())/2), 250);
+                }
+                else {
+                    length = slide.getCharacterRight().getText().length();
+                    splitIndex = slide.getCharacterRight().getText().indexOf(" ", length/2);
+
+                    if(splitIndex == -1) {
+                        firstLine = slide.getCharacterRight().getText().substring(0, length/2);
+                        secondLine = slide.getCharacterRight().getText().substring((length/2), length);
+                    }
+                    else {
+                        firstLine = slide.getCharacterRight().getText().substring(0, splitIndex);
+                        secondLine = slide.getCharacterRight().getText().substring(splitIndex+1, length);
+                    }
+
+                    g.drawString(firstLine, 603-(metrics.stringWidth(firstLine)/2), 250-metrics.getMaxDescent());
+                    g.drawString(secondLine, 603-(metrics.stringWidth(secondLine)/2), 250+metrics.getMaxAscent());
+                }
+            }
+
+            images.add(pane);
+        }
+        images.add(endPane);
+
+        return images;
+    }
+
+    private void generateHTML(ArrayList<String> imageNames, String exportPath) throws FileNotFoundException {
+        int i = 0;
+        StringBuilder html = new StringBuilder();
+        html.append("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<style>\n" +
+                "table, th, td {\n" +
+                "border: 10px solid white;\n" +
+                "border-collapse: collapse;\n" +
+                "}\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "<center>\n" +
+                "<body style=\"background-color:white\">\n" +
+                "<h2>Your Comic</h2>\n" +
+                "<table>");
+
+        for (String name : imageNames) {
+            if (i % 2 == 0) {
+                html.append("<tr>\n");
+            }
+            html.append("<td><center><img src=\"").append(name).append("\" width=\"500\" height=\"500\"></center></td>\n");
+
+            if (i % 2 == 1) {
+                html.append("<tr />\n");
+            }
+
+            i++;
+        }
+
+        if (i % 2 == 1) {
+            html.append("<tr />\n");
+        }
+
+        html.append("</body>\n" +
+                "</html>\n" +
+                "</center>");
+
+        File htmlFile = new File(exportPath + "/index.html");
+        PrintStream printStream = new PrintStream(new FileOutputStream(htmlFile));
+        printStream.println(html.toString());//将字符串写入文件
+    }
 
     public void saveAsXML(ArrayList<SavedSlide> slideArrayList) {
         FileChooser fileChooser = new FileChooser();
@@ -41,7 +242,7 @@ public class ExternalFileOperations {
                 }
                 writer.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                throwErrorMessage("Could not save as XML", e);
             }
         }
     }
