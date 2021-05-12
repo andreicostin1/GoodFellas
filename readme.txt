@@ -1,1 +1,0 @@
-I created stage panel which will have two boxs for each of: Narration, chart, speech arrow, character model. and will have the functionality that can be used to compose characters in a panel with their own dialogue text, dialogue markers, panel boundaries, as well as  any  additional  narrative  text  positioned.
