@@ -102,8 +102,9 @@ public class Controller {
     SplitMenuButton bubbleSelector = new SplitMenuButton();
 
     ArrayList<Character> poseList = new ArrayList<>();
-    ArrayList<Bubble> rightBubbleList = new ArrayList<>();
-    ArrayList<Bubble> leftBubbleList = new ArrayList<>();
+    ArrayList<Bubble> bubbleList = new ArrayList<>();
+    //ArrayList<Bubble> rightBubbleList = new ArrayList<>();
+    //ArrayList<Bubble> leftBubbleList = new ArrayList<>();
 
     Label upperNarrative = new Label();
     Label lowerNarrative = new Label();
@@ -114,6 +115,7 @@ public class Controller {
     }
 
     MemoryOperations memoryOperations = new MemoryOperations();
+    ExternalFileOperations externalFileOperations = new ExternalFileOperations();
     Character left;
     Character right;
     Bubble leftBubble;
@@ -210,8 +212,19 @@ public class Controller {
 
     public void initialize() {
         // Menu Bar
-        saveXML.setOnAction(event -> saveAsXML());
-        loadXML.setOnAction(event -> loadXML());
+        saveXML.setOnAction(actionEvent -> {
+            externalFileOperations.saveAsXML(memoryOperations.getSavedSlides());
+        });
+        loadXML.setOnAction(actionEvent -> {
+            ArrayList<SavedSlide> savedSlides = externalFileOperations.loadXML(poseList, bubbleList);
+            if(savedSlides != null) {
+                clearPane();
+                memoryOperations.setSavedSlides(savedSlides, listView);
+            }
+            disableSaveToFile(memoryOperations.isEmpty());
+        });
+        //saveXML.setOnAction(event -> saveAsXML());
+        //loadXML.setOnAction(event -> loadXML());
         saveHTML.setOnAction(event -> saveAsHTML());
         saveGIF.setOnAction(event -> saveAsGIF());
 
@@ -264,176 +277,6 @@ public class Controller {
         listView.getItems().add(emptyPane);
         listView.setOrientation(Orientation.HORIZONTAL);
         listView.getSelectionModel().selectFirst();
-    }
-
-    public void saveAsXML() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter for text files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show save file dialog
-        File file = fileChooser.showSaveDialog(Main.primaryStage);
-
-        if (file != null) {
-            PrintWriter writer;
-            try {
-                writer = new PrintWriter(file);
-                ArrayList<String> strings = memoryOperations.toXML();
-                for (String string : strings) {
-                    writer.println(string);
-                }
-                writer.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void loadXML() {
-        FileChooser fileChooser = new FileChooser();
-
-        // Set extension filter for text files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML", "*.xml");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        // Show save file dialog
-        File file = fileChooser.showOpenDialog(Main.primaryStage);
-
-        if (file != null) {
-            try {
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(file);
-                doc.getDocumentElement().normalize();
-
-                if (!doc.getDocumentElement().getNodeName().equals("comic")) {
-                    // alert the user their file is not valid
-                    throwAlertMessage("File invalid", new Exception());
-                } else {
-                    clearPane();
-                    memoryOperations.clear(listView);
-
-                    Node panelsNode = doc.getDocumentElement().getElementsByTagName("panels").item(0);
-                    Element panelsElement = (Element) panelsNode;
-                    NodeList panels = panelsElement.getElementsByTagName("panel");
-
-                    // get each panel
-                    for (int i = 0; i < panels.getLength(); i++) {
-                        Element panel = (Element) panels.item(i);
-                        Element above = (Element) panel.getElementsByTagName("above").item(0);
-                        Element below = (Element) panel.getElementsByTagName("below").item(0);
-
-                        Element leftE = (Element) panel.getElementsByTagName("left").item(0);
-                        Element rightE = (Element) panel.getElementsByTagName("right").item(0);
-
-                        Element leftBalloon = (Element) leftE.getElementsByTagName("balloon").item(0);
-                        Element rightBalloon = (Element) rightE.getElementsByTagName("balloon").item(0);
-
-                        Element leftFigure = (Element) leftE.getElementsByTagName("figure").item(0);
-                        Element rightFigure = (Element) rightE.getElementsByTagName("figure").item(0);
-
-                        Element leftFigureName = (Element) leftFigure.getElementsByTagName("name").item(0);
-                        Element rightFigureName = (Element) rightFigure.getElementsByTagName("name").item(0);
-
-                        Element leftFigureAppearance =
-                                (Element) leftFigure.getElementsByTagName("appearance").item(0);
-                        Element rightFigureAppearance =
-                                (Element) rightFigure.getElementsByTagName("appearance").item(0);
-
-                        Element leftFigureSkin = (Element) leftFigure.getElementsByTagName("skin").item(0);
-                        Element rightFigureSkin = (Element) rightFigure.getElementsByTagName("skin").item(0);
-
-                        Element leftFigureHair = (Element) leftFigure.getElementsByTagName("hair").item(0);
-                        Element rightFigureHair = (Element) rightFigure.getElementsByTagName("hair").item(0);
-
-                        Element leftFigureFacing = (Element) leftFigure.getElementsByTagName("facing").item(0);
-                        Element rightFigureFacing =
-                                (Element) rightFigure.getElementsByTagName("facing").item(0);
-
-                        // Left Character
-                        currentlySelected = leftDisplayBox;
-                        left = findCharacter(leftFigureName.getTextContent());
-                        left.getImage().setFitHeight(150);
-                        left.getImage().setFitWidth(150);
-                        if (leftFigureAppearance.getTextContent().equals("MALE")) {
-                            changeGender(leftDisplayBox);
-                        }
-                        if (!leftFigureSkin.getTextContent().equals("default")) {
-                            skinColorPicker.setValue(Color.web(leftFigureSkin.getTextContent()));
-                            changeSkinColor();
-                        }
-                        if (!leftFigureHair.getTextContent().equals("default")) {
-                            hairColorPicker.setValue(Color.web(leftFigureHair.getTextContent()));
-                            changeHairColor();
-                        }
-                        if (leftFigureFacing.getTextContent().equals("RIGHT")) {
-                            flip();
-                        }
-
-                        if (leftBalloon != null) {
-                            Element leftBalloonContent = (Element) leftBalloon.getElementsByTagName("content").item(0);
-
-                            for (MenuItem menuItem : bubbleSelector.getItems()) {
-                                if (menuItem.getText().equals(leftBalloon.getAttribute("status"))) {
-                                    bubbleSelector.setText(leftBalloon.getAttribute("status"));
-                                    usertxt.setText(leftBalloonContent.getTextContent());
-                                    bubble();
-                                }
-                            }
-                        }
-
-                        //Right Character
-                        currentlySelected = rightDisplayBox;
-                        right = findCharacter(rightFigureName.getTextContent());
-                        right.getImage().setFitHeight(150);
-                        right.getImage().setFitWidth(150);
-                        if (rightFigureAppearance.getTextContent().equals("MALE")) {
-                            changeGender(rightDisplayBox);
-                        }
-                        if (!rightFigureSkin.getTextContent().equals("default")) {
-                            skinColorPicker.setValue(Color.web(rightFigureSkin.getTextContent()));
-                            changeSkinColor();
-                        }
-                        if (!rightFigureHair.getTextContent().equals("default")) {
-                            hairColorPicker.setValue(Color.web(rightFigureHair.getTextContent()));
-                            changeHairColor();
-                        }
-                        if (rightFigureFacing.getTextContent().equals("RIGHT")) {
-                            flip();
-                        }
-
-                        if (above != null) {
-                            aboveNarrativeText.setText(above.getTextContent());
-                        }
-
-                        if (below != null) {
-                            belowNarrativeText.setText(below.getTextContent());
-                        }
-
-                        if (rightBalloon != null) {
-                            Element rightBalloonContent = (Element) rightBalloon.getElementsByTagName("content").item(0);
-
-                            for (MenuItem menuItem : bubbleSelector.getItems()) {
-                                if (menuItem.getText().equals(rightBalloon.getAttribute("status"))) {
-                                    bubbleSelector.setText(rightBalloon.getAttribute("status"));
-                                    usertxt2.setText(rightBalloonContent.getTextContent());
-                                    bubble();
-                                }
-                            }
-                        }
-
-                        memoryOperations.save(
-                                left, right, listView, aboveNarrativeText.getText(), belowNarrativeText.getText());
-                        clearPane();
-                    }
-                    disableSaveToFile(memoryOperations.isEmpty());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void saveAsHTML() {
@@ -587,23 +430,20 @@ public class Controller {
 
         for (Iterator<Path> it = walk.iterator(); it.hasNext(); ) {
             Path inLoop = it.next();
-            ImageView poseImageR = new ImageView(inLoop.toUri().toURL().toString());
-            ImageView poseImageL = new ImageView(inLoop.toUri().toURL().toString());
+            ImageView poseImage = new ImageView(inLoop.toUri().toURL().toString());
             String name = inLoop.getFileName().toString();
             if (!name.equals("bubbles")) {
                 // Removes extension from file name
                 if (name.indexOf(".") > 0) {
                     name = name.substring(0, name.lastIndexOf("."));
                 }
-                rightBubbleList.add(new Bubble(name, poseImageR));
-                leftBubbleList.add(new Bubble(name, poseImageL));
+                bubbleList.add(new Bubble(name, poseImage));
             }
         }
         // to make list alphabetical
-        rightBubbleList.sort(Comparator.comparing(Bubble::getName));
-        leftBubbleList.sort(Comparator.comparing(Bubble::getName));
+        bubbleList.sort(Comparator.comparing(Bubble::getName));
 
-        for (Bubble bubble : rightBubbleList) {
+        for (Bubble bubble : bubbleList) {
             bubbleSelector.getItems().add(new MenuItem(bubble.getName()));
         }
         bubbleSelector.getItems().add(new MenuItem("none"));
@@ -707,9 +547,6 @@ public class Controller {
                 character.setName(c.getName());
                 character.setImage(new ImageView(c.getImage().getImage()));
                 character.setText("");
-                character.setHairColor(new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1));
-                character.setSkin(new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1));
-                character.setBraidColor(new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1));
             }
         }
         return character;
@@ -819,18 +656,12 @@ public class Controller {
         panelSide.getChildren().add(updatedCharacter.getImage());
     }
 
-    public Bubble findNextBubble(Direction d, String name) {
+    public Bubble findNextBubble(String name) {
         Bubble bubble = new Bubble();
-        List<Bubble> bubbleList;
-        if (d == Direction.LEFT) {
-            bubbleList = leftBubbleList;
-        } else {
-            bubbleList = rightBubbleList;
-        }
         for (Bubble c : bubbleList) {
             if (name.equals(c.getName())) {
                 bubble.setName(c.getName());
-                bubble.setImage(c.getImage());
+                bubble.setImage(new ImageView(c.getImage().getImage()));
             }
         }
         return bubble;
@@ -884,9 +715,7 @@ public class Controller {
             }
 
             if (!bubbleName.equals("none")) {
-                leftBubble = findNextBubble(Direction.LEFT, bubbleName);
-                leftBubble.getImage().setFitWidth(90);
-                leftBubble.getImage().setFitHeight(25);
+                leftBubble = findNextBubble(bubbleName);
                 leftLabel.setText("     " + out);
                 //display.add(leftLabel, 0, 1);
                 speechBubbleLeft.getChildren().add(leftBubble.getImage());
@@ -907,9 +736,7 @@ public class Controller {
             }
 
             if (!bubbleName.equals("none")) {
-                rightBubble = findNextBubble(Direction.RIGHT, bubbleName);
-                rightBubble.getImage().setFitWidth(90);
-                rightBubble.getImage().setFitHeight(25);
+                rightBubble = findNextBubble(bubbleName);
                 rightLabel.setText("     " + out);
                 //display.add(rightLabel, 1, 1);
                 speechBubbleRight.getChildren().add(rightBubble.getImage());

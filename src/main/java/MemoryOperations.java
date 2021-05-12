@@ -23,6 +23,25 @@ public class MemoryOperations {
   private ArrayList<SavedSlide> slideArrayList = new ArrayList<>();
   private int id = 0;
 
+  public ArrayList<SavedSlide> getSavedSlides() {
+    return slideArrayList;
+  }
+
+  public void setSavedSlides(ArrayList<SavedSlide> slides, ListView<GridPane> listView) {
+    slideArrayList = slides;
+    id = 0;
+    listView.getItems().remove(1, listView.getItems().size());
+    for(SavedSlide slide : slideArrayList) {
+      savedSlide = generateSlide(slide, slide.getCharacterLeft(), slide.getCharacterRight(),
+              slide.getAboveNarrativeText(), slide.getBelowNarrativeText());
+      savedSlide.setPrefSize(225, 125);
+      savedSlide.setGridLinesVisible(true);
+      listView.getItems().add(savedSlide);
+      listView.setOrientation(Orientation.HORIZONTAL);
+      id++;
+    }
+  }
+
   public void save(
       Character left,
       Character right,
@@ -160,121 +179,6 @@ public class MemoryOperations {
     generatedSlide.add(rightImage, 1, 0);
 
     return generatedSlide;
-  }
-
-  public ArrayList<String> toXML() {
-    Color defaultSkin = new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1);
-    Color defaultHair = new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1);
-
-    Character character;
-
-    ArrayList<String> strings = new ArrayList<>();
-    strings.add("<?xml version = \"1.0\" encoding = \"UTF-8\"?>");
-    strings.add("<comic>");
-    strings.add("<panels>");
-
-    for (SavedSlide slide : slideArrayList) {
-      strings.add("<panel>");
-
-      if (!slide.getAboveNarrativeText().isEmpty()) {
-        strings.add("<above>" + slide.getAboveNarrativeText() + "</above>");
-      }
-
-      // Left Character
-      strings.add("<left>");
-      if (slide.getCharacterLeft() != null) {
-        character = slide.getCharacterLeft();
-        strings.add("<figure>");
-        strings.add("<name>" + character.getName() + "</name>");
-        strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
-
-        Color skin = character.getSkin();
-        Color hair = character.getHairColor();
-        String skinHex = "#" + (format(skin.getRed()) + format(skin.getGreen()) + format(skin.getBlue()) + format(skin.getOpacity())).toUpperCase();
-        String hairHex = "#" + (format(hair.getRed()) + format(hair.getGreen()) + format(hair.getBlue()) + format(hair.getOpacity())).toUpperCase();
-
-        // skin
-        if (skin.equals(defaultSkin)) {
-          strings.add("<skin>default</skin>");
-        } else {
-          strings.add("<skin>" + skinHex + "</skin>");
-        }
-
-        // hair
-        if (hair.equals(defaultHair)) {
-          strings.add("<hair>default</hair>");
-        } else {
-          strings.add("<hair>" + hairHex + "</hair>");
-        }
-
-        strings.add("<facing>" + character.getFacing().toString() + "</facing>");
-        strings.add("</figure>");
-
-        // bubble
-        if (character.getBubble() != null) {
-          strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
-          strings.add("<content>" + character.getText() + "</content>");
-          strings.add("</balloon>");
-        }
-      }
-      strings.add("</left>");
-
-      // Right Character
-      strings.add("<right>");
-      if (slide.getCharacterRight() != null) {
-        character = slide.getCharacterRight();
-        strings.add("<figure>");
-        strings.add("<name>" + character.getName() + "</name>");
-        strings.add("<appearance>" + character.getGender().toString() + "</appearance>");
-
-        Color skin = character.getSkin();
-        Color hair = character.getHairColor();
-
-        String skinHex = "#" + (format(skin.getRed()) + format(skin.getGreen()) + format(skin.getBlue()) + format(skin.getOpacity())).toUpperCase();
-        String hairHex = "#" + (format(hair.getRed()) + format(hair.getGreen()) + format(hair.getBlue()) + format(hair.getOpacity())).toUpperCase();
-
-        // skin
-        if (skin.equals(defaultSkin)) {
-          strings.add("<skin>default</skin>");
-        } else {
-          strings.add("<skin>" + skinHex + "</skin>");
-        }
-
-        // hair
-        if (hair.equals(defaultHair)) {
-          strings.add("<hair>default</hair>");
-        } else {
-          strings.add("<hair>" + hairHex + "</hair>");
-        }
-
-        strings.add("<facing>" + character.getFacing().toString() + "</facing>");
-        strings.add("</figure>");
-
-        // bubble
-        if (character.getBubble() != null) {
-          strings.add("<balloon status = \"" + character.getBubble().getName() + "\">");
-          strings.add("<content>" + character.getText() + "</content>");
-          strings.add("</balloon>");
-        }
-      }
-      strings.add("</right>");
-
-      if (!slide.getBelowNarrativeText().isEmpty()) {
-        strings.add("<below>" + slide.getBelowNarrativeText() + "</below>");
-      }
-      strings.add("</panel>");
-    }
-
-    strings.add("</panels>");
-    strings.add("</comic>");
-
-    return strings;
-  }
-
-  //helper method for converting color to hex
-  private String format(double val) {
-    String in = Integer.toHexString((int) Math.round(val * 255));
-    return in.length() == 1 ? "0" + in : in;
   }
 
   public ArrayList<BufferedImage> toImages() throws IOException {

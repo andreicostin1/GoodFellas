@@ -9,6 +9,8 @@ public class Bubble {
   public Bubble(String name, ImageView image) {
     this.name = name;
     this.image = image;
+    this.image.setFitWidth(90);
+    this.image.setFitHeight(25);
   }
 
   public Bubble() {}
@@ -27,5 +29,7 @@ public class Bubble {
 
   public void setImage(ImageView image) {
     this.image = image;
+    this.image.setFitWidth(90);
+    this.image.setFitHeight(25);
   }
 }

@@ -33,12 +33,18 @@ public class Character {
     scale = 1;
     setFacing();
     text = "";
+    hairColor = new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1);
+    skin = new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1);
+    braidColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
   }
 
   public Character() {
     gender = Gender.FEMALE;
     scale = 1;
     setFacing();
+    hairColor = new Color(249 / 255.0, 255 / 255.0, 0 / 255.0, 1);
+    skin = new Color(255 / 255.0, 232 / 255.0, 216 / 255.0, 1);
+    braidColor = new Color(240 / 255.0, 255 / 255.0, 0 / 255.0, 1);
   }
 
   public String getName() {
