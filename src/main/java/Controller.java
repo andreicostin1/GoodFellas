@@ -15,11 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import main.java.gif.GifSequenceWriter.GifSequenceWriter;
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -94,20 +89,15 @@ public class Controller {
 
     ArrayList<Character> poseList = new ArrayList<>();
     ArrayList<Bubble> bubbleList = new ArrayList<>();
-
     Label upperNarrative = new Label();
     Label lowerNarrative = new Label();
-
-
     MemoryOperations memoryOperations = new MemoryOperations();
     ExternalFileOperations externalFileOperations = new ExternalFileOperations();
     Character left;
     Character right;
     Bubble leftBubble;
     Bubble rightBubble;
-
     HBox currentlySelected = null;
-
     String out = "";
     Label leftLabel = new Label();
     Label rightLabel = new Label();
@@ -647,10 +637,27 @@ public class Controller {
     }
 
     public void narrativeText() {
-        upperNarrative.setText(aboveNarrativeText.getText());
-        lowerNarrative.setText(belowNarrativeText.getText());
-        aboveNarrativeText.clear();
-        belowNarrativeText.clear();
+        Exception f = new Exception();
+        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = img.createGraphics();
+        FontMetrics fm = g2d.getFontMetrics();
+        double textLength_1 = fm.stringWidth(aboveNarrativeText.getText());
+        g2d.dispose();
+        double textLength_2 = fm.stringWidth(belowNarrativeText.getText());
+        //System.out.print(textLength_1+"  ");
+        if (textLength_1 > 265 || textLength_2 > 265) {
+            throwAlertMessage("message to long enter again",f);
+            aboveNarrativeText.clear();
+            belowNarrativeText.clear();
+        } else {
+            if(!aboveNarrativeText.getText().equals("")){
+                upperNarrative.setText(aboveNarrativeText.getText());
+                aboveNarrativeText.clear();
+            } else{
+                lowerNarrative.setText(belowNarrativeText.getText());
+                belowNarrativeText.clear();
+            }
+        }
     }
 
     public void disableSaveToFile(Boolean bool) {
