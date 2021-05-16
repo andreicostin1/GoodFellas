@@ -180,6 +180,7 @@ public class Controller {
     saveGIF.setOnAction(
         actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides(listView)));
     aboveNarrativeText.setFocusTraversable(false);
+    belowNarrativeText.setFocusTraversable(false);
     try {
       createPoseList();
     } catch (Exception e) {
