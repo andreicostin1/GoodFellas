@@ -35,7 +35,6 @@ public class Controller {
   @FXML MenuItem loadXML = new MenuItem();
   @FXML MenuItem saveHTML = new MenuItem();
   @FXML MenuItem saveGIF = new MenuItem();
-  @FXML MenuItem close = new MenuItem();
   @FXML SplitPane splitPane = new SplitPane();
   @FXML Text title = new Text();
   @FXML Button addCharacter = new Button();
@@ -56,8 +55,6 @@ public class Controller {
   @FXML HBox speechBubbleRight = new HBox();
   @FXML ColorPicker hairColorPicker = new ColorPicker();
   @FXML ColorPicker skinColorPicker = new ColorPicker();
-  //@FXML TextField userText;
-  //@FXML TextField userText1;
   @FXML TextField aboveNarrativeText;
   @FXML TextField belowNarrativeText;
   @FXML TextField textLeft = new TextField();
@@ -332,8 +329,6 @@ public class Controller {
     for (Bubble bubble : bubbleList) {
       bubbleSelector.getItems().add(new MenuItem(bubble.getName()));
     }
-    bubbleSelector.getItems().add(new MenuItem("none"));
-
     for (MenuItem bubbleItem : bubbleSelector.getItems()) {
       bubbleItem.setOnAction((event) -> bubbleSelector.setText(bubbleItem.getText()));
     }

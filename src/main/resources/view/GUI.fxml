@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.ComboBox?>
@@ -10,183 +41,95 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="700.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
-    <children>
-        <MenuBar prefHeight="25.0" prefWidth="700.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem fx:id="saveXML" disable="true" mnemonicParsing="false" text="Save XML" />
-                        <MenuItem fx:id="loadXML" mnemonicParsing="false" text="Load XML" />
-                        <MenuItem fx:id="saveHTML" disable="true" mnemonicParsing="false" text="Save HTML" />
-                        <MenuItem fx:id="saveGIF" disable="true" mnemonicParsing="false" text="Save GIF" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <GridPane alignment="CENTER" layoutX="396.0" layoutY="38.0" prefHeight="400.0" prefWidth="290.0">
-            <columnConstraints>
-                <ColumnConstraints />
-                <ColumnConstraints />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="65.0" minHeight="30.0" prefHeight="59.0" />
-            </rowConstraints>
-            <children>
-                <Button fx:id="addCharacter" mnemonicParsing="false" text="Add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <tooltip>
-                        <Tooltip text="Add character to selected canvas" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="leftGender" mnemonicParsing="false" text="Gender" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                    <GridPane.margin>
-                        <Insets top="20.0" />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Change gender of selected character" textAlignment="CENTER" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="LeftSpeechBubble" mnemonicParsing="false" text="L Bubble" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                    <tooltip>
-                        <Tooltip text="Add or remove bubble to left character" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="RightSpeechBubble" mnemonicParsing="false" text="R Bubble" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                    <tooltip>
-                        <Tooltip text="Add or remove bubble to right character" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="save" mnemonicParsing="false" text="Save" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Save current panel" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="clearPane" mnemonicParsing="false" onMouseClicked="#clearPane" text="Clear Pane" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-                    <tooltip>
-                        <Tooltip text="Clear panel" />
-                    </tooltip>
-                </Button>
-
-                <Label alignment="CENTER" prefWidth="96.0" text="Select Character" textAlignment="JUSTIFY" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                    <GridPane.margin>
-                        <Insets top="10.0" />
-                    </GridPane.margin>
-                </Label>
-                <Button fx:id="flipCharacter" alignment="CENTER" mnemonicParsing="false" text="Flip" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
-                    <GridPane.margin>
-                        <Insets top="10.0" />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Flip selected character" />
-                    </tooltip>
-                </Button>
-                <ComboBox fx:id="characterMenu" prefWidth="176.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <tooltip>
-                        <Tooltip text="Select character" />
-                    </tooltip>
-                </ComboBox>
-                <ColorPicker fx:id="hairColorPicker" editable="true" promptText="Hair" style="-fx-color-label-visible: false;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <value>
-                        <Color red="0.9411764740943909" green="1.0" />
-                    </value>
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Change hair color of left character" />
-                    </tooltip>
-                </ColorPicker>
-                <Label prefHeight="17.0" prefWidth="34.0" text="Hair" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <GridPane.margin>
-                        <Insets top="5.0" />
-                    </GridPane.margin>
-                </Label>
-                <ColorPicker fx:id="skinColorPicker" editable="true" style="-fx-color-label-visible: false;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <value>
-                        <Color red="1.0" green="0.9098039269447327" blue="0.8470588326454163" />
-                    </value>
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                    <tooltip>
-                        <Tooltip text="Change skin color of left character" />
-                    </tooltip>
-                </ColorPicker>
-                <Label layoutX="10.0" layoutY="237.0" prefHeight="25.0" prefWidth="37.0" text="Skin" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <GridPane.margin>
-                        <Insets left="5.0" />
-                    </GridPane.margin>
-                </Label>
-                <Button fx:id="topNarrative" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefWidth="152.0" text="Add Top Narrative" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
-                    <tooltip>
-                        <Tooltip text="Add narrative text to pane" />
-                    </tooltip>
-                </Button>
-                <Button fx:id="Delete" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" text="Delete" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                    <tooltip>
-                        <Tooltip text="Delete saved panel" />
-                    </tooltip>
-                </Button>
-                <SplitMenuButton fx:id="bubbleSelector" mnemonicParsing="false" text="Bubbles" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                    <items>
-
-                    </items>
-                    <tooltip>
-                        <Tooltip text="Select and Click" />
-                    </tooltip>
-                </SplitMenuButton>
-                <Button fx:id="bottomNarrative" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefWidth="152.0" text="Add Bottom Narrative" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-                    <tooltip>
-                        <Tooltip text="Add narrative text to pane" />
-                    </tooltip>
-                </Button>
-            </children>
-        </GridPane>
-        <TextField fx:id="userText" layoutX="14.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0" promptText="Enter left character speech" />
-        <TextField fx:id="belowNarrativeText" layoutX="12.0" layoutY="454.0" prefHeight="35.0" prefWidth="360.0" promptText="Enter Narrative Text here..." />
-        <GridPane fx:id="display" layoutX="12.0" layoutY="127.0" prefHeight="319.0" prefWidth="360.0" style="-fx-background-color: white; -fx-border-color: black;">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="164.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <HBox fx:id="leftDisplayBox" prefHeight="124.0" prefWidth="150.0" GridPane.rowIndex="3" />
-                <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <HBox fx:id="speechBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
-                <HBox fx:id="speechBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField fx:id="textLeft" editable="false" visible="false" GridPane.rowIndex="1" />
-                <TextField fx:id="textRight" editable="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            </children>
-        </GridPane>
-        <ListView fx:id="listView" layoutX="13.0" layoutY="498.0" prefHeight="145.0" prefWidth="675.0" style="-fx-background-color: white; -fx-border-color: black;">
-        </ListView>
-        <TextField fx:id="userText1" layoutX="202.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0" promptText="Enter right character speech" />
-        <TextField fx:id="aboveNarrativeText" layoutX="12.0" layoutY="38.0" prefHeight="35.0" prefWidth="360.0" promptText="Enter Narrative Text here..." />
-    </children>
-</Pane>
+<VBox prefHeight="617.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+  <children>
+      <MenuBar prefHeight="25.0" prefWidth="700.0">
+          <menus>
+              <Menu mnemonicParsing="false" text="File">
+                  <items>
+                      <MenuItem fx:id="saveXML" disable="true" mnemonicParsing="false" text="Save XML" />
+                      <MenuItem fx:id="loadXML" mnemonicParsing="false" text="Load XML" />
+                      <MenuItem fx:id="saveHTML" disable="true" mnemonicParsing="false" text="Save HTML" />
+                      <MenuItem fx:id="saveGIF" disable="true" mnemonicParsing="false" text="Save GIF" />
+                  </items>
+              </Menu>
+          </menus>
+      </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <SplitPane fx:id="splitPane" dividerPositions="0.6372549019607843" prefHeight="441.0" prefWidth="818.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="517.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <TextField fx:id="aboveNarrativeText" layoutX="7.0" layoutY="14.0" prefHeight="25.0" prefWidth="449.0" promptText="Enter Above Narrative..." />
+                        <GridPane fx:id="display" layoutX="14.0" layoutY="50.0" prefHeight="344.0" prefWidth="489.0" style="-fx-background-color: white;">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="42.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox fx:id="leftDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                              <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <HBox fx:id="speechBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                              <HBox fx:id="speechBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <TextField fx:id="belowNarrativeText" layoutX="7.0" layoutY="405.0" prefHeight="25.0" prefWidth="449.0" promptText="Enter Below Narrative Text..." />
+                        <Button fx:id="topNarrative" layoutX="465.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="bottomNarrative" layoutX="465.0" layoutY="405.0" mnemonicParsing="false" text="Add" />
+                     </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="293.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Text fx:id="title" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Character">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="characterMenu" layoutX="112.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0" />
+                        <Label layoutX="14.0" layoutY="46.0" text="Select Character" />
+                        <Button fx:id="addCharacter" layoutX="249.0" layoutY="42.0" mnemonicParsing="false" text="Add" />
+                        <Label layoutX="14.0" layoutY="93.0" text="Hair Color" />
+                        <ColorPicker fx:id="hairColorPicker" layoutX="112.0" layoutY="89.0" prefHeight="25.0" prefWidth="131.0" promptText="Hair" />
+                        <Label layoutX="14.0" layoutY="141.0" text="Skin Color" />
+                        <ColorPicker fx:id="skinColorPicker" layoutX="112.0" layoutY="137.0" prefHeight="25.0" prefWidth="131.0" promptText="Skin" />
+                        <TextField fx:id="speech" layoutY="185.0" prefHeight="25.0" prefWidth="198.0" promptText="Enter Character Speech" AnchorPane.leftAnchor="1.0" />
+                        <SplitMenuButton fx:id="bubbleSelector" layoutX="211.0" layoutY="185.0" mnemonicParsing="false" text="Speach" AnchorPane.rightAnchor="5.0">
+                          <items>
+                          </items>
+                        </SplitMenuButton>
+                        <Button fx:id="save" layoutX="126.0" layoutY="404.0" mnemonicParsing="false" text="Save" />
+                        <Text layoutX="19.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Panel">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="Delete" layoutX="211.0" layoutY="404.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="clearPane" layoutX="26.0" layoutY="404.0" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="flipCharacter" layoutX="36.0" layoutY="249.0" mnemonicParsing="false" text="Flip Character" />
+                        <Button fx:id="leftGender" layoutX="165.0" layoutY="249.0" mnemonicParsing="false" text="Switch Gender" />
+                     </children></AnchorPane>
+              </items>
+            </SplitPane>
+            <ListView fx:id="listView" layoutY="441.0" prefHeight="152.0" prefWidth="818.0" style="-fx-background-color: white; -fx-border-color: gray;" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
