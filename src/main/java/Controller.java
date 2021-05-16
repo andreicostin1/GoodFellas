@@ -1,5 +1,6 @@
 package main.java;
 
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -178,7 +179,7 @@ public class Controller {
             externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides(listView)));
     saveGIF.setOnAction(
         actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides(listView)));
-
+    aboveNarrativeText.setFocusTraversable(false);
     try {
       createPoseList();
     } catch (Exception e) {
