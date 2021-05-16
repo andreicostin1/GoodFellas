@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class MemoryOperations {
 
   public ArrayList<SavedSlide> getSavedSlides(ListView<Thumbnail> listView) {
     ArrayList<SavedSlide> slideList = new ArrayList<>();
-    for(int i = 1; i < listView.getItems().size(); i++) {
+    for (int i = 1; i < listView.getItems().size(); i++) {
       slideList.add(slidesMap.get(listView.getItems().get(i)));
     }
     return slideList;
@@ -30,8 +31,13 @@ public class MemoryOperations {
   public void setSavedSlides(ArrayList<SavedSlide> slides, ListView<Thumbnail> listView) {
     clear(listView);
     id = 1;
-    for(SavedSlide slide : slides) {
-      Thumbnail thumbnail = new Thumbnail(slide.getID(), 240, 120, getImage(slide.getCharacterLeft(), slide.getCharacterRight()));
+    for (SavedSlide slide : slides) {
+      Thumbnail thumbnail =
+          new Thumbnail(
+              slide.getID(),
+              240,
+              120,
+              getImage(slide.getCharacterLeft(), slide.getCharacterRight()));
       listView.getItems().add(thumbnail);
       listView.setOrientation(Orientation.HORIZONTAL);
       slidesMap.put(thumbnail, slide);
@@ -62,13 +68,13 @@ public class MemoryOperations {
     BufferedImage leftImage = SwingFXUtils.fromFXImage(left.getImage().getImage(), null);
     BufferedImage rightImage = SwingFXUtils.fromFXImage(right.getImage().getImage(), null);
 
-    if(left.getScale() == -1) {
-      g.drawImage(leftImage, 120, 0, -120, 120,  null);
+    if (left.getScale() == -1) {
+      g.drawImage(leftImage, 120, 0, -120, 120, null);
     } else {
-      g.drawImage(leftImage, 0, 0, 120, 120,  null);
+      g.drawImage(leftImage, 0, 0, 120, 120, null);
     }
 
-    if(right.getScale() == -1) {
+    if (right.getScale() == -1) {
       g.drawImage(rightImage, 240, 0, -120, 120, null);
     } else {
       g.drawImage(rightImage, 120, 0, 120, 120, null);
@@ -77,8 +83,13 @@ public class MemoryOperations {
     return SwingFXUtils.toFXImage(bufferedImage, null);
   }
 
-  public void update(Character left, Character right, String aboveNarrativeText, String belowNarrativeText,
-                     ListView<Thumbnail> listView, int index) {
+  public void update(
+      Character left,
+      Character right,
+      String aboveNarrativeText,
+      String belowNarrativeText,
+      ListView<Thumbnail> listView,
+      int index) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
@@ -86,7 +97,8 @@ public class MemoryOperations {
     Thumbnail oldThumbnail = listView.getItems().get(index);
     Thumbnail newThumbnail = new Thumbnail(oldThumbnail.getID(), 240, 120, getImage(left, right));
     SavedSlide oldSlide = slidesMap.get(oldThumbnail);
-    SavedSlide newSlide = new SavedSlide(oldThumbnail.getID(), left, right, aboveNarrativeText, belowNarrativeText);
+    SavedSlide newSlide =
+        new SavedSlide(oldThumbnail.getID(), left, right, aboveNarrativeText, belowNarrativeText);
     listView.getItems().set(index, newThumbnail);
     listView.setOrientation(Orientation.HORIZONTAL);
     slidesMap.remove(oldThumbnail, oldSlide);
@@ -94,25 +106,25 @@ public class MemoryOperations {
   }
 
   public SavedSlide load(
-          HBox leftDisplay,
-          HBox rightDisplay,
-          int index,
-          ListView<Thumbnail> listView,
-          HBox speechBubbleLeft,
-          HBox speechBubbleRight,
-          TextField textLeft,
-          TextField textRight,
-          Label upperNarrative,
-          Label lowerNarrative,
-          Label leftSpeech,
-          Label rightSpeech) {
+      HBox leftDisplay,
+      HBox rightDisplay,
+      int index,
+      ListView<Thumbnail> listView,
+      HBox speechBubbleLeft,
+      HBox speechBubbleRight,
+      TextField textLeft,
+      TextField textRight,
+      Label upperNarrative,
+      Label lowerNarrative,
+      Label leftSpeech,
+      Label rightSpeech) {
     if (slidesMap.isEmpty()) {
       throw new IllegalArgumentException("Please add a slide before trying to load it");
     }
     Thumbnail thumbnail = listView.getItems().get(index);
     SavedSlide slideToLoad = slidesMap.get(thumbnail);
 
-    if(slideToLoad == null) {
+    if (slideToLoad == null) {
       throw new IllegalArgumentException("Slide could not be found");
     }
 
@@ -136,7 +148,6 @@ public class MemoryOperations {
     if (slideToLoad.getCharacterLeft().getText() != null) {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
-
 
     right.setFitHeight(150);
     right.setFitWidth(150);
@@ -182,5 +193,4 @@ public class MemoryOperations {
   public boolean isEmpty() {
     return slidesMap.isEmpty();
   }
-
 }

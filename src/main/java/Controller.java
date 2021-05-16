@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -99,8 +101,7 @@ public class Controller {
         } else if (e.getSource().equals(Delete)) {
           try {
             if (listView.getSelectionModel().getSelectedIndex() != 0) {
-              memoryOperations.delete(
-                  listView.getSelectionModel().getSelectedIndex(), listView);
+              memoryOperations.delete(listView.getSelectionModel().getSelectedIndex(), listView);
               disableSaveToFile(memoryOperations.isEmpty());
               clearPane();
               listView.getSelectionModel().selectFirst();
@@ -170,7 +171,8 @@ public class Controller {
           disableSaveToFile(memoryOperations.isEmpty());
         });
     saveHTML.setOnAction(
-        actionEvent -> externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides(listView)));
+        actionEvent ->
+            externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides(listView)));
     saveGIF.setOnAction(
         actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides(listView)));
 
@@ -192,10 +194,15 @@ public class Controller {
     // insert empty narrative text
     upperNarrative.setFont(new Font("Arial", 15));
     upperNarrative.setText(" ");
-    display.add(upperNarrative, 1, 0, 2, 1);
+    upperNarrative.setAlignment(Pos.CENTER);
+    upperNarrative.setMaxWidth(Double.MAX_VALUE);
+    display.add(upperNarrative, 0, 0, 2, 1);
+
     lowerNarrative.setFont(new Font("Arial", 15));
     lowerNarrative.setText(" ");
-    display.add(lowerNarrative, 1, 4, 2, 1);
+    lowerNarrative.setAlignment(Pos.CENTER);
+    lowerNarrative.setMaxWidth(Double.MAX_VALUE);
+    display.add(lowerNarrative, 0, 4, 2, 1);
 
     leftLabel.setText("");
     display.add(leftLabel, 0, 1);
@@ -217,33 +224,39 @@ public class Controller {
     rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
     leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
 
-        //new list view
-        BufferedImage newPane = new BufferedImage(240, 120, 2);
-        Graphics g = newPane.getGraphics();
-        g.setColor(Color.BLACK);
-        java.awt.Font font = new java.awt.Font("TimesRoman", java.awt.Font.PLAIN, 15);
-        g.setFont(font);
-        g.drawString("New Panel", 80, 60);
-        listView.setCellFactory(param -> new SlideCell());
-        listView.setOrientation(Orientation.HORIZONTAL);
-        listView.getItems().add(new Thumbnail(0, 240, 120, SwingFXUtils.toFXImage(newPane, null)));
-        listView.getSelectionModel().selectFirst();
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Thumbnail>() {
-                 @Override
-                 public void changed(ObservableValue<? extends Thumbnail> observableValue, Thumbnail thumbnail, Thumbnail t1) {
-                     try {
-                         if(t1.getID() == 0) {
-                             clearPane();
-                         } else {
-                             loadPane();
-                         }
-                     } catch (Exception f) {
-                         throwAlertMessage("Error loading Frame", f);
-                     }
-                 }
-             }
-        );
-    }
+    // new list view
+    BufferedImage newPane = new BufferedImage(240, 120, 2);
+    Graphics g = newPane.getGraphics();
+    g.setColor(Color.BLACK);
+    java.awt.Font font = new java.awt.Font("TimesRoman", java.awt.Font.PLAIN, 15);
+    g.setFont(font);
+    g.drawString("New Panel", 80, 60);
+    listView.setCellFactory(param -> new SlideCell());
+    listView.setOrientation(Orientation.HORIZONTAL);
+    listView.getItems().add(new Thumbnail(0, 240, 120, SwingFXUtils.toFXImage(newPane, null)));
+    listView.getSelectionModel().selectFirst();
+    listView
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            new ChangeListener<Thumbnail>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Thumbnail> observableValue,
+                  Thumbnail thumbnail,
+                  Thumbnail t1) {
+                try {
+                  if (t1.getID() == 0) {
+                    clearPane();
+                  } else {
+                    loadPane();
+                  }
+                } catch (Exception f) {
+                  throwAlertMessage("Error loading Frame", f);
+                }
+              }
+            });
+  }
 
   public void throwAlertMessage(String error, Exception f) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -403,16 +416,27 @@ public class Controller {
     right = null;
   }
 
-    // loads objects in saved frame
-    public void loadPane() {
-        SavedSlide slide = memoryOperations.load(leftDisplayBox, rightDisplayBox,
-                listView.getSelectionModel().getSelectedIndex(), listView, speechBubbleLeft, speechBubbleRight,
-                textLeft, textRight, upperNarrative, lowerNarrative, leftLabel, rightLabel);
-        left = slide.getCharacterLeft();
-        right = slide.getCharacterRight();
-        leftBubble = left.getBubble();
-        rightBubble = right.getBubble();
-    }
+  // loads objects in saved frame
+  public void loadPane() {
+    SavedSlide slide =
+        memoryOperations.load(
+            leftDisplayBox,
+            rightDisplayBox,
+            listView.getSelectionModel().getSelectedIndex(),
+            listView,
+            speechBubbleLeft,
+            speechBubbleRight,
+            textLeft,
+            textRight,
+            upperNarrative,
+            lowerNarrative,
+            leftLabel,
+            rightLabel);
+    left = slide.getCharacterLeft();
+    right = slide.getCharacterRight();
+    leftBubble = left.getBubble();
+    rightBubble = right.getBubble();
+  }
 
   // function to find character in list
   public Character findCharacter(String name) {
@@ -427,8 +451,8 @@ public class Controller {
     return character;
   }
 
-    public void flip() {
-        Character toFlip;
+  public void flip() {
+    Character toFlip;
 
     if (currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character to flip");
