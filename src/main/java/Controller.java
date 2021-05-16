@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,7 +36,8 @@ public class Controller {
   @FXML MenuItem saveHTML = new MenuItem();
   @FXML MenuItem saveGIF = new MenuItem();
   @FXML MenuItem close = new MenuItem();
-
+  @FXML SplitPane splitPane = new SplitPane();
+  @FXML Text title = new Text();
   @FXML Button addCharacter = new Button();
   @FXML Button clearPane = new Button();
   @FXML Button flipCharacter = new Button();
@@ -54,12 +56,13 @@ public class Controller {
   @FXML HBox speechBubbleRight = new HBox();
   @FXML ColorPicker hairColorPicker = new ColorPicker();
   @FXML ColorPicker skinColorPicker = new ColorPicker();
-  @FXML TextField userText;
-  @FXML TextField userText1;
+  //@FXML TextField userText;
+  //@FXML TextField userText1;
   @FXML TextField aboveNarrativeText;
   @FXML TextField belowNarrativeText;
   @FXML TextField textLeft = new TextField();
   @FXML TextField textRight = new TextField();
+  @FXML TextField speech = new TextField();
   @FXML SplitMenuButton bubbleSelector = new SplitMenuButton();
 
   ArrayList<Character> poseList = new ArrayList<>();
@@ -112,6 +115,8 @@ public class Controller {
           addTopNarrative();
         } else if (e.getSource().equals(bottomNarrative)) {
           addBottomNarrative();
+        } else if (e.getSource().equals(clearPane)) {
+          clearPane();
         } else if (e.getSource().equals(save)) {
           try {
             if (listView.getSelectionModel().getSelectedIndex() > 0) {
@@ -210,6 +215,7 @@ public class Controller {
     rightLabel.setText("");
     display.add(rightLabel, 1, 1);
 
+
     addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -221,16 +227,18 @@ public class Controller {
     save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     listView.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     Delete.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+    clearPane.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     bubbleSelector.setOnAction(actionEventHandler);
 
     rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
     leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
+    characterSelected(leftDisplayBox);
 
     // new list view
     BufferedImage newPane = new BufferedImage(240, 120, 2);
     Graphics g = newPane.getGraphics();
     g.setColor(Color.BLACK);
-    java.awt.Font font = new java.awt.Font("TimesRoman", java.awt.Font.PLAIN, 15);
+    java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 15);
     g.setFont(font);
     g.drawString("New Panel", 80, 60);
     listView.setCellFactory(param -> new SlideCell());
@@ -356,8 +364,8 @@ public class Controller {
 
     // add new character
     toStore = findCharacter(menuValue);
-    toStore.getImage().setFitHeight(150);
-    toStore.getImage().setFitWidth(150);
+    toStore.getImage().setFitHeight(210);
+    toStore.getImage().setFitWidth(210);
 
     // add to display
     currentlySelected.getChildren().add(toStore.getImage());
@@ -382,15 +390,16 @@ public class Controller {
 
   public void characterSelected(HBox side) {
     String border_style = "-fx-border-color: red;" + "-fx-border-width: 1;";
-
     if (side.equals(leftDisplayBox)) {
       rightDisplayBox.setStyle("-fx-border-width: 0;");
       leftDisplayBox.setStyle(border_style);
       currentlySelected = leftDisplayBox;
-    } else if (side.equals(rightDisplayBox)) {
+      title.setText("Left Character");
+    } else {
       leftDisplayBox.setStyle("-fx-border-width: 0;");
       rightDisplayBox.setStyle(border_style);
       currentlySelected = rightDisplayBox;
+      title.setText("Right Character");
     }
   }
 
@@ -569,11 +578,10 @@ public class Controller {
 
     if (currentlySelected.equals(leftDisplayBox)) {
       speakingCharacter = left;
-      out = userText.getText();
     } else {
       speakingCharacter = right;
-      out = userText1.getText();
     }
+    out = speech.getText();
     BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2d = img.createGraphics();
     FontMetrics fm = g2d.getFontMetrics();
@@ -609,9 +617,9 @@ public class Controller {
         // display.add(leftLabel, 0, 1);
         speechBubbleLeft.getChildren().add(leftBubble.getImage());
         left.setBubble(leftBubble);
-        left.setText(userText.getText());
+        left.setText(speech.getText());
       }
-      userText.clear();
+      speech.clear();
 
     } else {
 
@@ -630,9 +638,9 @@ public class Controller {
         // display.add(rightLabel, 1, 1);
         speechBubbleRight.getChildren().add(rightBubble.getImage());
         right.setBubble(rightBubble);
-        right.setText(userText1.getText());
+        right.setText(speech.getText());
       }
-      userText1.clear();
+      speech.clear();
     }
   }
 

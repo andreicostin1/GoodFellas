@@ -519,8 +519,8 @@ public class ExternalFileOperations {
     left.setImage(new ImageView(c.getImage().getImage()));
     left.setText("");
 
-    left.getImage().setFitHeight(150);
-    left.getImage().setFitWidth(150);
+    left.getImage().setFitHeight(210);
+    left.getImage().setFitWidth(210);
 
     if (leftFigureAppearance != null
         && leftFigureAppearance.getTextContent().equalsIgnoreCase("MALE")) {

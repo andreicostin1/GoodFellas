@@ -107,8 +107,8 @@ public class Character {
     }
 
     image = new ImageView(newCharacterImage);
-    image.setFitHeight(150);
-    image.setFitWidth(150);
+    image.setFitHeight(210);
+    image.setFitWidth(210);
     image.setScaleX(scale);
   }
 
@@ -160,8 +160,8 @@ public class Character {
     braidColor = newBraidColor;
 
     image = new ImageView(newCharacterImage);
-    image.setFitHeight(150);
-    image.setFitWidth(150);
+    image.setFitHeight(210);
+    image.setFitWidth(210);
     image.setScaleX(scale);
   }
 
@@ -195,8 +195,8 @@ public class Character {
     }
 
     image = new ImageView(newCharacterImage);
-    image.setFitHeight(150);
-    image.setFitWidth(150);
+    image.setFitHeight(210);
+    image.setFitWidth(210);
     image.setScaleX(scale);
   }
 

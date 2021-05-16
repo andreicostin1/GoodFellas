@@ -33,7 +33,7 @@ public class SplashScreenController implements Initializable {
               @Override
               public void run() {
                 Pane root = null;
-                URL url = getClass().getResource("/main/resources/view/GUI.fxml");
+                URL url = getClass().getResource("/main/resources/view/GUI2.fxml");
 
                 try {
                   root = FXMLLoader.load(url);

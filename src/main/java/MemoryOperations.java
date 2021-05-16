@@ -136,8 +136,8 @@ public class MemoryOperations {
     ImageView left = new ImageView(slideToLoad.getCharacterLeft().getImage().getImage());
     ImageView right = new ImageView(slideToLoad.getCharacterRight().getImage().getImage());
 
-    left.setFitHeight(150);
-    left.setFitWidth(150);
+    left.setFitHeight(210);
+    left.setFitWidth(210);
     left.setScaleX(slideToLoad.getCharacterLeft().getScale());
     leftDisplay.getChildren().add(left);
     slideToLoad.getCharacterLeft().setImage(left);
@@ -149,8 +149,8 @@ public class MemoryOperations {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
 
-    right.setFitHeight(150);
-    right.setFitWidth(150);
+    right.setFitHeight(210);
+    right.setFitWidth(210);
     right.setScaleX(slideToLoad.getCharacterRight().getScale());
     rightDisplay.getChildren().add(right);
     slideToLoad.getCharacterRight().setImage(right);
