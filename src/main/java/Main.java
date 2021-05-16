@@ -22,11 +22,11 @@ public class Main extends Application {
       Pane root = FXMLLoader.load(Objects.requireNonNull(url));
       Scene scene = new Scene(root, 700, 475);
 
+      primaryStage.setResizable(false);
       primaryStage.initStyle(StageStyle.UNDECORATED);
       primaryStage.setScene(scene);
       primaryStage.setTitle("Splash Screen");
       primaryStage.show();
-
     } catch (Exception e) {
     }
   }
