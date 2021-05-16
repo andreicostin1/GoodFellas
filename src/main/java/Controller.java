@@ -1,7 +1,5 @@
 package main.java;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -243,21 +241,15 @@ public class Controller {
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
-            new ChangeListener<Thumbnail>() {
-              @Override
-              public void changed(
-                  ObservableValue<? extends Thumbnail> observableValue,
-                  Thumbnail thumbnail,
-                  Thumbnail t1) {
-                try {
-                  if (t1.getID() == 0) {
-                    clearPane();
-                  } else {
-                    loadPane();
-                  }
-                } catch (Exception f) {
-                  throwAlertMessage("Error loading Frame", f);
+            (observableValue, thumbnail, t1) -> {
+              try {
+                if (t1.getID() == 0) {
+                  clearPane();
+                } else {
+                  loadPane();
                 }
+              } catch (Exception f) {
+                throwAlertMessage("Error loading Frame", f);
               }
             });
   }
