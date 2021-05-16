@@ -51,8 +51,8 @@ public class Controller {
   @FXML HBox speechBubbleRight = new HBox();
   @FXML ColorPicker hairColorPicker = new ColorPicker();
   @FXML ColorPicker skinColorPicker = new ColorPicker();
-  @FXML TextField usertxt;
-  @FXML TextField usertxt2;
+  @FXML TextField userText;
+  @FXML TextField userText1;
   @FXML TextField aboveNarrativeText;
   @FXML TextField belowNarrativeText;
   @FXML TextField textLeft = new TextField();
@@ -167,9 +167,7 @@ public class Controller {
   public void initialize() {
     // Menu Bar
     saveXML.setOnAction(
-        actionEvent -> {
-          externalFileOperations.saveAsXML(memoryOperations.getSavedSlides());
-        });
+        actionEvent -> externalFileOperations.saveAsXML(memoryOperations.getSavedSlides()));
     loadXML.setOnAction(
         actionEvent -> {
           ArrayList<SavedSlide> savedSlides = externalFileOperations.loadXML(poseList, bubbleList);
@@ -180,13 +178,9 @@ public class Controller {
           disableSaveToFile(memoryOperations.isEmpty());
         });
     saveHTML.setOnAction(
-        actionEvent -> {
-          externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides());
-        });
+        actionEvent -> externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides()));
     saveGIF.setOnAction(
-        actionEvent -> {
-          externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides());
-        });
+        actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides()));
 
     try {
       createPoseList();
@@ -313,9 +307,7 @@ public class Controller {
 
     for (MenuItem bubbleItem : bubbleSelector.getItems()) {
       bubbleItem.setOnAction(
-          (event) -> {
-            bubbleSelector.setText(bubbleItem.getText());
-          });
+          (event) -> bubbleSelector.setText(bubbleItem.getText()));
     }
 
     if (fileSystem != null) {
@@ -435,7 +427,7 @@ public class Controller {
   }
 
   public void flip() {
-    Character toFlip = new Character();
+    Character toFlip;
 
     if (currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character to flip");
@@ -487,32 +479,21 @@ public class Controller {
     }
   }
 
+  public enum COLORACTION {
+    SKIN,
+    HAIR
+  }
+
   public void changeHairColor() {
-    if (currentlySelected == null) {
-      throw new IllegalArgumentException("Please select a character");
-    }
-
-    Character updatedCharacter;
-    HBox panelSide;
-
-    if (currentlySelected.equals(leftDisplayBox)) {
-      updatedCharacter = left;
-      panelSide = leftDisplayBox;
-    } else {
-      updatedCharacter = right;
-      panelSide = rightDisplayBox;
-    }
-
-    if (updatedCharacter == null) {
-      throw new IllegalArgumentException("Please add a character");
-    }
-
-    panelSide.getChildren().clear();
-    updatedCharacter.setHairColor(hairColorPicker.getValue());
-    panelSide.getChildren().add(updatedCharacter.getImage());
+    changeHairAndSkinColor(COLORACTION.HAIR);
   }
 
   public void changeSkinColor() {
+    changeHairAndSkinColor(COLORACTION.SKIN);
+  }
+
+  // helper function
+  public void changeHairAndSkinColor(COLORACTION x) {
     if (currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character");
     }
@@ -533,8 +514,14 @@ public class Controller {
     }
 
     panelSide.getChildren().clear();
-    updatedCharacter.setSkin(skinColorPicker.getValue());
-    panelSide.getChildren().add(updatedCharacter.getImage());
+
+    if (x == COLORACTION.HAIR) {
+      updatedCharacter.setHairColor(hairColorPicker.getValue());
+      panelSide.getChildren().add(updatedCharacter.getImage());
+    } else if (x == COLORACTION.SKIN) {
+      updatedCharacter.setSkin(skinColorPicker.getValue());
+      panelSide.getChildren().add(updatedCharacter.getImage());
+    }
   }
 
   public Bubble findNextBubble(String name) {
@@ -561,10 +548,10 @@ public class Controller {
 
     if (currentlySelected.equals(leftDisplayBox)) {
       speakingCharacter = left;
-      out = usertxt.getText();
+      out = userText.getText();
     } else {
       speakingCharacter = right;
-      out = usertxt2.getText();
+      out = userText1.getText();
     }
     BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2d = img.createGraphics();
@@ -601,9 +588,9 @@ public class Controller {
         // display.add(leftLabel, 0, 1);
         speechBubbleLeft.getChildren().add(leftBubble.getImage());
         left.setBubble(leftBubble);
-        left.setText(usertxt.getText());
+        left.setText(userText.getText());
       }
-      usertxt.clear();
+      userText.clear();
 
     } else {
 
@@ -622,9 +609,9 @@ public class Controller {
         // display.add(rightLabel, 1, 1);
         speechBubbleRight.getChildren().add(rightBubble.getImage());
         right.setBubble(rightBubble);
-        right.setText(usertxt2.getText());
+        right.setText(userText1.getText());
       }
-      usertxt2.clear();
+      userText1.clear();
     }
   }
 

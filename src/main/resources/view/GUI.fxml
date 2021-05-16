@@ -180,7 +180,7 @@
                 </SplitMenuButton>
             </children>
         </GridPane>
-        <TextField fx:id="usertxt" layoutX="14.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0"
+        <TextField fx:id="userText" layoutX="14.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0"
                    promptText="Enter left character speech"/>
         <TextField fx:id="belowNarrativeText" layoutX="12.0" layoutY="454.0" prefHeight="35.0" prefWidth="360.0"
                    promptText="Enter Narrative Text here..."/>
@@ -212,7 +212,7 @@
         <ListView fx:id="listView" layoutX="13.0" layoutY="498.0" prefHeight="138.0" prefWidth="675.0"
                   style="-fx-background-color: white; -fx-border-color: black;">
         </ListView>
-        <TextField fx:id="usertxt2" layoutX="202.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0"
+        <TextField fx:id="userText1" layoutX="202.0" layoutY="84.0" prefHeight="35.0" prefWidth="170.0"
                    promptText="Enter right character speech"/>
         <TextField fx:id="aboveNarrativeText" layoutX="12.0" layoutY="38.0" prefHeight="35.0" prefWidth="360.0"
                    promptText="Enter Narrative Text here..."/>
