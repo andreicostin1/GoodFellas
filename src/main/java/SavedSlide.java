@@ -1,8 +1,5 @@
 package main.java;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-
 public class SavedSlide {
 
   private int ID;
@@ -12,7 +9,12 @@ public class SavedSlide {
   private String belowNarrativeText;
   private Bubble leftBubble, rightBubble;
 
-  public SavedSlide(int ID, Character characterLeft, Character characterRight, String aboveNarrativeText, String belowNarrativeText) {
+  public SavedSlide(
+      int ID,
+      Character characterLeft,
+      Character characterRight,
+      String aboveNarrativeText,
+      String belowNarrativeText) {
     this.ID = ID;
     this.characterLeft = characterLeft;
     this.characterRight = characterRight;
@@ -44,7 +46,9 @@ public class SavedSlide {
     this.characterRight = characterRight;
   }
 
-  public String getAboveNarrativeText() { return aboveNarrativeText; }
+  public String getAboveNarrativeText() {
+    return aboveNarrativeText;
+  }
 
   public void setAboveNarrativeText(String aboveNarrativeText) {
     this.aboveNarrativeText = aboveNarrativeText;

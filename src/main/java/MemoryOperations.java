@@ -1,6 +1,5 @@
 package main.java;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -8,13 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MemoryOperations {
@@ -31,9 +24,14 @@ public class MemoryOperations {
     slideArrayList = slides;
     id = 0;
     listView.getItems().remove(1, listView.getItems().size());
-    for(SavedSlide slide : slideArrayList) {
-      savedSlide = generateSlide(slide, slide.getCharacterLeft(), slide.getCharacterRight(),
-              slide.getAboveNarrativeText(), slide.getBelowNarrativeText());
+    for (SavedSlide slide : slideArrayList) {
+      savedSlide =
+          generateSlide(
+              slide,
+              slide.getCharacterLeft(),
+              slide.getCharacterRight(),
+              slide.getAboveNarrativeText(),
+              slide.getBelowNarrativeText());
       savedSlide.setPrefSize(225, 125);
       savedSlide.setGridLinesVisible(true);
       listView.getItems().add(savedSlide);
@@ -62,34 +60,40 @@ public class MemoryOperations {
     id++;
   }
 
-  public void update(Character left, Character right, String aboveNarrativeText, String belowNarrativeText,
-                     ListView<GridPane> listView, int index) {
+  public void update(
+      Character left,
+      Character right,
+      String aboveNarrativeText,
+      String belowNarrativeText,
+      ListView<GridPane> listView,
+      int index) {
     if (left == null || right == null) {
       throw new IllegalArgumentException("Needs two characters in frame");
     }
     SavedSlide oldSlide = slideArrayList.get(index);
-    SavedSlide slide = new SavedSlide(oldSlide.getID(), left, right, aboveNarrativeText, belowNarrativeText);
+    SavedSlide slide =
+        new SavedSlide(oldSlide.getID(), left, right, aboveNarrativeText, belowNarrativeText);
     slideArrayList.set(index, slide);
 
     savedSlide = generateSlide(slide, left, right, aboveNarrativeText, belowNarrativeText);
     savedSlide.setPrefSize(225, 125);
     savedSlide.setGridLinesVisible(true);
-    listView.getItems().set(index+1, savedSlide);
+    listView.getItems().set(index + 1, savedSlide);
     listView.setOrientation(Orientation.HORIZONTAL);
   }
 
   public SavedSlide load(
-          HBox leftDisplay,
-          HBox rightDisplay,
-          int index,
-          HBox speechBubbleLeft,
-          HBox speechBubbleRight,
-          TextField textLeft,
-          TextField textRight,
-          Label upperNarrative,
-          Label lowerNarrative,
-          Label leftSpeech,
-          Label rightSpeech) {
+      HBox leftDisplay,
+      HBox rightDisplay,
+      int index,
+      HBox speechBubbleLeft,
+      HBox speechBubbleRight,
+      TextField textLeft,
+      TextField textRight,
+      Label upperNarrative,
+      Label lowerNarrative,
+      Label leftSpeech,
+      Label rightSpeech) {
     if (slideArrayList.size() == 0) {
       throw new IllegalArgumentException("Please add a slide before trying to load it");
     }
@@ -116,7 +120,6 @@ public class MemoryOperations {
     if (slideToLoad.getCharacterLeft().getText() != null) {
       textLeft.setText(slideToLoad.getCharacterLeft().getText());
     }
-
 
     right.setFitHeight(150);
     right.setFitWidth(150);
@@ -148,7 +151,7 @@ public class MemoryOperations {
     if (listView.getItems().size() == 1) {
       throw new IllegalArgumentException("Please add a slide before deleting");
     }
-    listView.getItems().remove(index+1);
+    listView.getItems().remove(index + 1);
     slideArrayList.remove(index);
     id--;
   }
@@ -162,7 +165,12 @@ public class MemoryOperations {
     return slideArrayList.isEmpty();
   }
 
-  public GridPane generateSlide(SavedSlide slide, Character left, Character right, String aboveNarrativeText, String belowNarrativeText) {
+  public GridPane generateSlide(
+      SavedSlide slide,
+      Character left,
+      Character right,
+      String aboveNarrativeText,
+      String belowNarrativeText) {
     GridPane generatedSlide = new GridPane();
 
     ImageView leftImage = slide.getCharacterLeft().getImage();
@@ -180,5 +188,4 @@ public class MemoryOperations {
 
     return generatedSlide;
   }
-
 }

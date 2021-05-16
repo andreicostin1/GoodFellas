@@ -84,27 +84,23 @@ public class Character {
       for (int j = 0; j < width; j++) {
         Color currColor = reader.getColor(j, i);
 
-        if (currColor.equals(Color.RED)) { //hide lips
+        if (currColor.equals(Color.RED)) { // hide lips
           double newGreen = (skin.getGreen() * 255) + 1;
           Color hideLipColor = new Color(255 / 255.0, newGreen / 255.0, 216 / 255.0, 1);
           writer.setColor(j, i, hideLipColor);
-        }
-        else if (currColor.equals(new Color(255 / 255.0, ((skin.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) { //show lips
+        } else if (currColor.equals(
+            new Color(
+                255 / 255.0, ((skin.getGreen() * 255) + 1) / 255.0, 216 / 255.0, 1))) { // show lips
           writer.setColor(j, i, Color.RED);
-        }
-        else if (currColor.equals(Color.rgb(236, 180, 181))) { //hide bow
+        } else if (currColor.equals(Color.rgb(236, 180, 181))) { // hide bow
           writer.setColor(j, i, hideBowColor);
-        }
-        else if (currColor.equals(hideBowColor)) { //show bow
+        } else if (currColor.equals(hideBowColor)) { // show bow
           writer.setColor(j, i, Color.rgb(236, 180, 181));
-        }
-        else if (currColor.equals(braidColor)) { //hide braid
+        } else if (currColor.equals(braidColor)) { // hide braid
           writer.setColor(j, i, hideBraidColor);
-        }
-        else if (currColor.equals(hideBraidColor)) { //show braid
+        } else if (currColor.equals(hideBraidColor)) { // show braid
           writer.setColor(j, i, braidColor);
-        }
-        else {
+        } else {
           writer.setColor(j, i, currColor);
         }
       }
@@ -114,7 +110,6 @@ public class Character {
     image.setFitHeight(150);
     image.setFitWidth(150);
     image.setScaleX(scale);
-
   }
 
   public ImageView getImage() {
