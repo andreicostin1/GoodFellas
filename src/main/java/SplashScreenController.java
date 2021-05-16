@@ -38,7 +38,7 @@ public class SplashScreenController implements Initializable {
                 try {
                   root = FXMLLoader.load(url);
                 } catch (IOException e) {
-                  e.printStackTrace();
+
                 }
 
                 Scene scene = new Scene(root);
@@ -53,7 +53,6 @@ public class SplashScreenController implements Initializable {
             });
 
       } catch (Exception e) {
-        e.printStackTrace();
       }
     }
   }

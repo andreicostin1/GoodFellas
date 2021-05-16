@@ -208,13 +208,13 @@ public class Controller {
         try {
             createPoseList();
         } catch (Exception e) {
-            e.printStackTrace();
+            throwAlertMessage("Error creating pose list", e);
         }
 
         try {
             createBubbleList();
         } catch (Exception e) {
-            e.printStackTrace();
+            throwAlertMessage("Error creating bubble list", e);
         }
         for (Character pose : poseList) {
             characterMenu.getItems().add(pose.getName());
