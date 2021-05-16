@@ -643,7 +643,7 @@ public class ExternalFileOperations {
 
           ArrayList<Integer> unloadedPanels = new ArrayList<>();
           ArrayList<SavedSlide> loadedPanels = new ArrayList<>();
-          int id = 0;
+          int id = 1;
           // get each panel
           for (int i = 0; i < panels.getLength(); i++) {
             Element panel = (Element) panels.item(i);
