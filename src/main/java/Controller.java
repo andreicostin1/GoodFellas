@@ -1,6 +1,5 @@
 package main.java;
 
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -213,7 +212,6 @@ public class Controller {
     display.add(leftLabel, 0, 1);
     rightLabel.setText("");
     display.add(rightLabel, 1, 1);
-
 
     addCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
