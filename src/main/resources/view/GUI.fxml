@@ -43,6 +43,7 @@
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -93,8 +94,14 @@
                                     </children>
                                 </GridPane>
                                 <TextField fx:id="belowNarrativeText" layoutX="7.0" layoutY="405.0" prefHeight="25.0" prefWidth="449.0" promptText="Enter Below Narrative Text..." />
-                                <Button fx:id="topNarrative" layoutX="465.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
-                                <Button fx:id="bottomNarrative" layoutX="465.0" layoutY="405.0" mnemonicParsing="false" text="Add" />
+                                <Button fx:id="topNarrative" layoutX="465.0" layoutY="14.0" mnemonicParsing="false" text="Add">
+                           <tooltip>
+                              <Tooltip text="Add text above characters" />
+                           </tooltip></Button>
+                                <Button fx:id="bottomNarrative" layoutX="465.0" layoutY="405.0" mnemonicParsing="false" text="Add">
+                           <tooltip>
+                              <Tooltip text="Add text below characters" />
+                           </tooltip></Button>
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="293.0" prefHeight="160.0" prefWidth="100.0">
@@ -104,28 +111,58 @@
                                         <Font size="18.0" />
                                     </font>
                                 </Text>
-                                <ComboBox fx:id="characterMenu" layoutX="112.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0" />
+                                <ComboBox fx:id="characterMenu" layoutX="112.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0">
+                           <tooltip>
+                              <Tooltip text="Select Character from list" />
+                           </tooltip></ComboBox>
                                 <Label layoutX="14.0" layoutY="46.0" text="Select Character" />
-                                <Button fx:id="addCharacter" layoutX="249.0" layoutY="42.0" mnemonicParsing="false" text="Add" />
+                                <Button fx:id="addCharacter" layoutX="249.0" layoutY="42.0" mnemonicParsing="false" text="Add">
+                           <tooltip>
+                              <Tooltip text="Add Character" />
+                           </tooltip></Button>
                                 <Label layoutX="14.0" layoutY="93.0" text="Hair Color" />
-                                <ColorPicker fx:id="hairColorPicker" layoutX="112.0" layoutY="89.0" prefHeight="25.0" prefWidth="131.0" promptText="Hair" />
+                                <ColorPicker fx:id="hairColorPicker" layoutX="112.0" layoutY="89.0" prefHeight="25.0" prefWidth="131.0" promptText="Hair">
+                           <tooltip>
+                              <Tooltip text="Change character's hari color" />
+                           </tooltip></ColorPicker>
                                 <Label layoutX="14.0" layoutY="141.0" text="Skin Color" />
-                                <ColorPicker fx:id="skinColorPicker" layoutX="112.0" layoutY="137.0" prefHeight="25.0" prefWidth="131.0" promptText="Skin" />
+                                <ColorPicker fx:id="skinColorPicker" layoutX="112.0" layoutY="137.0" prefHeight="25.0" prefWidth="131.0" promptText="Skin">
+                           <tooltip>
+                              <Tooltip text="Change character's skin color" />
+                           </tooltip></ColorPicker>
                                 <TextField fx:id="speech" layoutY="185.0" prefHeight="25.0" prefWidth="198.0" promptText="Enter Character Speech" AnchorPane.leftAnchor="1.0" />
                                 <SplitMenuButton fx:id="bubbleSelector" layoutX="211.0" layoutY="185.0" mnemonicParsing="false" text="speech" AnchorPane.rightAnchor="5.0">
                                     <items>
                                     </items>
+                           <tooltip>
+                              <Tooltip text="Add Speach or Thought Bubble" />
+                           </tooltip>
                                 </SplitMenuButton>
-                                <Button fx:id="save" layoutX="126.0" layoutY="404.0" mnemonicParsing="false" text="Save" />
+                                <Button fx:id="save" layoutX="126.0" layoutY="404.0" mnemonicParsing="false" text="Save">
+                           <tooltip>
+                              <Tooltip text="Save current scene to list" />
+                           </tooltip></Button>
                                 <Text layoutX="19.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Panel">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
                                 </Text>
-                                <Button fx:id="Delete" layoutX="211.0" layoutY="404.0" mnemonicParsing="false" text="Delete" />
-                                <Button fx:id="clearPane" layoutX="26.0" layoutY="404.0" mnemonicParsing="false" text="Clear" />
-                                <Button fx:id="flipCharacter" layoutX="36.0" layoutY="249.0" mnemonicParsing="false" text="Flip Character" />
-                                <Button fx:id="leftGender" layoutX="165.0" layoutY="249.0" mnemonicParsing="false" text="Switch Gender" />
+                                <Button fx:id="Delete" layoutX="211.0" layoutY="404.0" mnemonicParsing="false" text="Delete">
+                           <tooltip>
+                              <Tooltip text="Delete scene from list" />
+                           </tooltip></Button>
+                                <Button fx:id="clearPane" layoutX="26.0" layoutY="404.0" mnemonicParsing="false" text="Clear">
+                           <tooltip>
+                              <Tooltip text="Clear Panel" />
+                           </tooltip></Button>
+                                <Button fx:id="flipCharacter" layoutX="36.0" layoutY="249.0" mnemonicParsing="false" text="Flip Character">
+                           <tooltip>
+                              <Tooltip text="Flip character's orientation" />
+                           </tooltip></Button>
+                                <Button fx:id="leftGender" layoutX="165.0" layoutY="249.0" mnemonicParsing="false" text="Switch Gender">
+                           <tooltip>
+                              <Tooltip text="Switch character's gender" />
+                           </tooltip></Button>
                             </children>
                         </AnchorPane>
                     </items>
