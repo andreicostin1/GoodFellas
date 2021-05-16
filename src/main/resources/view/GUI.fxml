@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="617.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controller">
+  <children>
+      <MenuBar prefHeight="25.0" prefWidth="700.0">
+          <menus>
+              <Menu mnemonicParsing="false" text="File">
+                  <items>
+                      <MenuItem fx:id="saveXML" disable="true" mnemonicParsing="false" text="Save XML" />
+                      <MenuItem fx:id="loadXML" mnemonicParsing="false" text="Load XML" />
+                      <MenuItem fx:id="saveHTML" disable="true" mnemonicParsing="false" text="Save HTML" />
+                      <MenuItem fx:id="saveGIF" disable="true" mnemonicParsing="false" text="Save GIF" />
+                  </items>
+              </Menu>
+          </menus>
+      </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <SplitPane fx:id="splitPane" dividerPositions="0.6372549019607843" prefHeight="441.0" prefWidth="818.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="517.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <TextField fx:id="aboveNarrativeText" layoutX="7.0" layoutY="14.0" prefHeight="25.0" prefWidth="449.0" promptText="Enter Above Narrative..." />
+                        <GridPane fx:id="display" layoutX="14.0" layoutY="50.0" prefHeight="344.0" prefWidth="489.0" style="-fx-background-color: white;">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="42.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <HBox fx:id="leftDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                              <HBox fx:id="rightDisplayBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <HBox fx:id="speechBubbleLeft" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                              <HBox fx:id="speechBubbleRight" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <TextField fx:id="belowNarrativeText" layoutX="7.0" layoutY="405.0" prefHeight="25.0" prefWidth="449.0" promptText="Enter Below Narrative Text..." />
+                        <Button fx:id="topNarrative" layoutX="465.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="bottomNarrative" layoutX="465.0" layoutY="405.0" mnemonicParsing="false" text="Add" />
+                     </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="293.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <Text fx:id="title" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Character">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="characterMenu" layoutX="112.0" layoutY="42.0" prefHeight="25.0" prefWidth="131.0" />
+                        <Label layoutX="14.0" layoutY="46.0" text="Select Character" />
+                        <Button fx:id="addCharacter" layoutX="249.0" layoutY="42.0" mnemonicParsing="false" text="Add" />
+                        <Label layoutX="14.0" layoutY="93.0" text="Hair Color" />
+                        <ColorPicker fx:id="hairColorPicker" layoutX="112.0" layoutY="89.0" prefHeight="25.0" prefWidth="131.0" promptText="Hair" />
+                        <Label layoutX="14.0" layoutY="141.0" text="Skin Color" />
+                        <ColorPicker fx:id="skinColorPicker" layoutX="112.0" layoutY="137.0" prefHeight="25.0" prefWidth="131.0" promptText="Skin" />
+                        <TextField fx:id="speech" layoutY="185.0" prefHeight="25.0" prefWidth="198.0" promptText="Enter Character Speech" AnchorPane.leftAnchor="1.0" />
+                        <SplitMenuButton fx:id="bubbleSelector" layoutX="211.0" layoutY="185.0" mnemonicParsing="false" text="Speach" AnchorPane.rightAnchor="5.0">
+                          <items>
+                          </items>
+                        </SplitMenuButton>
+                        <Button fx:id="save" layoutX="126.0" layoutY="404.0" mnemonicParsing="false" text="Save" />
+                        <Text layoutX="19.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Panel">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="Delete" layoutX="211.0" layoutY="404.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="clearPane" layoutX="26.0" layoutY="404.0" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="flipCharacter" layoutX="36.0" layoutY="249.0" mnemonicParsing="false" text="Flip Character" />
+                        <Button fx:id="leftGender" layoutX="165.0" layoutY="249.0" mnemonicParsing="false" text="Switch Gender" />
+                     </children></AnchorPane>
+              </items>
+            </SplitPane>
+            <ListView fx:id="listView" layoutY="441.0" prefHeight="152.0" prefWidth="818.0" style="-fx-background-color: white; -fx-border-color: gray;" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
