@@ -306,8 +306,7 @@ public class Controller {
     bubbleSelector.getItems().add(new MenuItem("none"));
 
     for (MenuItem bubbleItem : bubbleSelector.getItems()) {
-      bubbleItem.setOnAction(
-          (event) -> bubbleSelector.setText(bubbleItem.getText()));
+      bubbleItem.setOnAction((event) -> bubbleSelector.setText(bubbleItem.getText()));
     }
 
     if (fileSystem != null) {

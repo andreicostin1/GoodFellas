@@ -158,7 +158,7 @@ public class NeuQuant {
       for (j = i + 1; j < netsize; j++) {
         q = network[j];
         if (q[1] < smallval) {
-            /* index on g */
+          /* index on g */
           smallpos = j;
           smallval = q[1]; /* index on g */
         }
