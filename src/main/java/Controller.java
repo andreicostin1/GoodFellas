@@ -260,7 +260,6 @@ public class Controller {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(error);
-        alert.setContentText(f.getMessage());
         alert.showAndWait();
     }
 
