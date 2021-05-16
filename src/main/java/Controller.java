@@ -1,5 +1,8 @@
 package main.java;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class Controller {
   @FXML Button narrative = new Button();
   @FXML ComboBox characterMenu = new ComboBox();
   @FXML GridPane display = new GridPane();
-  @FXML ListView<GridPane> listView = new ListView<>();
+  @FXML ListView<Thumbnail> listView = new ListView<>();
   @FXML HBox leftDisplayBox = new HBox();
   @FXML HBox rightDisplayBox = new HBox();
   @FXML HBox speechBubbleLeft = new HBox();
@@ -128,16 +130,6 @@ public class Controller {
           } catch (Exception f) {
             throwAlertMessage("Error saving Frame", f);
           }
-        } else if (e.getSource().equals(listView)) {
-          try {
-            if (listView.getSelectionModel().getSelectedIndex() == 0) {
-              clearPane();
-            } else {
-              loadPane();
-            }
-          } catch (Exception f) {
-            throwAlertMessage("Error loading Frame", f);
-          }
         }
       };
 
@@ -167,7 +159,7 @@ public class Controller {
   public void initialize() {
     // Menu Bar
     saveXML.setOnAction(
-        actionEvent -> externalFileOperations.saveAsXML(memoryOperations.getSavedSlides()));
+        actionEvent -> externalFileOperations.saveAsXML(memoryOperations.getSavedSlides(listView)));
     loadXML.setOnAction(
         actionEvent -> {
           ArrayList<SavedSlide> savedSlides = externalFileOperations.loadXML(poseList, bubbleList);
@@ -178,9 +170,9 @@ public class Controller {
           disableSaveToFile(memoryOperations.isEmpty());
         });
     saveHTML.setOnAction(
-        actionEvent -> externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides()));
+        actionEvent -> externalFileOperations.saveAsHTML(memoryOperations.getSavedSlides(listView)));
     saveGIF.setOnAction(
-        actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides()));
+        actionEvent -> externalFileOperations.saveAsGIF(memoryOperations.getSavedSlides(listView)));
 
     try {
       createPoseList();
@@ -225,13 +217,33 @@ public class Controller {
     rightDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(rightDisplayBox));
     leftDisplayBox.setOnMouseClicked((MouseEvent e) -> characterSelected(leftDisplayBox));
 
-    GridPane emptyPane = new GridPane();
-    emptyPane.setPrefSize(225, 125);
-    emptyPane.add(new Label("New Panel"), 0, 0);
-    listView.getItems().add(emptyPane);
-    listView.setOrientation(Orientation.HORIZONTAL);
-    listView.getSelectionModel().selectFirst();
-  }
+        //new list view
+        BufferedImage newPane = new BufferedImage(240, 120, 2);
+        Graphics g = newPane.getGraphics();
+        g.setColor(Color.BLACK);
+        java.awt.Font font = new java.awt.Font("TimesRoman", java.awt.Font.PLAIN, 15);
+        g.setFont(font);
+        g.drawString("New Panel", 80, 60);
+        listView.setCellFactory(param -> new SlideCell());
+        listView.setOrientation(Orientation.HORIZONTAL);
+        listView.getItems().add(new Thumbnail(0, 240, 120, SwingFXUtils.toFXImage(newPane, null)));
+        listView.getSelectionModel().selectFirst();
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Thumbnail>() {
+                 @Override
+                 public void changed(ObservableValue<? extends Thumbnail> observableValue, Thumbnail thumbnail, Thumbnail t1) {
+                     try {
+                         if(t1.getID() == 0) {
+                             clearPane();
+                         } else {
+                             loadPane();
+                         }
+                     } catch (Exception f) {
+                         throwAlertMessage("Error loading Frame", f);
+                     }
+                 }
+             }
+        );
+    }
 
   public void throwAlertMessage(String error, Exception f) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -391,26 +403,16 @@ public class Controller {
     right = null;
   }
 
-  // loads objects in saved frame
-  public void loadPane() {
-    SavedSlide slide =
-        memoryOperations.load(
-            leftDisplayBox,
-            rightDisplayBox,
-            listView.getSelectionModel().getSelectedIndex() - 1,
-            speechBubbleLeft,
-            speechBubbleRight,
-            textLeft,
-            textRight,
-            upperNarrative,
-            lowerNarrative,
-            leftLabel,
-            rightLabel);
-    left = slide.getCharacterLeft();
-    right = slide.getCharacterRight();
-    leftBubble = left.getBubble();
-    rightBubble = right.getBubble();
-  }
+    // loads objects in saved frame
+    public void loadPane() {
+        SavedSlide slide = memoryOperations.load(leftDisplayBox, rightDisplayBox,
+                listView.getSelectionModel().getSelectedIndex(), listView, speechBubbleLeft, speechBubbleRight,
+                textLeft, textRight, upperNarrative, lowerNarrative, leftLabel, rightLabel);
+        left = slide.getCharacterLeft();
+        right = slide.getCharacterRight();
+        leftBubble = left.getBubble();
+        rightBubble = right.getBubble();
+    }
 
   // function to find character in list
   public Character findCharacter(String name) {
@@ -425,8 +427,8 @@ public class Controller {
     return character;
   }
 
-  public void flip() {
-    Character toFlip;
+    public void flip() {
+        Character toFlip;
 
     if (currentlySelected == null) {
       throw new IllegalArgumentException("Please select a character to flip");
