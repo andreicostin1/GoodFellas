@@ -45,7 +45,8 @@ public class Controller {
   @FXML Button rightGender = new Button();
   @FXML Button Delete = new Button();
   @FXML Button save = new Button();
-  @FXML Button narrative = new Button();
+  @FXML Button topNarrative = new Button();
+  @FXML Button bottomNarrative = new Button();
   @FXML ComboBox characterMenu = new ComboBox();
   @FXML GridPane display = new GridPane();
   @FXML ListView<Thumbnail> listView = new ListView<>();
@@ -109,8 +110,10 @@ public class Controller {
           } catch (Exception f) {
             throwAlertMessage("Error deleting frame", f);
           }
-        } else if (e.getSource().equals(narrative)) {
-          narrativeText();
+        } else if (e.getSource().equals(topNarrative)) {
+          addTopNarrative();
+        } else if (e.getSource().equals(bottomNarrative)) {
+          addBottomNarrative();
         } else if (e.getSource().equals(save)) {
           try {
             if (listView.getSelectionModel().getSelectedIndex() > 0) {
@@ -213,7 +216,8 @@ public class Controller {
     flipCharacter.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     leftGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     rightGender.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-    narrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+    topNarrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+    bottomNarrative.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
     hairColorPicker.setOnAction(actionEventHandler);
     skinColorPicker.setOnAction(actionEventHandler);
     save.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -640,7 +644,20 @@ public class Controller {
     }
   }
 
-  public void narrativeText() {
+  public enum narrativeLocation {
+    TOP,
+    BOTTOM
+  }
+
+  public void addTopNarrative() {
+    addNarrativeText(narrativeLocation.TOP);
+  }
+
+  public void addBottomNarrative() {
+    addNarrativeText(narrativeLocation.BOTTOM);
+  }
+
+  public void addNarrativeText(narrativeLocation l) {
     Exception f = new Exception();
     BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g2d = img.createGraphics();
@@ -654,12 +671,16 @@ public class Controller {
       aboveNarrativeText.clear();
       belowNarrativeText.clear();
     } else {
-      if (!aboveNarrativeText.getText().equals("")) {
-        upperNarrative.setText(aboveNarrativeText.getText());
-        aboveNarrativeText.clear();
+      if (l == narrativeLocation.TOP) {
+        if (!aboveNarrativeText.getText().equals("")) {
+          upperNarrative.setText(aboveNarrativeText.getText());
+          aboveNarrativeText.clear();
+        }
       } else {
-        lowerNarrative.setText(belowNarrativeText.getText());
-        belowNarrativeText.clear();
+        if (!belowNarrativeText.getText().equals("")) {
+          lowerNarrative.setText(belowNarrativeText.getText());
+          belowNarrativeText.clear();
+        }
       }
     }
   }
