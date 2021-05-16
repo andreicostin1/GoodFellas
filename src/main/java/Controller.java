@@ -100,7 +100,7 @@ public class Controller {
           try {
             if (listView.getSelectionModel().getSelectedIndex() != 0) {
               memoryOperations.delete(
-                  listView.getSelectionModel().getSelectedIndex() - 1, listView);
+                  listView.getSelectionModel().getSelectedIndex(), listView);
               disableSaveToFile(memoryOperations.isEmpty());
               clearPane();
               listView.getSelectionModel().selectFirst();
@@ -119,7 +119,7 @@ public class Controller {
                   upperNarrative.getText(),
                   lowerNarrative.getText(),
                   listView,
-                  listView.getSelectionModel().getSelectedIndex() - 1);
+                  listView.getSelectionModel().getSelectedIndex());
             } else {
               memoryOperations.save(
                   left, right, listView, upperNarrative.getText(), lowerNarrative.getText());
